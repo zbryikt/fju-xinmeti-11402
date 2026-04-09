@@ -1,0 +1,36 @@
+<div class="a b"></div>
+<div class="a C"></div>
+<div class="a d"></div>
+<div class="a e"></div>
+<div class="a f"></div>
+<div class="a g"></div>
+<style>
+.a{
+ background-color:black;
+ width:150px;
+ height:150px;
+ display: inline-block;
+ background-image: url(https://xinmeti.co/assets/img/sample/cloud.svg)
+}
+.c{
+  background-color: #08aae1;
+}
+.d{
+  background-color: #08aae1;
+  background-repeat:no-repeat;
+  background-position: center center;
+}
+.e{
+  background-color: #08aae1;
+  background-attachment:fixed;
+}
+ .f{ 
+   background-color: #08aae1;
+    background-size: 30px 30px;
+  }
+  .g{
+     background-color: #08aae1;
+    background-size:cover;
+  }
+</style>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
