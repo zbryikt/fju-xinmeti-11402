@@ -1,0 +1,28 @@
+<style>
+div {width:200px;height:100px;background:#00f}
+
+  #a1{
+  	border-radius:100px 100px 0 0;
+    transform-origin:100px 100px;
+    transform:rotate(-45deg);
+    animation:eat 1s ease-in-out infinite;
+  }
+  #a2{
+  	border-radius:0 0 100px 100px;
+    transform-origin:100px 0px;
+ 	transform:rotate(45deg);
+   animation:eat2 1s ease-in-out infinite;
+  }
+  @keyframes eat {
+    0%{transform:rotate(-45deg)}
+    50%{transform:rotate(0deg)}
+    100%{transform:rotate(-45deg)}
+  }
+  @keyframes eat2{
+    0%{transform:rotate(45deg)}
+    50%{transform:rotate(0deg)}
+    100%{transform:rotate(45deg)}
+  }
+  </style>
+<div id="a1"></div>
+<div id="a2"></div>
