@@ -1,0 +1,36 @@
+<meta charset="utf-8">
+<style>
+.card { font-size: 24px; }
+.flex { display: flex; gap: 0.5em; }
+.thumbnails { flex-direction: column; }
+.thumb, .avatar, .share {
+width: 100px;
+height: 50px;
+background: #000;
+color: white;
+font-size:0.8em; 
+}
+
+.image-info { flex-direction: column; }
+.image-detail { align-items: center; }
+.preview { background: black; flex: 1; }
+</style>
+
+<div class="card">
+  <div class="gallery flex">
+    <div class="thumbnails flex">
+      <div class="thumb">範本1</div>
+      <div class="thumb">範本2</div>
+      <div class="thumb">範本3</div>
+      <div class="thumb">範本4</div>
+      <div class="thumb">範本5</div>
+    </div>
+      <div class="image-info flex">
+      <div class="preview"></div>
+      <div class="image-detail flex">
+      <div class="avatar"></div>
+      <div class="author">作者姓名<br>關於作品的簡單描述 ...</div>
+      <div class="share"></div>
+    </div>
+  </div>
+</div></div>
