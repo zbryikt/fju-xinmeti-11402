@@ -1,0 +1,34 @@
+<meta charset="utf-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="row bg-dark text-light p-3">
+	<div class="col-6">
+    <h1>讓您跟上時代的潮流</h1>
+    <p>面日響，力可史密人思；求經女跟生的度會師天!</p>
+    <p>天、生性記下生開英，說是規水，不機的:此會印很驗亞看強她子工</P>
+    <div class="btn btn-primary">現在就跟上</div>
+	</div>
+    <div class="col-6">
+    <img class="w-100" src="https://upload.wikimedia.org/wikipedia/zh/a/a9/Kuromi_characters.png">
+</div>
+<br>
+
+<div class="row">
+	<div class="col-4">
+		<div class="bg-dark rounded w-100" style="height:8em"></div>
+        <h1>正港奇片</H1>
+        <P>各位讀者大家好，我叫正港奇片，我的興趣是創作有趣搞笑的漫畫，雖然我還有很多地方要再加強，但我會盡力分享最好<p>
+</div>
+<div class="col-4">
+	<div class="bg-dark rounded w-100" style="height:8em"></div>
+    <h1>正港奇片</H1>
+    <P>各位讀者大家好，我叫正港奇片，我的興趣是創作有趣搞笑的漫畫，雖然我還有很多地方要再加強，但我會盡力分享最好<p>
+</div>
+<div class="col-4">
+	<div class="bg-dark rounded w-100" style="height:8em"></div>
+    <h1>正港奇片</H1>
+    <P>各位讀者大家好，我叫正港奇片，我的興趣是創作有趣搞笑的漫畫，雖然我還有很多地方要再加強，但我會盡力分享最好<p>
+    </div>
+
+    </div>
+    <div class="m-2 p-2 border shadow rounded bg-light text-danger text-conter" style="font-size:32px;font-weight:800">student/#id/09/bootstrap.html</div>
