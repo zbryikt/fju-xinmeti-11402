@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        body { font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif; line-height: 1.8; color: #333; max-width: 900px; margin: 0 auto; padding: 40px 20px; background-color: #f8f9fa; }
+        h1 { color: #2c3e50; text-align: center; margin-bottom: 50px; font-size: 2.5rem; }
+        section { background: #fff; padding: 40px; margin-bottom: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h2 { color: #d35400; border-left: 6px solid #e67e22; padding-left: 15px; margin-bottom: 25px; }
+        p { margin-bottom: 20px; text-align: justify; }
+        ol { background: #fffaf0; padding: 25px 50px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffeaa7; }
+        li { margin-bottom: 10px; font-weight: 500; }
+        .btn-container { margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn { display: inline-block; padding: 12px 24px; border-radius: 30px; text-decoration: none; font-weight: bold; transition: 0.3s; border: none; cursor: pointer; }
+        .btn-primary { background-color: #3498db; color: white; }
+        .btn-primary:hover { background-color: #2980b9; transform: translateY(-2px); }
+        .hastag-container { margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px; }
+        .hastag { display: inline-block; background: #ecf0f1; color: #7f8c8d; padding: 5px 15px; border-radius: 20px; margin-right: 8px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <h1>{{ title }}</h1>
+
+    {% for section in sections %}
+    <section>
+        <h2>{{ section.heading }}</h2>
+
+        {% for p in section.paragraphs %}
+        <p>{{ p }}</p>
+        {% endfor %}
+
+        <ol>
+            {% for item in section.list_items %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ol>
+
+        <div class="btn-container">
+            {% for btn in section.buttons %}
+            <div class="btn btn-primary">{{ btn }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="hastag-container">
+            {% for tag in section.hashtags %}
+            <div class="hastag">#{{ tag }}</div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endfor %}
+
+</body>
+</html>
