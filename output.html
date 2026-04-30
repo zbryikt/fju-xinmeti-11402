@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>當愛變成窒息的拉扯：給 18-24 歲的你，在親子衝突中找回呼吸的空間</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        section { margin-bottom: 40px; padding: 20px; background: #f9f9f9; border-radius: 8px; }
+        h2 { color: #e67e22; }
+        .btn { display: inline-block; padding: 10px 20px; margin: 5px; border-radius: 5px; text-decoration: none; cursor: pointer; }
+        .btn-primary { background-color: #3498db; color: white; border: none; }
+        .hastag { display: inline-block; margin-right: 10px; color: #7f8c8d; font-size: 0.9em; }
+        ol { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>當愛變成窒息的拉扯：給 18-24 歲的你，在親子衝突中找回呼吸的空間</h1>
+
+    
+    <section>
+        <h2>為什麼每一次對話，最後都變成了情緒的戰場？</h2>
+        
+        {% for p in section.paragraphs %}
+        <p>{{ p }}</p>
+        
+    <section>
+        <h2>練習畫出一道「隱形的界線」，保護彼此的獨立性</h2>
+        
+        {% for p in section.paragraphs %}
+        <p>{{ p }}</p>
+        
+    <section>
+        <h2>你不需要活成他們期待的模樣，你依然值得被愛</h2>
+        
+        {% for p in section.paragraphs %}
+        <p>{{ p }}</p>
+        
+
+        <ol>
+            {% for item in section.list_items %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ol>
+
+        {% for btn in section.buttons %}
+        <div class="btn btn-primary">{{ btn }}</div>
+        {% endfor %}
+        
+        <br>
+
+        {% for tag in section.hashtags %}
+        <div class="hastag">{{ tag }}</div>
+        {% endfor %}
+    </section>
+    {% endfor %}
+
+</body>
+</html>
