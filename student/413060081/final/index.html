@@ -1,0 +1,1993 @@
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>縫隙中的日光：新莊街友反覆聚集與治理邊界的兩難</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+            scroll-behavior: smooth;
+        }
+        .serif-title {
+            font-family: 'Playfair Display', 'Noto Sans TC', serif;
+        }
+        /* 客製化滾動條 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .no-select {
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        /* 圖片比對滑軌樣式 */
+        .comparison-container {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            overflow: hidden;
+            border-radius: 24px;
+        }
+        .comparison-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: filter 0.3s ease;
+        }
+        .comparison-slider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #f59e0b;
+            left: 50%;
+            cursor: ew-resize;
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.8);
+        }
+        .comparison-slider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -20px;
+            width: 44px;
+            height: 100%;
+            cursor: ew-resize;
+        }
+        .comparison-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #f59e0b;
+            border: 4px solid #f8fafc;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 16px;
+            z-index: 11;
+            cursor: ew-resize;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            pointer-events: none;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        
+        /* 玻璃砂磨卡片效果 (Light Mode Glassmorphism) */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(15, 23, 42, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(245, 158, 11, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        /* 旋轉動畫 */
+        .animate-spin-slow {
+            animation: spin 8s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* 網頁滑動輸入條樣式優化 */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: #e2e8f0;
+            height: 6px;
+            border-radius: 9999px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.1s ease, background-color 0.1s;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.3);
+        }
+        #slider-enforce::-webkit-slider-thumb {
+            background: #ef4444;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+        }
+        #slider-shelter::-webkit-slider-thumb {
+            background: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Light Mode CSS Overrides */
+        #editorial-design h2, #editorial-design h3, #editorial-design h4,
+        main h2, main h3, main h4,
+        #interactive-game h2, #interactive-game h3, #interactive-game h4,
+        .text-white:not(header *):not(.comparison-container *) {
+            color: #0f172a !important;
+        }
+
+        .text-slate-200:not(header *):not(.comparison-container *), .text-slate-300:not(header *):not(.comparison-container *) {
+            color: #334155 !important;
+        }
+
+        .text-slate-400:not(header *):not(.comparison-container *), .text-slate-500:not(header *):not(.comparison-container *) {
+            color: #64748b !important;
+        }
+
+        /* Background overrides */
+        .bg-slate-900:not(header *):not(.comparison-container *), 
+        .bg-slate-950:not(header *):not(.comparison-container *):not(#matrix-dots), 
+        .bg-slate-900\/80:not(header *), 
+        .bg-slate-900\/60:not(header *):not(#feed-container *) {
+            background-color: #ffffff !important;
+        }
+
+        .bg-slate-950\/60:not(header *), .bg-slate-900\/40:not(header *) {
+            background-color: #f8fafc !important;
+        }
+
+        /* Borders */
+        .border-slate-800:not(header *), .border-slate-900:not(header *), .border-slate-850:not(header *), .border-slate-800\/60:not(header *) {
+            border-color: #e2e8f0 !important;
+        }
+
+        /* Specific blocks */
+        blockquote {
+            background-color: #ffffff !important;
+            border-color: #ef4444 !important;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
+        }
+        #matrix-dots {
+            background-color: #f1f5f9 !important;
+            border-color: #e2e8f0 !important;
+        }
+        
+        /* Emergency feed */
+        .bg-red-950\/20 {
+            background-color: #fef2f2 !important;
+            color: #b91c1c !important;
+            border-color: #fca5a5 !important;
+        }
+
+        /* Dialogue Choices modal */
+        #dialogue-modal {
+            background-color: rgba(15, 23, 42, 0.45) !important;
+        }
+        #dialogue-modal > div {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        #dialogue-modal button {
+            background-color: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+            color: #1e293b !important;
+        }
+        #dialogue-modal button:hover {
+            background-color: #f1f5f9 !important;
+            border-color: #cbd5e1 !important;
+        }
+        
+        /* Summary Screen card */
+        #summary-screen .bg-slate-950 {
+            background-color: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+        }
+
+        /* Contact Section */
+        #contacts-section {
+            background-color: #f1f5f9 !important;
+            border-color: #e2e8f0 !important;
+        }
+        #contacts-section .bg-slate-900\/60 {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+        }
+        
+        /* Comparison component light classes override */
+        .bg-red-950\/90 {
+            background-color: #fef2f2 !important;
+            color: #b91c1c !important;
+            border-color: #fee2e2 !important;
+        }
+        .bg-emerald-950\/90 {
+            background-color: #ecfdf5 !important;
+            color: #047857 !important;
+            border-color: #d1fae5 !important;
+        }
+        .bg-slate-950\/80 {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            color: #334155 !important;
+            border-color: #e2e8f0 !important;
+        }
+
+        /* Virtual buttons override */
+        #btn-up, #btn-down, #btn-left, #btn-right {
+            background-color: #ffffff !important;
+            color: #475569 !important;
+            border-color: #e2e8f0 !important;
+        }
+        #btn-up:active, #btn-down:active, #btn-left:active, #btn-right:active {
+            background-color: #f1f5f9 !important;
+        }
+
+        /* Card flip overrides */
+        .group .relative.h-full.w-full {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.02) !important;
+        }
+        .group:hover .relative.h-full.w-full {
+            border-color: rgba(245, 158, 11, 0.2) !important;
+        }
+        .group .absolute.inset-0.h-full.w-full.bg-slate-950 {
+            background-color: #ffffff !important;
+            color: #334155 !important;
+            border-color: #e2e8f0 !important;
+        }
+        .group:nth-child(1) .absolute.inset-0.h-full.w-full.bg-slate-950 {
+            border-color: rgba(16, 185, 129, 0.3) !important;
+            background-color: rgba(16, 185, 129, 0.02) !important;
+        }
+        .group:nth-child(2) .absolute.inset-0.h-full.w-full.bg-slate-950 {
+            border-color: rgba(245, 158, 11, 0.3) !important;
+            background-color: rgba(245, 158, 11, 0.02) !important;
+        }
+        .group:nth-child(3) .absolute.inset-0.h-full.w-full.bg-slate-950 {
+            border-color: rgba(59, 130, 246, 0.3) !important;
+            background-color: rgba(59, 130, 246, 0.02) !important;
+        }
+        .bg-emerald-500\/10 {
+            background-color: #ecfdf5 !important;
+            color: #059669 !important;
+            border-color: #a7f3d0 !important;
+        }
+        .bg-amber-500\/10 {
+            background-color: #fffbeb !important;
+            color: #d97706 !important;
+            border-color: #fde68a !important;
+        }
+        .bg-blue-500\/10 {
+            background-color: #eff6ff !important;
+            color: #2563eb !important;
+            border-color: #bfdbfe !important;
+        }
+    </style>
+</head>
+<body class="selection:bg-amber-500 selection:text-slate-900 overflow-x-hidden">
+
+<div class="fixed top-0 left-0 w-full h-1 bg-slate-900 z-50">
+    <div id="scroll-progress" class="h-full bg-gradient-to-r from-red-500 via-amber-500 to-emerald-500 w-0 transition-all duration-100"></div>
+</div>
+
+<!-- 英雄巨幕 (Hero Block) -->
+<header class="relative min-h-screen flex items-center justify-center bg-cover bg-center overflow-hidden py-20" style="background-image: linear-gradient(to bottom, rgba(7, 10, 19, 0.85) 0%, #070a13 100%), url('./hero_xinzhuang_night.png');">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.15),transparent_75%)]"></div>
+    <div class="relative max-w-4xl mx-auto px-6 text-center space-y-8 fade-in bg-white/70 backdrop-blur-md p-8 md:p-12 rounded-3xl border border-white/50 shadow-xl">
+        <span class="inline-block bg-amber-500/10 text-amber-600 border border-amber-500/30 font-bold px-4 py-1.5 rounded-full text-xs tracking-wider uppercase">
+            設計思考 ✕ 數據探索 ✕ 新聞模擬專題
+        </span>
+        <h1 class="text-4xl md:text-6xl font-black text-slate-900 leading-tight tracking-tight serif-title">
+            縫隙中的日光
+            <span class="block text-2xl md:text-4xl text-amber-600 font-normal mt-3">新莊街友反覆聚集與治理邊界的兩難</span>
+        </h1>
+        <div class="h-1 w-24 bg-amber-500 mx-auto rounded-full shadow"></div>
+        <p class="text-base md:text-xl text-slate-700 leading-relaxed max-w-2xl mx-auto font-light">
+            一場發生在繁華新莊公共空間的拉鋸戰。當「維持市容」的民意尖叫，撞上「法無法強制帶離」的人權底線，第一線社工如何扛起雙向施壓的無力感？
+        </p>
+        <div class="text-sm text-slate-500 space-y-1">
+            <div>記者 林庭安 / 新莊報導 · 數位敘事研發小組 共同開發</div>
+            <div class="text-xs text-slate-400">【上下文工程專案】深度解釋型互動專案 2.0</div>
+        </div>
+        <div class="pt-6 flex justify-center">
+            <a href="#editorial-design" class="animate-bounce p-3 rounded-full border border-slate-200 bg-white/80 text-slate-500 hover:text-slate-800 transition shadow">
+                <i data-lucide="chevron-down" class="w-6 h-6"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<section id="editorial-design" class="max-w-4xl mx-auto px-6 py-16 space-y-12 animate-fade-in">
+    <div class="glass-panel rounded-3xl p-6 md:p-8 space-y-8">
+        <div class="border-b border-slate-850 pb-4">
+            <h2 class="text-xs font-bold text-amber-500 uppercase tracking-widest flex items-center gap-2">
+                <i data-lucide="git-branch" class="w-4 h-4 animate-pulse"></i>
+                Phase 1: Research & Design Thinking 診斷分析
+            </h2>
+            <p class="text-slate-400 text-xs mt-1">我們如何利用設計思考（Design Thinking）剖析這場新莊街頭的治理結構？</p>
+        </div>
+
+        <!-- 5 Whys 互動風暴 -->
+        <div class="space-y-4">
+            <h3 class="text-sm font-bold text-white flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-md bg-amber-500/10 text-amber-400 text-xs flex items-center justify-center font-bold">5W</span>
+                5 Whys 根源分析：為什麼新莊體育園區的街友「反覆聚集」？
+            </h3>
+            <div class="space-y-2 text-xs">
+                <div class="p-3 glass-card rounded-xl flex items-start gap-3">
+                    <span class="font-bold text-amber-500 shrink-0">Why 1:</span>
+                    <div>
+                        <span class="text-slate-200 font-bold block mb-1">為什麼新莊區第一季列冊街友高達 46 人且高度集中在公共場所？</span>
+                        <span class="text-slate-400 leading-relaxed">因為體育園區與捷運騎樓具備遮風避雨、有公廁且人流大等「生存優勢環境」。</span>
+                    </div>
+                </div>
+                <div class="p-3 glass-card rounded-xl flex items-start gap-3">
+                    <span class="font-bold text-amber-500 shrink-0">Why 2:</span>
+                    <div>
+                        <span class="text-slate-200 font-bold block mb-1">為什麼社工通報、輔導後，他們仍選擇在上述環境露宿，不願配合安置？</span>
+                        <span class="text-slate-400 leading-relaxed">因為現行中途之家（萬里、林口等）多採剛性集中管理，設有嚴格門禁與禁酒菸規定，使習慣街頭高度自由的街友極其排斥。</span>
+                    </div>
+                </div>
+                <div class="p-3 glass-card rounded-xl flex items-start gap-3">
+                    <span class="font-bold text-amber-500 shrink-0">Why 3:</span>
+                    <div>
+                        <span class="text-slate-200 font-bold block mb-1">既然街友拒絕，為什麼政府不能採取強制力將其帶離，排除居民恐慌？</span>
+                        <span class="text-slate-400 leading-relaxed">因為我國《精神衛生法》及相關人權憲法保障：在街友無自傷或傷人行為的前提下，公權力「依法無法強制安置」。</span>
+                    </div>
+                </div>
+                <div class="p-3 glass-card rounded-xl flex items-start gap-3">
+                    <span class="font-bold text-amber-500 shrink-0">Why 4:</span>
+                    <div>
+                        <span class="text-slate-200 font-bold block mb-1">為什麼居民與里長仍會不斷撥打 1999 通報施壓，甚至引發民怨暴發？</span>
+                        <span class="text-slate-400 leading-relaxed">因為少數街友隨地便溺或酒後咆哮，直接擠壓了社區整潔與公共安全觀感，且大眾普遍認為「政府收了稅就該處理乾淨」。</span>
+                    </div>
+                </div>
+                <div class="p-3 glass-card rounded-xl flex items-start gap-3">
+                    <span class="font-bold text-amber-500 shrink-0">Why 5:</span>
+                    <div>
+                        <span class="text-slate-200 font-bold block mb-1">為什麼這個矛盾會落到第一線外展社工身上，成為肉身拉鋸戰？</span>
+                        <span class="text-slate-400 leading-relaxed">因為社工處於「福利輸送最前端」與「公權力執行末端」的交界，既背負 1999 結案時限，又不能違法硬性帶人，只能用無止盡的溝通建立脆弱的信任。</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crazy 8 & 利弊分析的雙欄分組 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Crazy 8 腦力激盪 -->
+            <div class="glass-card p-4 rounded-2xl space-y-3">
+                <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
+                    <i data-lucide="lightbulb" class="w-4 h-4 text-amber-500 animate-pulse"></i>
+                    Crazy 8: 創新治理的 8 個瘋狂點子
+                </h4>
+                <div class="grid grid-cols-2 gap-2 text-[10px]">
+                    <div class="p-2 bg-slate-900/40 border border-slate-800/60 rounded-lg font-light text-slate-300">1. 街頭精神醫療會診</div>
+                    <div class="p-2 bg-slate-900/40 border border-slate-800/60 rounded-lg font-light text-slate-300">2. 零門禁公寓「短期家屋」</div>
+                    <div class="p-2 bg-slate-900/40 border border-slate-800/60 rounded-lg font-light text-slate-300">3. 跨單位即時 Line 群組群防</div>
+                    <div class="p-2 bg-slate-900/40 border border-slate-800/60 rounded-lg font-light text-slate-300">4. 街友自立清潔隊合作</div>
+                    <div class="p-2 bg-slate-900/40 border border-slate-800/60 rounded-lg font-light text-slate-300">5. 公共廁所加設針筒回收與乾淨淋浴</div>
+                    <div class="p-2 bg-slate-900/40 border border-slate-800/60 rounded-lg font-light text-slate-300">6. 生存防寒物資租借（用工時兌換）</div>
+                    <div class="p-2 bg-slate-900/40 border border-slate-800/60 rounded-lg font-light text-slate-300">7. 體育園區定點非剛性安置哨</div>
+                    <div class="p-2 bg-slate-900/40 border border-slate-800/60 rounded-lg font-light text-slate-300">8. 居民與無家者開放對話公聽會</div>
+                </div>
+            </div>
+
+            <!-- Pros/Cons 政策邊界 -->
+            <div class="glass-card p-4 rounded-2xl space-y-3">
+                <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
+                    <i data-lucide="scale" class="w-4 h-4 text-amber-400"></i>
+                    剛性管制 vs 溫和共生（利弊比對）
+                </h4>
+                <div class="space-y-3 text-[11px] leading-relaxed">
+                    <div class="border-l-2 border-red-500 pl-3">
+                        <strong class="text-red-400 block mb-0.5">鐵腕驅離（剛性）</strong>
+                        <span class="text-slate-400 font-light">市容迅速恢復，居民權益得保。但街友退向更隱蔽暗巷，病死率暴增，互信徹底雪崩，問題在暗處惡化。</span>
+                    </div>
+                    <div class="border-l-2 border-emerald-500 pl-3">
+                        <strong class="text-emerald-400 block mb-0.5">人權陪伴（溫和）</strong>
+                        <span class="text-slate-400 font-light">保護憲法生存權、隱私與自尊，能真正根治部分自立者。然而行政耗時極長，民怨可能在改善前先一步燒毀體制。</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<main id="story" class="max-w-3xl mx-auto px-6 py-8 space-y-8">
+    <div class="flex items-center space-x-2 text-amber-500 text-xs font-bold uppercase tracking-widest">
+        <span>Chapter 01</span>
+        <span class="h-px w-8 bg-amber-500/50"></span>
+        <span>導言與新莊現狀</span>
+    </div>
+
+    <p class="text-slate-200 leading-relaxed text-base md:text-lg font-light first-letter:text-4xl first-letter:font-black first-letter:text-amber-500 first-letter:mr-1">
+        新莊區作為新北市的核心行政區之一，近年來持續面臨街友露宿的棘手難題。無論是在腹地廣闊的體育園區、供居民散步的社區公園，還是通勤族每日穿梭的捷運站騎樓，都能看見街友落腳的身影。根據新北市社會局統計，<strong class="text-white font-semibold">新莊區於民國115年第一季列冊街友共達46人</strong>，這個數字在全市各行政區中名列前茅，使得新莊成為街友治理的關鍵風暴眼。
+    </p>
+
+    <!-- 關鍵數據展示方塊 -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-8">
+        <div class="p-6 bg-slate-900/60 border border-slate-800 rounded-2xl text-center space-y-2">
+            <div class="text-3xl font-black text-amber-500">46人</div>
+            <div class="text-xs text-slate-400">新莊區第一季列冊街友數</div>
+        </div>
+        <div class="p-6 bg-slate-900/60 border border-slate-800 rounded-2xl text-center space-y-2">
+            <div class="text-3xl font-black text-red-400">24小時</div>
+            <div class="text-xs text-slate-400">通報後社工到場時效限制</div>
+        </div>
+        <div class="p-6 bg-slate-900/60 border border-slate-800 rounded-2xl text-center space-y-2">
+            <div class="text-3xl font-black text-emerald-400">3處</div>
+            <div class="text-xs text-slate-400">新北市提供之安置中途之家</div>
+        </div>
+    </div>
+
+    <p class="text-slate-300 leading-relaxed text-base font-light">
+        新北市政府面對街友問題，目前的常態機制主要以外展訪視、緊急就醫協助以及中途安置為主。只要接獲來自市民、里長、警察或區公所的 1999 通報，外展中心的社工便被要求必須在二十四小時內火速趕往現場。
+    </p>
+
+    <div class="glass-panel p-6 rounded-2xl space-y-4">
+        <h3 class="text-sm font-bold text-white flex items-center gap-1.5">
+            <i data-lucide="split" class="text-amber-500 w-4 h-4"></i>
+            1. 左右互博比對：新莊公共空間的兩端
+        </h3>
+        <p class="text-xs text-slate-400">左右滑動滑軌，直觀對比兩種治理模式下公共地景的轉變：</p>
+        
+        <!-- 左右圖片比對組件 (Image Comparison Slider) -->
+        <div class="comparison-container select-none shadow-2xl border border-slate-800">
+            <!-- 剛性驅離背景 (Image B - Spikes and rigidness) -->
+            <div class="comparison-img" style="background-image: linear-gradient(to bottom, rgba(7,10,19,0.3) 0%, rgba(7,10,19,0.6) 100%), url('./rigid_exclusion.png');">
+                <div class="absolute top-4 right-4 bg-red-950/90 border border-red-500/30 text-red-400 px-3 py-1.5 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5 backdrop-blur-sm z-20">
+                    <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+                    <span>剛性驅逐：淨空市容</span>
+                </div>
+                <div class="absolute bottom-4 right-4 bg-slate-950/80 backdrop-blur px-3 py-1.5 rounded-lg text-[10px] text-slate-300 border border-slate-800/80 max-w-[240px] text-right z-20 font-light leading-relaxed">
+                    設置阻隔設施與強硬驅離。市容表面淨空，但街友被迫流入更隱蔽的社區死角，安全隱憂未解。
+                </div>
+            </div>
+            <!-- 溫和共生前景 (Image A - Supportive space) -->
+            <div id="comparison-foreground" class="comparison-img" style="background-image: linear-gradient(to bottom, rgba(7,10,19,0.3) 0%, rgba(7,10,19,0.6) 100%), url('./gentle_coexistence.png'); width: 100%; clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);">
+                <div class="absolute top-4 left-4 bg-emerald-950/90 border border-emerald-500/30 text-emerald-400 px-3 py-1.5 rounded-xl text-xs font-bold shadow-lg flex items-center gap-1.5 backdrop-blur-sm z-20">
+                    <i data-lucide="heart" class="w-3.5 h-3.5 animate-pulse"></i>
+                    <span>溫和共生：自立扶助</span>
+                </div>
+                <div class="absolute bottom-4 left-4 bg-slate-950/80 backdrop-blur px-3 py-1.5 rounded-lg text-[10px] text-slate-300 border border-slate-800/80 max-w-[240px] z-20 font-light leading-relaxed">
+                    提供關懷熱湯與街頭醫療。保障憲法基本權利，用信任做為橋樑，輔導其走向自主自立重建。
+                </div>
+            </div>
+            <!-- 滑軌拖曳手柄 -->
+            <div id="comparison-slider" class="comparison-slider">
+                <div class="comparison-button">⇄</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<section class="bg-slate-900/60 border-y border-slate-900 py-16">
+    <div class="max-w-4xl mx-auto px-6 space-y-8">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+            <span class="text-xs font-bold text-amber-500 uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">解釋型探索小模型 (KISS)</span>
+            <h2 class="text-2xl md:text-3xl font-black text-white">📊 「水床效應」街頭流體力學模擬器</h2>
+            <p class="text-slate-400 text-sm leading-relaxed">
+                街友不會憑空消失。當你在新莊體育園區加強驅離，他們會流向捷運站或住宅公園。請調整下方兩大核心變數，親自探索這套「街頭物理定律」：
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-950 p-6 rounded-3xl border border-slate-800">
+            <!-- 左側控制面板 -->
+            <div class="lg:col-span-5 space-y-6">
+                <!-- 控制 1 -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-bold text-red-400 flex items-center gap-1"><i data-lucide="shield-alert" class="w-4 h-4"></i> 👮‍♂️ 驅趕力道 (Enforcement)</span>
+                        <span id="val-enforce" class="text-red-400 font-black">20%</span>
+                    </div>
+                    <input type="range" id="slider-enforce" min="0" max="100" value="20" class="w-full accent-red-500 cursor-pointer">
+                    <p class="text-[10px] text-slate-500">強度提高時，街友會被逼離主要景點，散入周邊社區暗角。</p>
+                </div>
+
+                <!-- 控制 2 -->
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-bold text-emerald-400 flex items-center gap-1"><i data-lucide="home" class="w-4 h-4"></i> 🏠 庇護所友善與容納量</span>
+                        <span id="val-shelter" class="text-emerald-400 font-black">20%</span>
+                    </div>
+                    <input type="range" id="slider-shelter" min="0" max="100" value="20" class="w-full accent-emerald-500 cursor-pointer">
+                    <p class="text-[10px] text-slate-500">提高庇護所容量與隱私（降低門禁門檻）可有效吸收街頭無家者。</p>
+                </div>
+
+                <!-- 即時動態數據 -->
+                <div class="bg-slate-900 p-4 rounded-xl space-y-2 text-xs">
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">體育園區露宿者 (可見)：</span>
+                        <span id="stat-visible" class="font-bold text-white">80 人</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">周邊社區暗角散落者 (隱形隱憂)：</span>
+                        <span id="stat-hidden" class="font-bold text-amber-500">10 人</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">成功安置自立者 (重建中)：</span>
+                        <span id="stat-saved" class="font-bold text-emerald-400">10 人</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右側即時點陣模擬圖 (100個個體) -->
+            <div class="lg:col-span-7 flex flex-col items-center">
+                <span class="text-[10px] text-slate-500 font-bold uppercase mb-2 tracking-widest">無家者人口（100位個體）分佈動態圖</span>
+                <div class="w-full aspect-video bg-slate-900 rounded-2xl p-4 grid grid-cols-10 gap-1.5 border border-slate-800" id="matrix-dots">
+                    <!-- JS 動態生成 100 顆點點 -->
+                </div>
+                <div class="flex gap-4 mt-3 text-[10px]">
+                    <span class="flex items-center gap-1 text-slate-300"><span class="w-2.5 h-2.5 rounded-full bg-slate-400 inline-block"></span> 露宿體育場</span>
+                    <span class="flex items-center gap-1 text-amber-500"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block animate-pulse"></span> 流入周邊社區</span>
+                    <span class="flex items-center gap-1 text-emerald-400"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> 進入庇護重建</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="interactive-game" class="bg-slate-950 py-16 border-y border-slate-900">
+    <div class="max-w-6xl mx-auto px-6 space-y-8">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+            <span class="text-xs font-bold text-red-500 uppercase tracking-widest bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">實地模擬體驗：立場置換</span>
+            <h2 class="text-3xl font-black text-white">🎮 實地任務：一日外展社工極限體驗</h2>
+            <p class="text-slate-400 text-sm md:text-base font-light leading-relaxed">
+                親自穿上社工制服，走入新莊街頭。請在 **45 秒工作日限時** 內，克服**體力消耗**（回左下角外展中心喝水）、**1999 民怨泡泡持續施壓**，並走到閃爍黃光的街頭現場觸發真實事件。任何指標歸零將立刻遭到撤職！
+            </p>
+        </div>
+
+        <!-- 遊戲開始畫面 -->
+        <div id="start-screen" class="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-10 shadow-2xl space-y-6 max-w-3xl mx-auto">
+            <div class="flex items-center justify-between text-red-500 border-b border-slate-800 pb-4">
+                <div class="flex items-center space-x-3">
+                    <i data-lucide="shield-alert" class="w-6 h-6 animate-pulse"></i>
+                    <span class="font-bold text-sm md:text-base">🚨 為什麼這個模擬器極度困難？</span>
+                </div>
+                <span class="text-xs bg-red-500/20 text-red-400 border border-red-500/30 px-2.5 py-0.5 rounded">會 Game Over 的嚴苛現實</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-400">
+                <div class="space-y-4">
+                    <h3 class="font-bold text-white flex items-center gap-2 text-xs md:text-sm">
+                        <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>
+                        社工機制與操作：
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 text-xs leading-relaxed">
+                        <li>使用鍵盤 <strong class="text-slate-200 bg-slate-800 px-1 py-0.5 rounded">WASD</strong> 或 <strong class="text-slate-200 bg-slate-800 px-1 py-0.5 rounded">方向鍵</strong> 移動（手機可按下方方向盤）。</li>
+                        <li><strong class="text-red-400 font-semibold">1999 民怨泡泡</strong>：地圖上會持續冒出投訴氣球，<strong class="text-white">必須走過去將其撞碎</strong>，否則「居民滿意度」會以每秒 1.5% 速度暴跌！</li>
+                        <li><strong class="text-amber-400 font-semibold">體力限制 (Stamina)</strong>：跑步會消耗體力。體力見底時移動會極慢。走回左下角<strong class="text-sky-400">外展中心（藍圈）</strong>即可瞬間補水並回滿體力。</li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="font-bold text-white flex items-center gap-2 text-xs md:text-sm">
+                        <i data-lucide="timer" class="w-4 h-4 text-red-500"></i>
+                        每日關卡挑戰：
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 text-xs leading-relaxed">
+                        <li>每天僅有 <strong class="text-red-400">45 秒</strong>。您必須完成當天事件（走到閃爍黃光的 NPC 身旁按空白鍵/或點擊按鈕），並在超時前<strong class="text-white">走回辦公室辦公桌</strong>結算。</li>
+                        <li>任何一項指標（信任值、滿意度）降到 <strong class="text-red-500">0%</strong>，立刻判定遊戲失敗。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex justify-center pt-4">
+                <button onclick="startGame()" class="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-red-600 hover:from-amber-600 hover:to-red-700 text-white font-bold px-10 py-4 rounded-xl shadow-lg transition active:scale-95 text-sm uppercase tracking-wider">
+                    進入街頭現場
+                    <i data-lucide="play" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 遊戲主畫面主容器 -->
+        <div id="game-container" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            
+            <!-- 狀態看板與畫布 -->
+            <div class="lg:col-span-8 space-y-4">
+                <div class="glass-panel rounded-2xl p-4 grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
+                    
+                    <!-- 工作天數指示 -->
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 border border-amber-500/20 shadow-inner">
+                            <i data-lucide="calendar" class="w-4.5 h-4.5"></i>
+                        </div>
+                        <div>
+                            <div class="text-[9px] text-slate-500 font-bold uppercase tracking-wider">工作日程</div>
+                            <div id="game-day" class="text-xs font-black text-white">Day 1 (星期一)</div>
+                        </div>
+                    </div>
+
+                    <!-- 每日剩餘時間 -->
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400 border border-red-500/20 shadow-inner">
+                            <i data-lucide="clock" class="w-4.5 h-4.5 animate-spin-slow"></i>
+                        </div>
+                        <div>
+                            <div class="text-[9px] text-slate-500 font-bold uppercase tracking-wider">每日剩餘時間</div>
+                            <div id="game-timer" class="text-xs font-black text-red-500">45s</div>
+                        </div>
+                    </div>
+
+                    <!-- 體力條 -->
+                    <div class="col-span-2 bg-slate-950/60 p-2.5 rounded-xl border border-slate-900 shadow-inner">
+                        <div class="flex justify-between text-[10px] font-semibold text-slate-400 mb-1.5">
+                            <span class="flex items-center gap-1"><i data-lucide="zap" class="w-3 h-3 text-amber-500"></i>社工體力 (喝水補充)</span>
+                            <span id="stamina-val" class="text-amber-500 font-bold">100%</span>
+                        </div>
+                        <div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                            <div id="stamina-bar" class="bg-amber-500 h-full rounded-full transition-all" style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                    <!-- 信任值與滿意度 KPI -->
+                    <div class="col-span-2 bg-slate-950/60 p-2.5 rounded-xl border border-slate-900 shadow-inner">
+                        <div class="flex justify-between text-[10px] font-semibold text-slate-400 mb-1.5">
+                            <span class="flex items-center gap-1"><i data-lucide="heart" class="w-3 h-3 text-emerald-400"></i>街友信任</span>
+                            <span id="trust-val" class="text-emerald-400 font-bold">60%</span>
+                        </div>
+                        <div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                            <div id="trust-bar" class="bg-emerald-500 h-full rounded-full transition-all" style="width: 60%"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-span-2 bg-slate-950/60 p-2.5 rounded-xl border border-slate-900 shadow-inner">
+                        <div class="flex justify-between text-[10px] font-semibold text-slate-400 mb-1.5">
+                            <span class="flex items-center gap-1"><i data-lucide="users" class="w-3 h-3 text-blue-400"></i>居民滿意度 (1999 施壓中)</span>
+                            <span id="sat-val" class="text-blue-400 font-bold">50%</span>
+                        </div>
+                        <div class="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
+                            <div id="sat-bar" class="bg-blue-500 h-full rounded-full transition-all" style="width: 50%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 畫布與操作按鈕 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-3 relative overflow-hidden">
+                    <div id="mission-status" class="text-xs text-amber-400 mb-2 font-bold flex items-center gap-1">
+                        <i data-lucide="navigation" class="w-3.5 h-3.5 animate-pulse"></i>
+                        <span>今日任務：請在地圖中尋找閃爍黃光的事件點，並撞碎冒出來的 1999 泡泡。</span>
+                    </div>
+                    
+                    <div class="w-full aspect-[8/5] bg-slate-950 rounded-xl overflow-hidden relative border border-slate-800">
+                        <canvas id="game-canvas" class="w-full h-full block"></canvas>
+                        <!-- 接近 NPC 時的提示 -->
+                        <div id="interaction-prompt" class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white font-bold px-4 py-2.5 rounded-xl shadow-2xl animate-bounce text-xs flex items-center gap-1.5 border border-red-400 pointer-events-none z-10">
+                            <i data-lucide="message-square" class="w-4 h-4"></i>
+                            <span>按 [ 空白鍵 ] 開始訪視抉擇</span>
+                        </div>
+                    </div>
+
+                    <!-- 手機端虛擬方向盤 -->
+                    <div class="grid grid-cols-12 gap-4 mt-3 items-center bg-slate-950 p-3 rounded-xl border border-slate-800">
+                        <div class="col-span-12 md:col-span-5 flex flex-col justify-center items-center">
+                            <span class="text-[9px] text-slate-500 font-bold mb-2 uppercase tracking-widest">行動端虛擬方向盤</span>
+                            <div class="grid grid-cols-3 gap-1 w-28 no-select">
+                                <div></div>
+                                <button id="btn-up" class="w-8 h-8 bg-slate-800 text-slate-300 border border-slate-700 rounded-lg flex items-center justify-center font-bold"><i data-lucide="chevron-up" class="w-4 h-4"></i></button>
+                                <div></div>
+                                <button id="btn-left" class="w-8 h-8 bg-slate-800 text-slate-300 border border-slate-700 rounded-lg flex items-center justify-center font-bold"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                                <div class="w-8 h-8 flex items-center justify-center"><span class="w-1.5 h-1.5 rounded-full bg-slate-700"></span></div>
+                                <button id="btn-right" class="w-8 h-8 bg-slate-800 text-slate-300 border border-slate-700 rounded-lg flex items-center justify-center font-bold"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                                <div></div>
+                                <button id="btn-down" class="w-8 h-8 bg-slate-800 text-slate-300 border border-slate-700 rounded-lg flex items-center justify-center font-bold"><i data-lucide="chevron-down" class="w-4 h-4"></i></button>
+                                <div></div>
+                            </div>
+                        </div>
+                        <div class="col-span-12 md:col-span-7 flex flex-col justify-between h-full space-y-2">
+                            <p class="text-[10px] text-slate-400 leading-normal">
+                                <span class="font-bold text-red-400 block mb-0.5">📌 社工現場秘訣</span>
+                                1. 發現地圖上冒出紅色 <strong class="text-red-500">1999 警示泡泡</strong>，務必迅速走過去撞碎它，否則居民滿意度會因無人理會而加速崩跌！<br>
+                                2. 體力不足（移動變極慢）時，走回左下角藍圈（外展中心辦公桌）即可自動補充。
+                            </p>
+                            <div class="flex gap-2">
+                                <button id="btn-interact" class="flex-grow bg-gradient-to-r from-red-600 to-amber-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs tracking-wider uppercase transition active:scale-95 flex items-center justify-center gap-1.5">
+                                    <i data-lucide="message-square" class="w-4 h-4"></i>
+                                    執行訪視任務
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右側即時輿情監控 -->
+            <div class="lg:col-span-4 space-y-4 h-full">
+                <div class="glass-panel rounded-2xl p-4 shadow-2xl space-y-4">
+                    <h3 class="text-xs font-bold text-slate-200 flex items-center gap-2 border-b border-slate-800/60 pb-3 uppercase tracking-widest">
+                        <i data-lucide="alert-triangle" class="text-red-500 w-4 h-4 animate-pulse"></i>
+                        新莊街頭即時投訴 / 輿情監控
+                    </h3>
+                    <div id="feed-container" class="space-y-3 max-h-[380px] overflow-y-auto pr-1">
+                        <div class="bg-red-950/20 p-3.5 rounded-xl border border-red-900/30 text-xs text-red-400 leading-relaxed shadow-inner">
+                            <span class="font-bold block mb-1">⚠️ 警報：輿論張力攀升中</span>
+                            新莊區第一季列冊街友維持46人高位，居民抗議公共空間被壓縮的聲浪漸高。若放任 1999 泡泡不予清理，您將迅速面臨彈劾危機。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 遊戲結束與結案報告畫面 -->
+        <div id="summary-screen" class="hidden bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-10 shadow-2xl space-y-6 max-w-4xl mx-auto">
+            <div class="text-center space-y-2">
+                <div id="end-icon-container" class="inline-flex p-3 rounded-full">
+                    <!-- 由 JS 動態載入 -->
+                </div>
+                <h3 id="end-title" class="text-2xl font-bold text-white">結案報告：街頭的永續共生</h3>
+                <p id="end-subtitle" class="text-xs text-slate-400 max-w-xl mx-auto"></p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                    <h4 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">您的治理特質評估</h4>
+                    <div id="perf-verdict" class="text-base font-bold text-amber-500"></div>
+                    <p id="perf-desc" class="text-xs text-slate-400 leading-relaxed"></p>
+                </div>
+
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                    <h4 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">最大治理死角</h4>
+                    <div class="text-base font-bold text-rose-400">「無法強制安置」的現實</div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        第一線外展督導張哲榮指出：「只要街友沒有自傷或傷人，我們依法沒有強制將其安置的權利。」這形成了治理防線最尷尬的紅線。
+                    </p>
+                </div>
+
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                    <h4 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">制度創新的未來</h4>
+                    <div class="text-base font-bold text-emerald-400">短期家屋與街頭醫療</div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        突破傳統大型收容所的生硬管理，發展低度管理的過渡期公寓（短期家屋），並推動精神科醫師走進街頭，是目前實踐中可行性最高的折中解方。
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex justify-center pt-2">
+                <button onclick="resetGame()" class="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-5 py-2.5 rounded-xl text-xs transition">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                    重新挑戰一次
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="max-w-3xl mx-auto px-6 py-16 space-y-8">
+    <div class="text-slate-400 text-sm italic border-l-2 border-slate-700 pl-4 py-2 my-6">
+        *如果您剛才在遊戲中遭遇了「Game Over」，無論是因為民怨爆發而下台，還是因為手段過於剛硬而失去街友的信任——這並非您操作不當，而是全台灣外展社工每日面臨的**真實制度寫照**。*
+    </div>
+
+    <div class="flex items-center space-x-2 text-amber-500 text-xs font-bold uppercase tracking-widest">
+        <span>Chapter 02</span>
+        <span class="h-px w-8 bg-amber-500/50"></span>
+        <span>人權與秩序的拔河</span>
+    </div>
+    
+    <h2 class="text-2xl md:text-3.5xl font-bold text-white tracking-tight">
+        無法強制安置：社工與法規的治理紅線
+    </h2>
+    
+    <p class="text-slate-300 leading-relaxed text-base md:text-lg font-light">
+        在剛才的模擬任務中，玩家很快會發現，面對不願配合就醫的皮膚病患者，採取強行帶走會面臨巨大的權益反彈。這也是新莊街友問題反覆聚集的最深層核心——<strong class="text-white font-semibold">法律禁止「強制安置」</strong>。
+    </p>
+    <p class="text-slate-300 leading-relaxed text-base md:text-lg font-light">
+        依據我國現行《精神衛生法》與相關社福法規，只要街友未涉及傷害自己或他人的具體事實，且未違反其他刑法規範，政府與社工便絕對沒有權利強制對其進行移送、就醫或限制自由。許多街友即使身心機能衰退、傷口潰爛，一旦拒絕接受安置，社工只能耐著性子，日復一日前往現場，用熱湯與關懷艱難地「磨出信任」。
+    </p>
+
+    <!-- 經典引言與暖心社工插圖 -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 my-8 items-center">
+        <div class="md:col-span-7 space-y-4">
+            <blockquote class="border-l-4 border-red-500 pl-6 italic text-slate-300 text-base md:text-lg font-light space-y-2 bg-slate-900/40 p-5 rounded-r-2xl border border-slate-800 border-l-4 shadow-md">
+                <p class="leading-relaxed">「只要街友未涉及傷害自己或他人的情況，也未違反相關法規，政府便不能強制送醫或帶離現場。」</p>
+                <cite class="block text-xs text-slate-500 font-bold tracking-wider uppercase mt-3">— 新北市街友外展服務中心督導 張哲榮</cite>
+            </blockquote>
+        </div>
+        <div class="md:col-span-5">
+            <div class="relative rounded-2xl overflow-hidden border border-slate-800 group shadow-xl bg-slate-900">
+                <img src="./social_worker_hands.png" alt="社工關懷雙手" class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+                <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-slate-950/90 to-transparent p-3 text-left">
+                    <p class="text-[10px] text-slate-300 font-light leading-relaxed">在冰冷城市角落中，一碗熱湯與一次次的緊握，是點亮希望的起點。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="text-slate-300 leading-relaxed text-base md:text-lg font-light">
+        督導張哲榮回憶，新莊區曾有一名女性街友長期患有嚴重皮膚病，雙腿因感染而發出異味。社工多次訪視並勸導送醫，均遭其強烈抗拒，直到數月後病情急遽惡化，她才勉強同意接受治療。然而，在林口觀照園安置一段時間後，她因不適應機構生活，再次選擇回到新莊街頭。當身體狀況二度惡化時，社工只能將建立信任的過程從零開始，形成「街頭、收容、再度街頭」的循環怪圈。
+    </p>
+</section>
+
+<section class="bg-slate-900/40 py-16 border-y border-slate-900">
+    <div class="max-w-4xl mx-auto px-6 space-y-12">
+        <div class="text-center space-y-3">
+            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">精密分流政策解構 (點擊翻牌)</span>
+            <h2 class="text-2xl md:text-3.5xl font-bold text-white">新北市中途安置三階段分流機制</h2>
+            <p class="text-slate-400 text-sm max-w-xl mx-auto font-light">
+                新北市目前設立了三處定位完全不同的重建中途之家。點擊下方卡片即可翻轉，查看其精準的自立重建分工：
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- 卡片 1 -->
+            <div class="group h-64 [perspective:1000px] cursor-pointer">
+                <div class="relative h-full w-full rounded-2xl border border-slate-800 bg-slate-900 shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                    <!-- 正面 -->
+                    <div class="absolute inset-0 p-6 flex flex-col justify-between [backface-visibility:hidden]">
+                        <div class="flex justify-between items-start">
+                            <span class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
+                                <i data-lucide="activity" class="w-6 h-6"></i>
+                            </span>
+                            <span class="text-[9px] font-bold text-emerald-400 uppercase tracking-widest">生活重建</span>
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-lg font-black text-white">1. 萬里重建中心</h3>
+                            <p class="text-xs text-slate-500">點擊或觸碰以翻轉卡片...</p>
+                        </div>
+                    </div>
+                    <!-- 背面 -->
+                    <div class="absolute inset-0 h-full w-full rounded-2xl bg-slate-950 p-6 text-slate-300 [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-center space-y-2 border border-emerald-500/30">
+                        <span class="text-xs font-bold text-emerald-400">主要安置對象</span>
+                        <p class="text-xs leading-relaxed font-light">
+                            低就業能力、身體機能顯著退化或生活無法自理之街友。中心提供全天候生活照料與基本機能重建。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 2 -->
+            <div class="group h-64 [perspective:1000px] cursor-pointer">
+                <div class="relative h-full w-full rounded-2xl border border-slate-800 bg-slate-900 shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                    <!-- 正面 -->
+                    <div class="absolute inset-0 p-6 flex flex-col justify-between [backface-visibility:hidden]">
+                        <div class="flex justify-between items-start">
+                            <span class="p-3 bg-amber-500/10 text-amber-400 rounded-xl border border-amber-500/20">
+                                <i data-lucide="wrench" class="w-6 h-6"></i>
+                            </span>
+                            <span class="text-[9px] font-bold text-amber-400 uppercase tracking-widest">技能培訓</span>
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-lg font-black text-white">2. 林口觀照園</h3>
+                            <p class="text-xs text-slate-500">點擊或觸碰以翻轉卡片...</p>
+                        </div>
+                    </div>
+                    <!-- 背面 -->
+                    <div class="absolute inset-0 h-full w-full rounded-2xl bg-slate-950 p-6 text-slate-300 [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-center space-y-2 border border-amber-500/30">
+                        <span class="text-xs font-bold text-amber-400">核心服務定位</span>
+                        <p class="text-xs leading-relaxed font-light">
+                            重點在於「生活重建與就業適應」。協助具備勞動意願但缺乏技能之街友，在此接受手藝、技藝與秩序重整訓練。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片 3 -->
+            <div class="group h-64 [perspective:1000px] cursor-pointer">
+                <div class="relative h-full w-full rounded-2xl border border-slate-800 bg-slate-900 shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                    <!-- 正面 -->
+                    <div class="absolute inset-0 p-6 flex flex-col justify-between [backface-visibility:hidden]">
+                        <div class="flex justify-between items-start">
+                            <span class="p-3 bg-blue-500/10 text-blue-400 rounded-xl border border-blue-500/20">
+                                <i data-lucide="home" class="w-6 h-6"></i>
+                            </span>
+                            <span class="text-[9px] font-bold text-blue-400 uppercase tracking-widest">獨立返社</span>
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-lg font-black text-white">3. 板橋幸福居</h3>
+                            <p class="text-xs text-slate-500">點擊或觸碰以翻轉卡片...</p>
+                        </div>
+                    </div>
+                    <!-- 背面 -->
+                    <div class="absolute inset-0 h-full w-full rounded-2xl bg-slate-950 p-6 text-slate-300 [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col justify-center space-y-2 border border-blue-500/30">
+                        <span class="text-xs font-bold text-blue-400">自立轉銜模式</span>
+                        <p class="text-xs leading-relaxed font-light">
+                            專為準備好重返職場之街友設計。提供自立租屋補貼、就業機會媒合，協助其完全融入普通社區。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="max-w-3xl mx-auto px-6 py-16 space-y-8">
+    <div class="flex items-center space-x-2 text-amber-500 text-xs font-bold uppercase tracking-widest">
+        <span>Chapter 03</span>
+        <span class="h-px w-8 bg-amber-500/50"></span>
+        <span>服務方式的進化</span>
+    </div>
+    
+    <h2 class="text-2xl md:text-3.5xl font-bold text-white tracking-tight">
+        打破剛性收容框架：從「機構化管理」走向「溫和短期家屋」
+    </h2>
+    
+    <p class="text-slate-300 leading-relaxed text-base md:text-lg font-light">
+        科長郭宏昇指出，傳統中途之家大多採取集中式的機構管理模式，部分街友因無法適應團體作息而選擇逃離。為了解決這道瓶頸，新北市近年開始積極規劃發展新型態的<strong class="text-white">「短期家屋」</strong>服務。
+    </p>
+
+    <!-- 短期家屋介紹與插圖 -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 my-8 items-center">
+        <div class="md:col-span-5 order-last md:order-first">
+            <div class="relative rounded-2xl overflow-hidden border border-slate-800 group shadow-xl bg-slate-900">
+                <img src="./short_term_home.png" alt="短期家屋內部" class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+                <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-slate-950/90 to-transparent p-3 text-left">
+                    <p class="text-[10px] text-slate-300 font-light leading-relaxed">有別於傳統機構的「短期家屋」，為無家者提供像家一樣的溫馨容身所。</p>
+                </div>
+            </div>
+        </div>
+        <div class="md:col-span-7">
+            <p class="text-slate-300 leading-relaxed text-base font-light">
+                短期家屋採用一般智慧型公寓設計，不設生硬警衛或繁複門禁，提供高度個人隱私。這種模式提供了更接近普通社區生活的「中間溫和階梯」，讓街友能在放鬆的環境中重拾對生活的自主權。目前新北市政府正全力爭取閒置的公有建物空間，作為未來增設短期家屋的基地。
+            </p>
+        </div>
+    </div>
+
+    <!-- 政策對抗表格 -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 my-8 space-y-4">
+        <h4 class="text-xs font-bold text-slate-300 text-center tracking-wider uppercase">核心政策對抗：傳統集中管理 vs 新型短期家屋</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                <span class="text-rose-400 font-bold block flex items-center gap-1.5">
+                    <i data-lucide="building" class="w-4 h-4"></i> 傳統集中管理（收容所）
+                </span>
+                <ul class="text-slate-400 space-y-1 list-disc list-inside font-light">
+                    <li>高度機構化，規定嚴苛之門禁與作息。</li>
+                    <li>強制性的團體生活，個人隱私空間匱乏。</li>
+                    <li>抗拒率偏高，街友入住後容易出逃重回街頭。</li>
+                </ul>
+            </div>
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                <span class="text-emerald-400 font-bold block flex items-center gap-1.5">
+                    <i data-lucide="home" class="w-4 h-4"></i> 新型短期家屋（過渡式住宅）
+                </span>
+                <ul class="text-slate-400 space-y-1 list-disc list-inside font-light">
+                    <li>一般公寓配置，保有高度個人尊嚴與隱私。</li>
+                    <li>低度管理，著重輔導其恢復自主生活適應。</li>
+                    <li>接受度極高，做為自立自強的中間溫和階梯。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 結論段落 -->
+    <div class="pt-8 border-t border-slate-900 space-y-4">
+        <h3 class="text-xl font-bold text-white">結語：縫隙中流淌的日光</h3>
+        <p class="text-slate-300 leading-relaxed text-base md:text-lg font-light">
+            新莊街友反覆聚集的治理困局，從來不是用強硬驅離或完全放任的單一思維就能解決。當我們能理解法律紅線背後對人權的堅守，體會社工在第一線承受民意與體力的極限拉扯，並逐步朝「短期家屋」與「街頭醫療」等創新方向前進時，那道照向街頭縫隙的日光，或許才能真正溫暖每一個在城市角落流浪的靈魂。
+        </p>
+    </div>
+</section>
+
+<section id="contacts-section" class="bg-slate-950 py-16 border-t border-slate-900">
+    <div class="max-w-4xl mx-auto px-6 space-y-8">
+        <h3 class="text-sm font-bold text-slate-300 text-center uppercase tracking-widest border-b border-slate-900 pb-4">
+            新聞採訪來源與聯絡管道
+        </h3>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+            <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1">
+                <span class="font-bold text-slate-300 block">新北市社會局科長</span>
+                <span class="text-amber-500 font-bold text-sm block">郭宏昇</span>
+                <span class="text-[10px] text-slate-500 block">電話：0229603456 #5699</span>
+            </div>
+            <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1">
+                <span class="font-bold text-slate-300 block">新北市社會局科員</span>
+                <span class="text-amber-500 font-bold text-sm block">吳宗軒</span>
+                <span class="text-[10px] text-slate-500 block">電話：0229603456 #5644</span>
+            </div>
+            <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1">
+                <span class="font-bold text-slate-300 block">外展服務中心督導</span>
+                <span class="text-amber-500 font-bold text-sm block">張哲榮</span>
+                <span class="text-[10px] text-slate-500 block">請洽社會救助科聯繫</span>
+            </div>
+            <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 space-y-1">
+                <span class="font-bold text-slate-300 block">新莊區公所社會課</span>
+                <span class="text-amber-500 font-bold text-sm block">莊先生</span>
+                <span class="text-[10px] text-slate-500 block">電話：0229929891</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 頁腳 -->
+<footer class="border-t border-slate-900 bg-slate-950 py-8 px-6 text-center text-xs text-slate-500 space-y-2">
+    <div class="max-w-4xl mx-auto space-y-1">
+        <div>新莊街友反覆聚集的治理困境 · 網頁解釋型敘事專題</div>
+        <div>報導、企劃與撰稿：記者 林庭安 · 互動系統開發：數位敘事小組</div>
+        <div class="text-[10px] text-slate-600 pt-2">&copy; 2026. All rights reserved. 本網頁僅供數位新聞學專題呈現使用。</div>
+    </div>
+</footer>
+
+<!-- 遊戲對話 Modal -->
+<div id="dialogue-modal" class="hidden fixed inset-0 z-50 bg-slate-950/90 backdrop-blur flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-6">
+        <div class="flex items-start gap-4">
+            <div class="p-3 bg-red-500/10 border border-red-500/30 text-red-400 rounded-full">
+                <i data-lucide="help-circle" class="w-6 h-6 animate-pulse"></i>
+            </div>
+            <div class="space-y-2">
+                <div id="dialogue-tag" class="text-[10px] text-red-500 font-bold uppercase tracking-widest">🚨 極端抉擇關卡</div>
+                <h3 id="dialogue-title" class="text-base font-bold text-white"></h3>
+                <p id="dialogue-desc" class="text-xs text-slate-400 leading-relaxed"></p>
+            </div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+            <button onclick="handleDialogueChoice(1)" id="choice-1" class="w-full text-left bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 p-3.5 rounded-xl text-xs font-semibold transition flex justify-between items-center gap-4 group">
+                <span id="choice-1-text"></span>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-600 group-hover:translate-x-1 transition-transform"></i>
+            </button>
+            <button onclick="handleDialogueChoice(2)" id="choice-2" class="w-full text-left bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-200 p-3.5 rounded-xl text-xs font-semibold transition flex justify-between items-center gap-4 group">
+                <span id="choice-2-text"></span>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-slate-600 group-hover:translate-x-1 transition-transform"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. 左右圖片比對拖動邏輯
+    const compContainer = document.querySelector('.comparison-container');
+    const compFg = document.getElementById('comparison-foreground');
+    const compSlider = document.getElementById('comparison-slider');
+
+    let isSliding = false;
+
+    const slideMove = (clientX) => {
+        const rect = compContainer.getBoundingClientRect();
+        let position = ((clientX - rect.left) / rect.width) * 100;
+        
+        // 限制邊界
+        if (position < 0) position = 0;
+        if (position > 100) position = 100;
+        
+        // 使用 clip-path 裁切，維持前景圖比例不被壓縮縮放
+        compFg.style.clipPath = `polygon(0 0, ${position}% 0, ${position}% 100%, 0 100%)`;
+        compSlider.style.left = `${position}%`;
+    };
+
+    // 支援點擊外框區域直接移動滑軌
+    compContainer.addEventListener('mousedown', (e) => {
+        isSliding = true;
+        slideMove(e.clientX);
+    });
+    compContainer.addEventListener('touchstart', (e) => {
+        isSliding = true;
+        slideMove(e.touches[0].clientX);
+    }, { passive: true });
+
+    compSlider.addEventListener('mousedown', (e) => {
+        e.stopPropagation(); // 阻止重複觸發容器事件
+        isSliding = true;
+    });
+    window.addEventListener('mouseup', () => isSliding = false);
+    window.addEventListener('mousemove', (e) => {
+        if (!isSliding) return;
+        slideMove(e.clientX);
+    });
+
+    compSlider.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+        isSliding = true;
+    }, { passive: true });
+    window.addEventListener('touchend', () => isSliding = false);
+    window.addEventListener('touchmove', (e) => {
+        if (!isSliding) return;
+        slideMove(e.touches[0].clientX);
+        if (e.cancelable) e.preventDefault(); // 防止行動裝置拖動時頁面捲動
+    }, { passive: false });
+
+    // 2. 「水床效應」解釋型小模型邏輯
+    const sliderEnforce = document.getElementById('slider-enforce');
+    const sliderShelter = document.getElementById('slider-shelter');
+    const valEnforce = document.getElementById('val-enforce');
+    const valShelter = document.getElementById('val-shelter');
+    const statVisible = document.getElementById('stat-visible');
+    const statHidden = document.getElementById('stat-hidden');
+    const statSaved = document.getElementById('stat-saved');
+    const matrixDots = document.getElementById('matrix-dots');
+
+    function updateSimulation() {
+        const enforce = parseInt(sliderEnforce.value);
+        const shelter = parseInt(sliderShelter.value);
+
+        valEnforce.innerText = `${enforce}%`;
+        valShelter.innerText = `${shelter}%`;
+
+        // 核心公式：總人口 100 人
+        // 安置人數受庇護所容量與友善度主導
+        let saved = Math.min(100, Math.floor(shelter * 0.9 + (enforce * 0.1)));
+        // 剩餘露宿街頭人口
+        let remaining = 100 - saved;
+        // 驅趕力道會將剩餘露宿人口擠壓至隱蔽暗角
+        let hidden = Math.min(remaining, Math.floor(remaining * (enforce / 100)));
+        let visible = remaining - hidden;
+
+        statVisible.innerText = `${visible} 人`;
+        statHidden.innerText = `${hidden} 人`;
+        statSaved.innerText = `${saved} 人`;
+
+        // 重新繪製 100 顆點陣圖
+        matrixDots.innerHTML = '';
+        for (let i = 0; i < 100; i++) {
+            const dot = document.createElement('span');
+            dot.className = "w-full h-full rounded-full transition-all duration-300 ";
+            
+            if (i < visible) {
+                // 可見露宿
+                dot.classList.add("bg-slate-500");
+            } else if (i < visible + hidden) {
+                // 流入周邊
+                dot.classList.add("bg-amber-500", "animate-pulse");
+            } else {
+                // 成功安置
+                dot.classList.add("bg-emerald-500");
+            }
+            matrixDots.appendChild(dot);
+        }
+    }
+
+    sliderEnforce.addEventListener('input', updateSimulation);
+    sliderShelter.addEventListener('input', updateSimulation);
+    updateSimulation(); // 初始渲染
+
+    // 3. 滾動進度指示條
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        document.getElementById('scroll-progress').style.width = scrollPercent + '%';
+    });
+
+    // 4. 新聞遊戲主引擎
+    let state = {
+        day: 1,
+        trust: 60,
+        satisfaction: 50,
+        stamina: 100,
+        timer: 45,
+        currentTaskResolved: false,
+        isGameOver: false,
+        player: {
+            x: 80,
+            y: 350,
+            speed: 5.5,
+            width: 14,
+            height: 14
+        },
+        bubbles: []
+    };
+
+    const dayNames = ["星期一", "星期二", "星期三", "星期四", "星期五"];
+
+    const keys = {
+        w: false, a: false, s: false, d: false,
+        ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false,
+        Space: false
+    };
+
+    const locations = {
+        office: { x: 80, y: 350, r: 40, name: "外展服務中心辦公室", color: "#38bdf8" },
+        park: { x: 180, y: 120, r: 40, name: "新莊體育園區", color: "#10b981" },
+        subway: { x: 400, y: 360, r: 40, name: "捷運站騎樓", color: "#3b82f6" },
+        community: { x: 620, y: 150, r: 40, name: "社區公園", color: "#a855f7" }
+    };
+
+    const scenarios = {
+        1: {
+            location: 'park',
+            npcName: "皮膚病大姐",
+            missionText: "體育園區 訪視皮膚病病重大姐",
+            title: "皮膚病重症與人權限制的兩難",
+            desc: "新莊體育園區的皮膚病大姐雙腿已嚴重潰爛發臭，居民與民代因衛生與觀感問題瘋狂檢舉投訴。依據現行法規，在街友無自傷、傷人傾向下，政府『無法強制送醫與安置』。你將如何處置？",
+            choices: [
+                {
+                    text: "依法行政：拒絕強行介入，只提供藥膏，持續溫和勸導建立信任",
+                    effect: { trust: 15, sat: -25 },
+                    feed: "【決策反思】你堅持了法規與人權。雖然大姐對你漸漸放下心防，但園區周圍民怨大爆發，居民憤而將現場照片上傳爆料公社，控訴市府消極擺爛。",
+                    unlocked: "人權紅線的堅守"
+                },
+                {
+                    text: "法規邊緣：結合警消，藉由行政模糊空間強行送醫進行緊急安置",
+                    effect: { trust: -30, sat: 20 },
+                    feed: "【決策反思】你雖然迅速淨空現場並滿足民意。但大姐在醫院極度恐慌，兩天後逃離醫院，對社工產生強烈敵意。此舉也引發人權團體的抗議函。",
+                    unlocked: "模糊強制之反彈"
+                }
+            ]
+        },
+        2: {
+            location: 'subway',
+            npcName: "酒醉鬧事者",
+            missionText: "捷運站騎樓 處理隨地便溺與鬧事",
+            title: "捷運站公共安寧與行政效率危機",
+            desc: "有街友在捷運站出口隨地便溺，因酒醉情緒失控向路人吼叫。下班尖峰期大批群眾被迫繞道，民怨滿分。如何啟動跨部門調度？",
+            choices: [
+                {
+                    text: "按部就班：發文給警察與清潔隊，安排跨單位聯合會勘",
+                    effect: { trust: 5, sat: -35 },
+                    feed: "【決策反思】繁瑣的公文往返耗時兩天。等你會勘時，捷運站已被尿騷味與怒氣淹沒，里長協同媒體現場直播，指責行政程序僵化、尸位素餐。",
+                    unlocked: "行政公文之弊"
+                },
+                {
+                    text: "緊急防線：啟動新聯防群組，協調警方與清潔隊即時到場處理",
+                    effect: { trust: -5, sat: 25 },
+                    feed: "【決策反思】在 1 小時內完成了物理清理與警力控制。雖成功平息了排山倒海的民怨，但此舉屬於緊急高壓排除，部分街友因受驚再度轉入更隱蔽的社區暗處。",
+                    unlocked: "即時聯防防線"
+                }
+            ]
+        },
+        3: {
+            location: 'subway',
+            npcName: "安置逃離阿公",
+            missionText: "捷運站騎樓 勸導逃離安置機構的阿公",
+            title: "中途之家『強制禁令』之反噬",
+            desc: "先前成功送入林口觀照園中途之家的老阿公，因無法忍受機構內『嚴格作息與禁酒、禁煙令』而再度脫逃，重新露宿捷運站騎樓。他表示：『寧可死在街頭，也不要被關著。』",
+            choices: [
+                {
+                    text: "鐵腕施壓：警告他若不回安置所，將取消所有社會福利補助",
+                    effect: { trust: -35, sat: 15 },
+                    feed: "【決策反思】阿公感到極度憤懣，徹底切斷與外展社工的聯繫，轉而躲入更偏僻無人的暗巷，造成後續社工難以追蹤他的健康狀況，生命安全堪憂。",
+                    unlocked: "剛性限制的排斥"
+                },
+                {
+                    text: "尋求折中：暫緩回送機構，探討提供低度管理『短期家屋』的可能",
+                    effect: { trust: 25, sat: -15 },
+                    feed: "【決策反思】阿公聽聞有類似公寓、自由度較高的『短期家屋』，終於同意先接受社工安置。但新北市短期家屋目前空間極度短缺，居民對此頗有疑慮，民怨不降反升。",
+                    unlocked: "過渡期家屋之困"
+                }
+            ]
+        },
+        4: {
+            location: 'community',
+            npcName: "焦慮幻聽阿松",
+            missionText: "社區公園 評估精神異狀阿松",
+            title: "精神疾病、治安隱憂與醫療界線",
+            desc: "新莊社區公園的街友阿松近期出現嚴重幻聽，常對著空氣咆哮。附近幼兒園家長發動連署要求社工立刻『清理』公園，擔心學童生命受威脅。",
+            choices: [
+                {
+                    text: "強硬排除：結合警消，以危害社會安全為由進行精神強制就醫",
+                    effect: { trust: -30, sat: 25 },
+                    feed: "【決策反思】現場引發激烈肢體拉扯，阿松在被押送過程中受傷。此舉滿足了家長，但對阿松的身心造成嚴重創傷，外展中心與街友社群建立的互信瞬間雪崩。",
+                    unlocked: "精神衛生法界線"
+                },
+                {
+                    text: "溫和會診：協調精神科醫師直接到街頭進行『街頭醫療會診』",
+                    effect: { trust: 25, sat: -25 },
+                    feed: "【決策反思】醫師走上街頭，在不驚擾、不強迫的情況下完成評估與給藥。雖然保護了阿松的人權與互信，但在這段評估期間阿松仍留在公園，引發家長包圍外展中心抗議。",
+                    unlocked: "街頭精神醫療之困"
+                }
+            ]
+        },
+        5: {
+            location: 'park',
+            npcName: "體育園區代表",
+            missionText: "體育園區 決定長期公共空間策略",
+            title: "嚴寒來襲：生存、秩序與鄰避效應",
+            desc: "霸王級寒流來襲，體育園區夜間氣溫驟降至 6 度。多名街友為避寒在園區走廊堆滿紙箱與塑膠棚，阻擋了運動民眾的動線，且隨時有失溫死亡風險。民意與人命，你選哪一個？",
+            choices: [
+                {
+                    text: "生命優先：發放睡袋與熱食，默許甚至協助搭建臨時遮蔽物避寒",
+                    effect: { trust: 30, sat: -40 },
+                    feed: "【決策反思】你成功保住了多條寶貴的生命，街友對外展中心無比信任。然而，園區迅速變成了大型帳篷物堆疊區，引發市民全面暴怒，市府投訴專線被打爆。",
+                    unlocked: "生存權高於秩序"
+                },
+                {
+                    text: "秩序優先：依法拆除走廊易燃障礙物，強制引導其移往臨時避難所",
+                    effect: { trust: -40, sat: 25 },
+                    feed: "【決策反思】你確保了園區動線流暢與公共安全。然而當晚有兩名街友拒絕前往安置，在無障礙物遮蔽下失溫送醫急救。輿論風向轉變，怒批政策冷血殘酷。",
+                    unlocked: "鐵腕法治代價"
+                }
+            ]
+        }
+    };
+
+    let canvas, ctx;
+    let animFrameId;
+    let gameInterval;
+
+    function initCanvas() {
+        canvas = document.getElementById('game-canvas');
+        ctx = canvas.getContext('2d');
+        canvas.width = 800;
+        canvas.height = 500;
+        
+        canvas.addEventListener('touchstart', function(e) { e.preventDefault(); }, {passive: false});
+        canvas.addEventListener('touchmove', function(e) { e.preventDefault(); }, {passive: false});
+    }
+
+    function startGame() {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('summary-screen').classList.add('hidden');
+        document.getElementById('game-container').classList.remove('hidden');
+        
+        state.day = 1;
+        state.trust = 60;
+        state.satisfaction = 50;
+        state.stamina = 100;
+        state.timer = 45;
+        state.currentTaskResolved = false;
+        state.isGameOver = false;
+        state.player.x = 80;
+        state.player.y = 350;
+        state.bubbles = [];
+        
+        setupInput();
+        updateUI();
+        
+        if (animFrameId) cancelAnimationFrame(animFrameId);
+        gameLoop();
+
+        // 啟動 1 秒鐘計時器
+        if (gameInterval) clearInterval(gameInterval);
+        gameInterval = setInterval(() => {
+            if (state.isGameOver) return;
+
+            state.timer--;
+            if (state.timer <= 0) {
+                state.satisfaction -= 20;
+                showToast("⏰ 超時！今日工作尚未回辦公室結算，民怨與疲憊大幅上升！");
+                triggerNextDayTransition();
+            }
+
+            // 隨機生成 1999 民怨泡泡
+            if (Math.random() < 0.45 && state.bubbles.length < 5) {
+                spawnDiscontentBubble();
+            }
+
+            // 民怨未清除之持續扣分
+            if (state.bubbles.length > 0) {
+                state.satisfaction -= Math.floor(state.bubbles.length * 1.5);
+                if (state.satisfaction <= 0) {
+                    checkGameOver();
+                }
+            }
+
+            updateUI();
+        }, 1000);
+    }
+
+    function spawnDiscontentBubble() {
+        const hotspots = [
+            { x: 180, y: 120 },
+            { x: 400, y: 360 },
+            { x: 620, y: 150 }
+        ];
+        const spot = hotspots[Math.floor(Math.random() * hotspots.length)];
+        const bubble = {
+            x: spot.x + (Math.random() * 80 - 40),
+            y: spot.y + (Math.random() * 80 - 40),
+            r: 12,
+            pulse: 0
+        };
+        state.bubbles.push(bubble);
+        showToast("📢 1999 民怨警報！地圖上出現新投訴，請立刻跑過去清除！");
+    }
+
+    function setupInput() {
+        window.addEventListener('keydown', function(e) {
+            if (['w', 'a', 's', 'd', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].indexOf(e.key) >= 0) {
+                e.preventDefault();
+            }
+            if (e.key === ' ') {
+                keys.Space = true;
+                handleInteractionAttempt();
+            } else if (e.key === 'w' || e.key === 'ArrowUp') keys.ArrowUp = true;
+            else if (e.key === 's' || e.key === 'ArrowDown') keys.ArrowDown = true;
+            else if (e.key === 'a' || e.key === 'ArrowLeft') keys.ArrowLeft = true;
+            else if (e.key === 'd' || e.key === 'ArrowRight') keys.ArrowRight = true;
+        });
+
+        window.addEventListener('keyup', function(e) {
+            if (e.key === ' ') keys.Space = false;
+            else if (e.key === 'w' || e.key === 'ArrowUp') keys.ArrowUp = false;
+            else if (e.key === 's' || e.key === 'ArrowDown') keys.ArrowDown = false;
+            else if (e.key === 'a' || e.key === 'ArrowLeft') keys.ArrowLeft = false;
+            else if (e.key === 'd' || e.key === 'ArrowRight') keys.ArrowRight = false;
+        });
+
+        setupVirtualButton('btn-up', 'ArrowUp');
+        setupVirtualButton('btn-down', 'ArrowDown');
+        setupVirtualButton('btn-left', 'ArrowLeft');
+        setupVirtualButton('btn-right', 'ArrowRight');
+
+        document.getElementById('btn-interact').addEventListener('click', function() {
+            handleInteractionAttempt();
+        });
+    }
+
+    function setupVirtualButton(id, keyName) {
+        const btn = document.getElementById(id);
+        const startPress = (e) => { e.preventDefault(); keys[keyName] = true; };
+        const endPress = (e) => { e.preventDefault(); keys[keyName] = false; };
+
+        btn.addEventListener('touchstart', startPress);
+        btn.addEventListener('touchend', endPress);
+        btn.addEventListener('mousedown', startPress);
+        btn.addEventListener('mouseup', endPress);
+        btn.addEventListener('mouseleave', endPress);
+    }
+
+    function gameLoop() {
+        if (state.isGameOver) return;
+        updateGame();
+        drawGame();
+        animFrameId = requestAnimationFrame(gameLoop);
+    }
+
+    function updateGame() {
+        let dx = 0;
+        let dy = 0;
+
+        if (keys.ArrowUp) dy = -1;
+        if (keys.ArrowDown) dy = 1;
+        if (keys.ArrowLeft) dx = -1;
+        if (keys.ArrowRight) dx = 1;
+
+        if (dx !== 0 && dy !== 0) {
+            dx *= 0.7071;
+            dy *= 0.7071;
+        }
+
+        const isMoving = dx !== 0 || dy !== 0;
+        let currentSpeed = state.player.speed;
+        
+        if (isMoving) {
+            state.stamina -= 0.22; // 提高體力消耗速度
+            if (state.stamina <= 0) {
+                state.stamina = 0;
+                currentSpeed = 1.0; // 體力用盡速度更加遲緩
+            }
+        } else {
+            state.stamina = Math.min(100, state.stamina + 0.05);
+        }
+
+        // 回外展中心補水
+        const distToOffice = getDistance(state.player.x, state.player.y, locations.office.x, locations.office.y);
+        if (distToOffice < 35) {
+            state.stamina = Math.min(100, state.stamina + 3.0);
+            if (state.currentTaskResolved) {
+                triggerNextDayTransition();
+                return;
+            }
+        }
+
+        state.player.x += dx * currentSpeed;
+        state.player.y += dy * currentSpeed;
+
+        state.player.x = Math.max(state.player.width, Math.min(800 - state.player.width, state.player.x));
+        state.player.y = Math.max(state.player.height, Math.min(500 - state.player.height, state.player.y));
+
+        // 偵測撞碎 1999 民怨泡泡
+        for (let i = state.bubbles.length - 1; i >= 0; i--) {
+            const b = state.bubbles[i];
+            const distToBubble = getDistance(state.player.x, state.player.y, b.x, b.y);
+            if (distToBubble < 20) {
+                state.bubbles.splice(i, 1);
+                state.satisfaction = Math.min(100, state.satisfaction + 4);
+                showToast("🧹 成功消除 1999 民怨投訴！民意警報解除。");
+                updateUI();
+            }
+        }
+
+        // 偵測任務 NPC
+        const currentScenario = scenarios[state.day];
+        if (currentScenario && !state.currentTaskResolved) {
+            const hotSpot = locations[currentScenario.location];
+            const dist = getDistance(state.player.x, state.player.y, hotSpot.x, hotSpot.y);
+            const promptEl = document.getElementById('interaction-prompt');
+            if (dist < 45) {
+                promptEl.classList.remove('hidden');
+            } else {
+                promptEl.classList.add('hidden');
+            }
+        } else {
+            document.getElementById('interaction-prompt').classList.add('hidden');
+        }
+
+        checkGameOver();
+    }
+
+    function getDistance(x1, y1, x2, y2) {
+        return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+    }
+
+    function handleInteractionAttempt() {
+        const currentScenario = scenarios[state.day];
+        if (!currentScenario || state.currentTaskResolved) return;
+
+        const hotSpot = locations[currentScenario.location];
+        const dist = getDistance(state.player.x, state.player.y, hotSpot.x, hotSpot.y);
+
+        if (dist < 45) {
+            triggerDialogueModal(currentScenario);
+        } else {
+            showToast("💡 距離太遠！必須親自走到閃爍黃光的街頭事件點再執行訪視。");
+        }
+    }
+
+    function drawGame() {
+        ctx.fillStyle = "#f8fafc";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // 背景網格
+        ctx.strokeStyle = "rgba(15, 23, 42, 0.08)";
+        ctx.lineWidth = 1;
+        for (let x = 0; x < canvas.width; x += 40) {
+            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+        }
+        for (let y = 0; y < canvas.height; y += 40) {
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+        }
+
+        // 道路 (底座發光通道)
+        ctx.strokeStyle = "rgba(203, 213, 225, 0.9)";
+        ctx.lineWidth = 18;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.beginPath();
+        ctx.moveTo(locations.office.x, locations.office.y);
+        ctx.lineTo(locations.park.x, locations.park.y);
+        ctx.lineTo(locations.subway.x, locations.subway.y);
+        ctx.lineTo(locations.community.x, locations.community.y);
+        ctx.lineTo(locations.office.x, locations.office.y);
+        ctx.stroke();
+
+        // 道路 (內層發光導航線)
+        ctx.strokeStyle = "rgba(56, 189, 248, 0.4)";
+        ctx.lineWidth = 6;
+        ctx.stroke();
+        
+        ctx.strokeStyle = "rgba(14, 165, 233, 0.8)";
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // 繪製地標區域
+        drawLocationZone(locations.office, "🏢 新莊外展中心 (補水)");
+        drawLocationZone(locations.park, "🌳 新莊體育園區");
+        drawLocationZone(locations.subway, "🚇 捷運站騎樓");
+        drawLocationZone(locations.community, "🎪 社區小公園");
+
+        // 閃爍任務熱點
+        const currentScenario = scenarios[state.day];
+        if (currentScenario && !state.currentTaskResolved) {
+            const activeSpot = locations[currentScenario.location];
+            const pulseRadius = activeSpot.r + Math.sin(Date.now() / 150) * 8;
+            
+            // 任務外發光圈
+            ctx.strokeStyle = "rgba(245, 158, 11, 0.45)";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(activeSpot.x, activeSpot.y, pulseRadius, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // 任務驚嘆號圖示
+            ctx.fillStyle = "#f59e0b";
+            ctx.beginPath();
+            ctx.arc(activeSpot.x, activeSpot.y - 12, 7, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.strokeStyle = "#f8fafc";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 11px sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText("!", activeSpot.x, activeSpot.y - 8);
+        }
+
+        // 繪製 1999 民怨警示泡泡
+        state.bubbles.forEach(b => {
+            b.pulse = (b.pulse + 0.1) % (Math.PI * 2);
+            const scaleRadius = b.r + Math.sin(b.pulse) * 3;
+
+            const grad = ctx.createRadialGradient(b.x, b.y, 2, b.x, b.y, scaleRadius + 8);
+            grad.addColorStop(0, "rgba(239, 68, 68, 0.95)");
+            grad.addColorStop(0.5, "rgba(239, 68, 68, 0.45)");
+            grad.addColorStop(1, "rgba(239, 68, 68, 0)");
+
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, scaleRadius + 8, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 2;
+            ctx.fillStyle = "#ef4444";
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 9px 'Noto Sans TC'";
+            ctx.textAlign = "center";
+            ctx.fillText("1999", b.x, b.y + 3);
+        });
+
+        // 裝飾
+        drawVectorTree(120, 80);
+        drawVectorTree(240, 90);
+        drawVectorBench(570, 160);
+        drawVectorSubwaySign(440, 390);
+
+        // 飲水機與辦公桌
+        ctx.fillStyle = "#78350f";
+        ctx.fillRect(50, 320, 35, 15);
+        ctx.fillStyle = "#38bdf8";
+        ctx.fillRect(61, 320, 12, 6);
+
+        drawNPCs();
+        drawPlayerCharacter();
+    }
+
+    function drawLocationZone(loc, name) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
+        ctx.strokeStyle = loc.color + "80";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.arc(loc.x, loc.y, loc.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Inner glowing core
+        ctx.fillStyle = loc.color + "20";
+        ctx.beginPath();
+        ctx.arc(loc.x, loc.y, loc.r - 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#1e293b";
+        ctx.font = "bold 10px 'Noto Sans TC'";
+        ctx.textAlign = "center";
+        ctx.fillText(name, loc.x, loc.y + loc.r + 16);
+    }
+
+    function drawVectorTree(x, y) {
+        ctx.fillStyle = "#451a03";
+        ctx.fillRect(x - 3, y, 6, 12);
+        ctx.fillStyle = "#064e3b";
+        ctx.beginPath(); ctx.arc(x, y - 8, 14, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "#047857";
+        ctx.beginPath(); ctx.arc(x - 4, y - 10, 10, 0, Math.PI * 2); ctx.fill();
+    }
+
+    function drawVectorBench(x, y) {
+        ctx.fillStyle = "#451a03";
+        ctx.fillRect(x, y, 20, 4);
+        ctx.fillRect(x + 2, y + 4, 3, 6);
+        ctx.fillRect(x + 15, y + 4, 3, 6);
+    }
+
+    function drawVectorSubwaySign(x, y) {
+        ctx.fillStyle = "#1e293b";
+        ctx.fillRect(x, y, 4, 25);
+        ctx.fillStyle = "#1d4ed8";
+        ctx.fillRect(x - 6, y - 18, 16, 12);
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 8px sans-serif";
+        ctx.fillText("M", x + 2, y - 10);
+    }
+
+    function drawNPCs() {
+        const curDay = state.day;
+        if (curDay === 1) {
+            drawNPCCharacter(locations.park.x, locations.park.y, "#ec4899", "大姐");
+        }
+        if (curDay === 2 || curDay === 3) {
+            drawNPCCharacter(locations.subway.x, locations.subway.y, "#f43f5e", curDay === 2 ? "鬧事者" : "阿公");
+        }
+        if (curDay === 4) {
+            drawNPCCharacter(locations.community.x, locations.community.y, "#3b82f6", "阿松");
+        }
+        if (curDay === 5) {
+            drawNPCCharacter(locations.park.x, locations.park.y, "#14b8a6", "代表");
+        }
+    }
+
+    function drawNPCCharacter(x, y, colorHex, label) {
+        ctx.fillStyle = colorHex;
+        ctx.beginPath();
+        ctx.arc(x, y, 7, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillRect(x - 5, y + 4, 10, 10);
+
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 9px 'Noto Sans TC'";
+        ctx.textAlign = "center";
+        ctx.fillText(label, x, y - 10);
+    }
+
+    function drawPlayerCharacter() {
+        const px = state.player.x;
+        const py = state.player.y;
+
+        ctx.fillStyle = "#ef4444"; 
+        ctx.fillRect(px - 6, py - 3, 12, 12);
+        ctx.fillStyle = "#f59e0b";
+        ctx.fillRect(px - 6, py + 1, 12, 3);
+        
+        ctx.fillStyle = "#fed7aa";
+        ctx.beginPath();
+        ctx.arc(px, py - 8, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#1e293b";
+        ctx.fillRect(px - 5, py + 9, 4, 5);
+        ctx.fillRect(px + 1, py + 9, 4, 5);
+
+        const hasInput = keys.ArrowUp || keys.ArrowDown || keys.ArrowLeft || keys.ArrowRight;
+        if (hasInput && state.stamina > 0) {
+            const bounce = Math.sin(Date.now() / 80) * 1.5;
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(px - 4, py + 12 + bounce, 3, 2);
+            ctx.fillRect(px + 2, py + 12 - bounce, 3, 2);
+        } else {
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(px - 4, py + 13, 3, 2);
+            ctx.fillRect(px + 2, py + 13, 3, 2);
+        }
+
+        ctx.fillStyle = "#ef4444";
+        ctx.font = "bold 9px 'Noto Sans TC'";
+        ctx.textAlign = "center";
+        ctx.fillText("社工", px, py - 16);
+    }
+
+    function triggerDialogueModal(scenario) {
+        document.getElementById('dialogue-title').innerText = scenario.title;
+        document.getElementById('dialogue-desc').innerText = scenario.desc;
+        document.getElementById('choice-1-text').innerText = scenario.choices[0].text;
+        document.getElementById('choice-2-text').innerText = scenario.choices[1].text;
+        document.getElementById('dialogue-modal').classList.remove('hidden');
+    }
+
+    function handleDialogueChoice(choiceNum) {
+        const scenario = scenarios[state.day];
+        const choice = scenario.choices[choiceNum - 1];
+
+        state.trust += choice.effect.trust;
+        state.satisfaction += choice.effect.sat;
+        state.currentTaskResolved = true;
+
+        document.getElementById('dialogue-modal').classList.add('hidden');
+
+        const feedContainer = document.getElementById('feed-container');
+        const eventCard = document.createElement('div');
+        eventCard.className = "glass-card p-3.5 rounded-xl border border-amber-500/20 space-y-2 text-xs fade-in shadow-lg";
+        eventCard.innerHTML = `
+            <div class="flex justify-between items-center text-[9px] border-b border-slate-800/40 pb-1.5 mb-1.5">
+                <span class="text-amber-500 font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> 決策紀實 (Day ${state.day})</span>
+                <span class="text-slate-500 font-semibold">解鎖：${choice.unlocked}</span>
+            </div>
+            <p class="text-slate-300 leading-relaxed font-light">${choice.feed}</p>
+        `;
+        feedContainer.insertBefore(eventCard, feedContainer.firstChild);
+
+        updateUI();
+
+        document.getElementById('mission-status').innerHTML = "🏃 決策完成！立刻跑回 <strong class='text-sky-400'>左下角辦公中心（藍圈）</strong> 結算今日。";
+        showToast("🏃 決策完成！時間並未停止，請在時間內跑回辦公室結算今日工作！");
+    }
+
+    function triggerNextDayTransition() {
+        if (state.isGameOver) return;
+
+        if (state.day < 5) {
+            state.day += 1;
+            state.currentTaskResolved = false;
+            state.timer = 45;
+            
+            state.player.x = 80;
+            state.player.y = 350;
+            
+            updateUI();
+            showToast(`🌅 新的一天開始！第 ${state.day} 天，全區湧入新通報案件。`);
+            document.getElementById('mission-status').innerHTML = "<i data-lucide='navigation' class='w-3.5 h-3.5 animate-pulse'></i> 今日任務：請尋找地圖中閃爍黃光的新案件，並注意控制 1999 民怨。";
+        } else {
+            endGame(false);
+        }
+    }
+
+    function checkGameOver() {
+        if (state.isGameOver) return;
+
+        if (state.trust <= 0) {
+            endGame(true, "trust_collapse");
+        } else if (state.satisfaction <= 0) {
+            endGame(true, "sat_collapse");
+        }
+    }
+
+    function endGame(isFail, failReason = "") {
+        state.isGameOver = true;
+        if (animFrameId) cancelAnimationFrame(animFrameId);
+        if (gameInterval) clearInterval(gameInterval);
+
+        document.getElementById('game-container').classList.add('hidden');
+        document.getElementById('summary-screen').classList.remove('hidden');
+
+        const iconContainer = document.getElementById('end-icon-container');
+        const titleEl = document.getElementById('end-title');
+        const subtitleEl = document.getElementById('end-subtitle');
+        const verdictEl = document.getElementById('perf-verdict');
+        const descEl = document.getElementById('perf-desc');
+
+        if (isFail) {
+            iconContainer.className = "inline-flex p-3 bg-red-500/10 border border-red-500/30 text-red-500 rounded-full animate-bounce";
+            iconContainer.innerHTML = `<i data-lucide="skull" class="w-8 h-8"></i>`;
+            
+            if (failReason === "trust_collapse") {
+                titleEl.innerText = "治理失敗：社群信任崩解";
+                subtitleEl.innerText = "在應對突發事件中，你採取了過度剛硬的執法與強制驅逐政策。街友對外展社工的信任值降為零，多名重症街友因懼怕逮捕而躲入更偏僻的暗巷，最終病死。監察院對外展中心發動調查，你被調離現職。";
+                verdictEl.innerText = "❌「生硬驅逐的高牆官僚」";
+                verdictEl.className = "text-base font-bold text-red-500";
+                descEl.innerText = "你雖然短暫平息了部分民怨，但高壓政策將最底層的生命推向深淵。這印證了『缺乏基本互信的強硬行政，只會將治理問題逼入更危險的暗處』。";
+            } else {
+                titleEl.innerText = "行政彈劾：居民輿論海嘯";
+                subtitleEl.innerText = "由於你未能及時清除 1999 通報，且政策極度偏向街友。社區公園、捷運出口淪為大型露天帳篷堆疊區。市民滿意度歸零，新莊里長發動聯署帶領數百名群眾包圍區公所，新北市府出面道歉，你被革職處分。";
+                verdictEl.innerText = "❌「失守公共安寧的防線」";
+                verdictEl.className = "text-base font-bold text-red-500";
+                descEl.innerText = "你擁有保護弱勢的理想主義，卻忽視了社區居民在公共空間基本的環境衛生與安寧訴求。當秩序完全失守，民怨海嘯將吞噬脆弱的社福防線。";
+            }
+        } else {
+            iconContainer.className = "inline-flex p-3 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-full";
+            iconContainer.innerHTML = `<i data-lucide="shield-check" class="w-8 h-8"></i>`;
+            titleEl.innerText = "極限生存：走在鋼索上的社工英雄";
+            subtitleEl.innerText = "恭喜你！成功挺過這段高壓的一週外展實地體驗。你在人權、法規與民意的夾縫中，用極大的耐心維持了治理防線的脆弱平衡。";
+            
+            let verdict = "";
+            let desc = "";
+            if (state.trust >= 60 && state.satisfaction >= 60) {
+                verdict = "🏆「多方共識外交官」";
+                desc = "你展現了驚人的行政智慧。在即時滅火 1999 民怨的同時，妥善說服街友接受街頭醫療與短期家屋，真正實踐了『人權與秩序的共生』。";
+            } else if (state.trust >= 50) {
+                verdict = "🤝「弱勢權益守護者」";
+                desc = "你的決策核心高度傾向守護街友的生存權。雖然居民不滿令你疲於奔命，但你成功築起了底層生命的救贖網絡。";
+            } else {
+                verdict = "🏙️「公共秩序捍衛者」";
+                desc = "你對維護居民安寧、環境衛生與跨單位即時通報效率有著強烈的決心。雖然手段偶受質疑，但你確保了多數市民的安居權益。";
+            }
+            verdictEl.innerText = verdict;
+            verdictEl.className = "text-base font-bold text-emerald-400";
+            descEl.innerText = desc;
+        }
+
+        lucide.createIcons();
+    }
+
+    function resetGame() {
+        startGame();
+    }
+
+    function showToast(message) {
+        const oldToast = document.querySelector('.custom-toast');
+        if (oldToast) oldToast.remove();
+
+        const toast = document.createElement('div');
+        toast.className = "custom-toast fixed bottom-5 left-5 bg-slate-900 border border-red-900/60 text-slate-200 px-4 py-3 rounded-xl text-xs font-semibold shadow-2xl z-50 fade-in flex items-center gap-2 max-w-sm";
+        toast.innerHTML = `<i data-lucide="info" class="w-4 h-4 text-red-500 flex-shrink-0"></i> <span>${message}</span>`;
+        document.body.appendChild(toast);
+        lucide.createIcons();
+        setTimeout(() => {
+            toast.remove();
+        }, 3500);
+    }
+
+    function updateUI() {
+        document.getElementById('game-day').innerText = `Day ${state.day} (${dayNames[state.day - 1]})`;
+        document.getElementById('game-timer').innerText = `${state.timer}s`;
+
+        if (state.timer <= 15) {
+            document.getElementById('game-timer').className = "text-xs font-black text-red-500 animate-pulse";
+        } else {
+            document.getElementById('game-timer').className = "text-xs font-black text-white";
+        }
+
+        state.stamina = Math.max(0, Math.min(100, state.stamina));
+        state.trust = Math.max(0, Math.min(100, state.trust));
+        state.satisfaction = Math.max(0, Math.min(100, state.satisfaction));
+
+        // 體力條
+        document.getElementById('stamina-val').innerText = `${Math.floor(state.stamina)}%`;
+        const staminaBar = document.getElementById('stamina-bar');
+        staminaBar.style.width = `${state.stamina}%`;
+        if (state.stamina < 30) {
+            staminaBar.className = "bg-red-500 h-full rounded-full transition-all";
+            document.getElementById('stamina-val').className = "text-red-500 animate-pulse";
+        } else {
+            staminaBar.className = "bg-amber-500 h-full rounded-full transition-all";
+            document.getElementById('stamina-val').className = "text-amber-500";
+        }
+
+        // 信任條
+        document.getElementById('trust-val').innerText = `${state.trust}%`;
+        const trustBar = document.getElementById('trust-bar');
+        trustBar.style.width = `${state.trust}%`;
+        if (state.trust < 30) {
+            trustBar.className = "bg-rose-500 h-full rounded-full transition-all";
+            document.getElementById('trust-val').className = "text-rose-400";
+        } else if (state.trust < 60) {
+            trustBar.className = "bg-amber-500 h-full rounded-full transition-all";
+            document.getElementById('trust-val').className = "text-amber-400";
+        } else {
+            trustBar.className = "bg-emerald-500 h-full rounded-full transition-all";
+            document.getElementById('trust-val').className = "text-emerald-400";
+        }
+
+        // 滿意條
+        document.getElementById('sat-val').innerText = `${state.satisfaction}%`;
+        const satBar = document.getElementById('sat-bar');
+        satBar.style.width = `${state.satisfaction}%`;
+        if (state.satisfaction < 30) {
+            satBar.className = "bg-rose-500 h-full rounded-full transition-all animate-pulse";
+            document.getElementById('sat-val').className = "text-rose-400";
+        } else if (state.satisfaction < 60) {
+            satBar.className = "bg-amber-500 h-full rounded-full transition-all";
+            document.getElementById('sat-val').className = "text-amber-400";
+        } else {
+            satBar.className = "bg-blue-500 h-full rounded-full transition-all";
+            document.getElementById('sat-val').className = "text-blue-400";
+        }
+
+        lucide.createIcons();
+    }
+
+    // 初始化畫布
+    initCanvas();
+</script>
+
+</body>
+</html>

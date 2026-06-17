@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>消失的小學：少子化浪潮下的空間轉型記憶 | 深度探索專題</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Tone.js for premium web audio experience -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <!-- Leaflet.js for interactive maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Google Fonts: Noto Serif TC (Serif) & Inter (Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Base typography */
+        body {
+            font-family: 'Inter', 'Noto Serif TC', serif;
+            background-color: #f5f2eb;
+            color: #23201d;
+            background-image: radial-gradient(rgba(183, 121, 31, 0.03) 1px, transparent 0),
+                              radial-gradient(rgba(192, 86, 33, 0.02) 1px, transparent 0);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+        }
+        
+        .serif-editorial {
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        /* Reading Progress Bar */
+        #progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #b7791f, #c05621);
+            width: 0%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Custom Soft Glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(222, 214, 194, 0.6);
+        }
+
+        /* Polaroid memory card effect */
+        .polaroid-card {
+            background: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(46, 58, 47, 0.08);
+            border: 1px solid #eadecb;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                        box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .polaroid-card:hover {
+            transform: translateY(-6px) rotate(-0.5deg);
+            box-shadow: 0 20px 35px -8px rgba(139, 92, 26, 0.15);
+        }
+
+        /* Exquisite 3D Card Flip Mechanism */
+        .card-container {
+            perspective: 1500px;
+        }
+        .card-inner {
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+        .card-inner.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Image comparison slider */
+        .comparison-slider {
+            position: relative;
+            overflow: hidden;
+        }
+        .comparison-before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .comparison-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #ffffff;
+            cursor: ew-resize;
+            z-index: 30;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        .comparison-handle-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: #b7791f;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        /* Map styling override */
+        #leaflet-map {
+            height: 500px;
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid #ded6c2;
+            z-index: 10;
+        }
+        
+        .custom-map-marker {
+            background: transparent;
+            border: none;
+        }
+
+        /* 360 Panorama canvas style */
+        #pano-canvas {
+            cursor: grab;
+        }
+        #pano-canvas:active {
+            cursor: grabbing;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #eae5d8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbbfa8;
+            border-radius: 6px;
+            border: 2px solid #eae5d8;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9d8e74;
+        }
+
+        .blueprint-animate {
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        editorial: {
+                            paper: '#f5f2eb',
+                            ink: '#23201d',
+                            clay: '#ded6c2',
+                            forest: '#1e2d24',
+                            rust: '#b85a38',
+                            gold: '#b7791f',
+                            paleGold: '#f0e6d2'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="overflow-x-hidden selection:bg-editorial-rust/20">
+
+    <!-- Reading Progress Indicator -->
+    <div id="progress-bar"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full bg-editorial-paper/85 backdrop-blur-md z-50 border-b border-editorial-clay/50 py-3.5 px-6 md:px-12 flex justify-between items-center transition-all duration-300">
+        <div class="flex items-center space-x-3.5">
+            <span class="p-2.5 bg-editorial-forest text-editorial-paper rounded-xl shadow-inner">
+                <i data-lucide="compass" class="w-5 h-5"></i>
+            </span>
+            <div class="flex flex-col">
+                <span class="font-extrabold tracking-wider text-editorial-ink text-xs md:text-sm">THE VANISHING SCHOOLS</span>
+                <span class="text-[9px] tracking-widest text-editorial-rust uppercase font-medium">Interactive Editorial Feature</span>
+            </div>
+        </div>
+        
+        <div class="hidden lg:flex space-x-8 text-xs font-bold tracking-widest uppercase text-editorial-ink/75">
+            <a href="#hero" class="hover:text-editorial-rust transition-colors py-1">首頁</a>
+            <a href="#intro" class="hover:text-editorial-rust transition-colors py-1">導言</a>
+            <a href="#personalized" class="hover:text-editorial-rust transition-colors py-1">自訂敘事</a>
+            <a href="#memory-gallery" class="hover:text-editorial-rust transition-colors py-1">時光相冊</a>
+            <a href="#role-switcher" class="hover:text-editorial-rust transition-colors py-1">多元視角</a>
+            <a href="#image-comparison" class="hover:text-editorial-rust transition-colors py-1">空間對比</a>
+            <a href="#map-narrative" class="hover:text-editorial-rust transition-colors py-1">地理地圖</a>
+            <a href="#decision-game" class="hover:text-editorial-rust transition-colors py-1">決策沙盒</a>
+            <a href="#expert-quiz" class="hover:text-editorial-rust transition-colors py-1">常識測驗</a>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <button id="global-audio-btn" onclick="toggleGlobalAudio()" class="flex items-center space-x-2 bg-editorial-clay/40 hover:bg-editorial-clay/80 border border-editorial-clay text-editorial-forest px-3 py-1.5 rounded-full text-xs transition-all duration-300">
+                <i data-lucide="volume-x" id="audio-icon" class="w-4 h-4"></i>
+                <span id="audio-status-text" class="font-medium text-[10px] tracking-wider uppercase">環境音: 關閉</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Block -->
+    <header id="hero" class="relative min-h-screen flex flex-col justify-center items-center text-center px-6 bg-gradient-to-b from-[#efebe0] to-editorial-paper pt-24 overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.06] pointer-events-none">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#23201d" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+            </svg>
+        </div>
+
+        <div class="max-w-4xl mx-auto z-10 space-y-8 mt-12 md:mt-6">
+            <div class="inline-flex flex-col items-center space-y-2">
+                <div class="h-[1px] w-12 bg-editorial-rust"></div>
+                <span class="text-[10px] md:text-xs font-extrabold tracking-[0.25em] text-editorial-rust uppercase">
+                    教育部十年歷史空間轉移・解釋型探索專題
+                </span>
+                <div class="h-[1px] w-12 bg-editorial-rust"></div>
+            </div>
+            
+            <h1 class="serif-editorial text-5xl sm:text-6xl md:text-8xl text-editorial-forest font-black leading-none tracking-tight">
+                消失的小學
+            </h1>
+            <h2 class="serif-editorial text-lg sm:text-2xl md:text-3xl text-editorial-rust font-semibold max-w-3xl mx-auto italic">
+                當童音與下課鐘聲，退潮為社區共生與青創的新浪潮
+            </h2>
+            
+            <div class="flex justify-center items-center space-x-4 my-8">
+                <div class="h-[1px] w-16 bg-editorial-clay"></div>
+                <i data-lucide="scroll" class="w-5 h-5 text-editorial-gold/60"></i>
+                <div class="h-[1px] w-16 bg-editorial-clay"></div>
+            </div>
+            
+            <p class="text-xs sm:text-sm md:text-base text-editorial-ink/80 max-w-2xl mx-auto leading-relaxed font-light text-justify md:text-center">
+                課堂的木黑板落滿粉筆灰，走廊的鐵銅鐘再未被敲響。
+                這並非終點，而是另一場守護的開始。我們將透過空間轉型、老幼共融、科技農業與藝術活化，帶您探索這場無聲卻深刻的空間革命。
+            </p>
+            
+            <div class="pt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
+                <button onclick="playBellAndScroll('#intro')" class="w-full sm:w-auto bg-editorial-forest text-editorial-paper px-8 py-3.5 rounded-xl font-bold text-xs tracking-wider uppercase shadow-xl hover:bg-editorial-rust transition-all duration-300 flex items-center justify-center space-x-2">
+                    <span>聽著鐘聲，進入探索</span>
+                    <i data-lucide="bell" class="w-4 h-4 animate-bounce"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Intro: Inverted Triangle Structure -->
+    <section id="intro" class="py-24 px-6 md:px-12 max-w-4xl mx-auto">
+        <div class="text-center space-y-4 mb-12">
+            <span class="text-[10px] font-extrabold tracking-[0.25em] text-editorial-rust uppercase bg-editorial-rust/10 px-3 py-1.5 rounded-md">
+                導言 ── 倒三角觀點
+            </span>
+            <h2 class="serif-editorial text-3xl md:text-4xl text-editorial-forest font-bold">從宏觀巨變到微觀角落的告別</h2>
+        </div>
+
+        <div class="space-y-8 text-sm md:text-base text-editorial-ink/90 leading-relaxed font-light text-justify">
+            <!-- Broad Level -->
+            <div class="border-l-4 border-editorial-rust pl-6 py-2 bg-white/40 rounded-r-xl">
+                <h3 class="font-bold text-editorial-forest text-lg mb-2">【宏觀趨勢】極致老化的島嶼挑戰</h3>
+                <p>
+                    少子化海嘯對台灣的重塑是全面性的。民國 115 年全台國小生總數預估將滑落至歷史新低。在過去十年間，全台已有 118 所偏鄉與都市小學默默停辦或與他校合併，成為一座座寂靜的都市或偏鄉空島。
+                </p>
+            </div>
+
+            <!-- Mid Level -->
+            <div class="border-l-4 border-editorial-gold pl-6 py-2 bg-white/40 rounded-r-xl">
+                <h3 class="font-bold text-editorial-forest text-lg mb-2">【中層痛點】閒置公有校舍的處置十字路口</h3>
+                <p>
+                    廢校後留下的廣大空間是地方沈重的負擔，還是重啟生機的資產？以往，許多廢校因為「非都市土地變更」及法規繁複，只能鎖上鐵門，淪為野草叢生、居民走避的蚊子館。這不僅是地方活力的流失，更是龐大公有資產的空轉。
+                </p>
+            </div>
+
+            <!-- Micro Level -->
+            <div class="border-l-4 border-editorial-forest pl-6 py-2 bg-white/40 rounded-r-xl">
+                <h3 class="font-bold text-editorial-forest text-lg mb-2">【微觀重啟】長照與青創在教室生根</h3>
+                <p>
+                    但在某些角落，改變正在悄悄發生。透過地方創生與空間活化，昔日盛滿孩童喧譁聲的教室，被打掉隔牆，擺上了沙發、輔具、多功能廚房，華麗轉身為高齡日照沙龍或智慧農業培訓站。我們記錄下 these 空間在世代交替中的華麗轉身。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personalized Narrative Block -->
+    <section id="personalized" class="py-20 bg-editorial-paleGold/40 border-y border-editorial-clay/50 px-6 md:px-12">
+        <div class="max-w-3xl mx-auto bg-white p-8 rounded-3xl border border-editorial-clay shadow-sm space-y-6">
+            <div class="text-center space-y-2">
+                <span class="text-[10px] font-extrabold tracking-[0.25em] text-editorial-rust uppercase">PERSONALISED STORY</span>
+                <h3 class="serif-editorial text-2xl md:text-3xl text-editorial-forest font-bold">自訂化敘事：你在這場浪潮中的位置</h3>
+                <p class="text-xs text-editorial-ink/60">輸入你的資訊，看看少子化在你的生命歷程中留下了什麼軌跡</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-editorial-ink/75 mb-2">你的出生年份 (民國)</label>
+                    <input type="number" id="user-birth-year" placeholder="例：84" class="w-full bg-editorial-paper border border-editorial-clay p-3 rounded-xl text-sm focus:outline-none focus:border-editorial-rust">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-editorial-ink/75 mb-2">你生活的縣市</label>
+                    <select id="user-county" class="w-full bg-editorial-paper border border-editorial-clay p-3 rounded-xl text-sm focus:outline-none focus:border-editorial-rust">
+                        <option value="新北市">新北市</option>
+                        <option value="台北市">台北市</option>
+                        <option value="台中市">台中市</option>
+                        <option value="台南市">台南市</option>
+                        <option value="高雄市">高雄市</option>
+                        <option value="屏東縣">屏東縣</option>
+                        <option value="台東縣">台東縣</option>
+                        <option value="花蓮縣">花蓮縣</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button onclick="generatePersonalizedReport()" class="bg-editorial-rust text-white px-8 py-3 rounded-xl font-bold text-xs tracking-wider uppercase hover:bg-editorial-forest transition-colors shadow-md">
+                    生成我的少子化記憶圖譜
+                </button>
+            </div>
+
+            <div id="personalized-result" class="hidden bg-editorial-paper p-6 rounded-2xl border border-editorial-clay leading-relaxed text-sm text-justify space-y-4">
+                <!-- Result populated dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Polaroid 3D Cards Memory Gallery Section -->
+    <section id="memory-gallery" class="py-24 bg-white border-y border-editorial-clay/30 px-6 md:px-12">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                <span class="text-[10px] font-extrabold tracking-[0.25em] text-editorial-rust uppercase bg-editorial-rust/10 px-3 py-1.5 rounded-md">
+                    時光相冊 ── 空間的前世今生
+                </span>
+                <h2 class="serif-editorial text-3xl md:text-4xl text-editorial-forest font-bold">點擊照片：翻閱小學的記憶與新生</h2>
+                <p class="text-xs text-editorial-ink/60">這些校園曾是無數偏鄉孩童的遊樂場，在時間淘洗後，它們並未被廢棄，而是以全新姿態再次守護社區。點選卡片即可翻轉查看空間變革檔案。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="card-container w-full h-[360px] cursor-pointer">
+                    <div class="card-inner w-full h-full relative" onclick="this.classList.toggle('is-flipped')">
+                        <!-- Front -->
+                        <div class="card-front polaroid-card p-4 flex flex-col justify-between rounded-2xl">
+                            <div class="w-full h-52 overflow-hidden rounded-xl bg-editorial-clay/20">
+                                <img src="assets/polaroid_tea.png" class="w-full h-full object-cover" alt="阿里磅分校">
+                            </div>
+                            <div class="text-center pt-3">
+                                <span class="text-[9px] text-editorial-rust font-extrabold tracking-widest uppercase">昔日乾華國小阿里磅分校</span>
+                                <h4 class="font-bold text-sm text-editorial-forest mt-1">點擊翻看重生故事</h4>
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="card-back polaroid-card p-6 flex flex-col justify-between rounded-2xl bg-editorial-paleGold/30">
+                            <div class="space-y-3">
+                                <span class="text-[9px] text-editorial-rust font-extrabold uppercase">🎨 空間美學轉型</span>
+                                <h4 class="font-bold text-base text-editorial-forest">阿里磅生態茶藝文創園區</h4>
+                                <p class="text-[11px] text-editorial-ink/85 leading-relaxed text-justify">
+                                    原分校於停辦後多年閒置，操場荒廢。如今華麗改造成融入在地有機茶業、環境美學教育的永續探索基地。週末提供市民品茶與親子森林導覽，重新串起人與自然。
+                                </p>
+                            </div>
+                            <div class="text-center text-[10px] text-editorial-rust font-bold">
+                                點擊翻回正面
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card-container w-full h-[360px] cursor-pointer">
+                    <div class="card-inner w-full h-full relative" onclick="this.classList.toggle('is-flipped')">
+                        <!-- Front -->
+                        <div class="card-front polaroid-card p-4 flex flex-col justify-between rounded-2xl">
+                            <div class="w-full h-52 overflow-hidden rounded-xl bg-editorial-clay/20">
+                                <img src="assets/polaroid_ag.png" class="w-full h-full object-cover" alt="廣興國小關福分校">
+                            </div>
+                            <div class="text-center pt-3">
+                                <span class="text-[9px] text-editorial-rust font-extrabold tracking-widest uppercase">昔日廣興國小關福分校</span>
+                                <h4 class="font-bold text-sm text-editorial-forest mt-1">點擊翻看重生故事</h4>
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="card-back polaroid-card p-6 flex flex-col justify-between rounded-2xl bg-editorial-paleGold/30">
+                            <div class="space-y-3">
+                                <span class="text-[9px] text-editorial-rust font-extrabold uppercase">🌱 科技創生孵化</span>
+                                <h4 class="font-bold text-base text-editorial-forest">屏東智慧農業學校</h4>
+                                <p class="text-[11px] text-editorial-ink/85 leading-relaxed text-justify">
+                                    停辦後的校舍由地方政府與青創團隊攜手，打造為智慧農創孵化器。引進無人機噴灑培訓課程與在地農特產品直鋪平台，成為屏北地區吸引青年返鄉創業的最大綠洲。
+                                </p>
+                            </div>
+                            <div class="text-center text-[10px] text-editorial-rust font-bold">
+                                點擊翻回正面
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card-container w-full h-[360px] cursor-pointer">
+                    <div class="card-inner w-full h-full relative" onclick="this.classList.toggle('is-flipped')">
+                        <!-- Front -->
+                        <div class="card-front polaroid-card p-4 flex flex-col justify-between rounded-2xl">
+                            <div class="w-full h-52 overflow-hidden rounded-xl bg-editorial-clay/20">
+                                <img src="assets/polaroid_culture.png" class="w-full h-full object-cover" alt="電光分校">
+                            </div>
+                            <div class="text-center pt-3">
+                                <span class="text-[9px] text-editorial-rust font-extrabold tracking-widest uppercase">昔日關山國小電光分校</span>
+                                <h4 class="font-bold text-sm text-editorial-forest mt-1">點擊翻看重生故事</h4>
+                            </div>
+                        </div>
+                        <!-- Back -->
+                        <div class="card-back polaroid-card p-6 flex flex-col justify-between rounded-2xl bg-editorial-paleGold/30">
+                            <div class="space-y-3">
+                                <span class="text-[9px] text-editorial-rust font-extrabold uppercase">🎭 文化遺產保護</span>
+                                <h4 class="font-bold text-base text-editorial-forest">電光原民體驗博物館</h4>
+                                <p class="text-[11px] text-editorial-ink/85 leading-relaxed text-justify">
+                                    分校停辦後，為避免原民部落文化流失，校地被保留並改裝為原民竹砲、釀酒工坊與戶外實境劇場。將土地歷史與阿美族傳統記憶深刻融合，轉化為深度觀光資產。
+                                </p>
+                            </div>
+                            <div class="text-center text-[10px] text-editorial-rust font-bold">
+                                點擊翻回正面
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Role Switcher (角色切換) -->
+    <section id="role-switcher" class="py-24 px-6 md:px-12 max-w-5xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+            <span class="text-[10px] font-extrabold tracking-[0.25em] text-editorial-rust uppercase bg-editorial-rust/10 px-3 py-1.5 rounded-md">
+                角色切換 ── 四維視角
+            </span>
+            <h2 class="serif-editorial text-3xl md:text-4xl text-editorial-forest font-bold">誰在面對「消失」？</h2>
+            <p class="text-xs text-editorial-ink/60 font-light">同一個空間的褪色與重生，在不同人眼中有著截然不同的溫度。點選下方角色，聆聽他們心底的聲音。</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <!-- Left Role Navigation -->
+            <div class="lg:col-span-4 flex flex-col space-y-3">
+                <button onclick="switchRole('student')" id="role-btn-student" class="role-btn active p-4 rounded-2xl border-l-4 border-editorial-rust bg-white hover:bg-editorial-paleGold/30 text-left transition-all flex items-center space-x-3">
+                    <span class="p-2 bg-editorial-rust/15 text-editorial-rust rounded-lg"><i data-lucide="smile" class="w-5 h-5"></i></span>
+                    <div>
+                        <h4 class="font-bold text-sm text-editorial-forest">鄉村學童 ── 阿吉</h4>
+                        <span class="text-[10px] text-editorial-ink/50">失去了奔跑的操場</span>
+                    </div>
+                </button>
+                <button onclick="switchRole('teacher')" id="role-btn-teacher" class="role-btn p-4 rounded-2xl border-l-4 border-transparent bg-white/60 hover:bg-editorial-paleGold/30 text-left transition-all flex items-center space-x-3">
+                    <span class="p-2 bg-editorial-ink/10 text-editorial-ink/65 rounded-lg"><i data-lucide="pencil" class="w-5 h-5"></i></span>
+                    <div>
+                        <h4 class="font-bold text-sm text-editorial-forest">退休校長 ── 張校長</h4>
+                        <span class="text-[10px] text-editorial-ink/50">看著升旗台沒入雜草</span>
+                    </div>
+                </button>
+                <button onclick="switchRole('grandma')" id="role-btn-grandma" class="role-btn p-4 rounded-2xl border-l-4 border-transparent bg-white/60 hover:bg-editorial-paleGold/30 text-left transition-all flex items-center space-x-3">
+                    <span class="p-2 bg-editorial-ink/10 text-editorial-ink/65 rounded-lg"><i data-lucide="user" class="w-5 h-5"></i></span>
+                    <div>
+                        <h4 class="font-bold text-sm text-editorial-forest">社區長輩 ── 秀枝阿嬤</h4>
+                        <span class="text-[10px] text-editorial-ink/50">在孫子的舊教室吃中飯</span>
+                    </div>
+                </button>
+                <button onclick="switchRole('mayor')" id="role-btn-mayor" class="role-btn p-4 rounded-2xl border-l-4 border-transparent bg-white/60 hover:bg-editorial-paleGold/30 text-left transition-all flex items-center space-x-3">
+                    <span class="p-2 bg-editorial-ink/10 text-editorial-ink/65 rounded-lg"><i data-lucide="building" class="w-5 h-5"></i></span>
+                    <div>
+                        <h4 class="font-bold text-sm text-editorial-forest">地方首長 ── 曾鎮長</h4>
+                        <span class="text-[10px] text-editorial-ink/50">要在法規與民意間做抉擇</span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Right Dialog Panel -->
+            <div class="lg:col-span-8 bg-white p-8 rounded-3xl border border-editorial-clay shadow-sm min-h-[300px] flex flex-col justify-between">
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-2 text-editorial-rust">
+                        <i data-lucide="quote" class="w-5 h-5"></i>
+                        <span id="role-indicator-title" class="text-xs font-extrabold tracking-widest uppercase">鄉村學童阿吉的自白</span>
+                    </div>
+                    <p id="role-monologue" class="serif-editorial text-lg md:text-xl text-editorial-forest font-semibold italic leading-relaxed">
+                        「以前下課鐘一響，我們都往那棵大榕樹衝，看誰先爬上去。併校後，新學校好大好漂亮，可是上學要坐半小時客運，回到家大門鎖著，再也沒有人在圍牆邊大喊我的名字了...」
+                    </p>
+                </div>
+                <div class="pt-6 border-t border-editorial-clay/50 flex justify-between items-center text-xs text-editorial-ink/60">
+                    <span id="role-context-tag">情境：面對宣布廢校的那一天</span>
+                    <button onclick="triggerVoiceHint()" class="flex items-center space-x-1.5 text-editorial-rust hover:underline font-bold">
+                        <i data-lucide="play" class="w-4 h-4"></i>
+                        <span>模擬語音導讀</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Comparison (左右圖片比對) -->
+    <section id="image-comparison" class="py-24 bg-editorial-paleGold/20 border-y border-editorial-clay/50 px-6 md:px-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-4">
+                <span class="text-[10px] font-extrabold tracking-[0.25em] text-editorial-rust uppercase bg-editorial-rust/10 px-3 py-1.5 rounded-md">
+                    空間對比 ── 實景重構
+                </span>
+                <h2 class="serif-editorial text-3xl md:text-4xl text-editorial-forest font-bold">左右滑動：從黑板到暖陽</h2>
+                <p class="text-xs text-editorial-ink/60">拉動滑杆，親眼見證一間廢棄的偏鄉國小自然教室，如何透過微型空間改造工程，重新成為溫暖的老幼共融日照沙龍。</p>
+            </div>
+
+            <!-- Slider Container -->
+            <div class="comparison-slider w-full h-[400px] md:h-[500px] rounded-3xl shadow-lg border border-editorial-clay select-none" id="slider-root">
+                <!-- Under Image / Transformed Space (After) -->
+                <img src="assets/after_classroom.png" class="absolute inset-0 w-full h-full object-cover" alt="After: Transformed Senior Salon">
+                <div class="absolute bottom-8 right-8 z-20 bg-white/90 p-4 rounded-2xl max-w-xs md:max-w-sm border border-editorial-clay/80 shadow-sm">
+                    <span class="text-[9px] font-extrabold bg-green-100 text-green-800 px-2.5 py-0.5 rounded-full tracking-wider uppercase mb-1.5 inline-block">TRANSFORMED ── 今</span>
+                    <h4 class="font-extrabold text-editorial-forest text-sm">溫潤的樂齡長照共融日照沙龍</h4>
+                    <p class="text-[11px] text-editorial-ink/80 mt-1 leading-relaxed">原有冰冷的普通水泥地，全面改裝為防滑軟木地板。拆除重型講台，換上多功能流理檯、柔和燈光與長者舒緩沙發。</p>
+                </div>
+
+                <!-- Over Image / Original Ruins (Before) -->
+                <div class="comparison-before bg-[#2d2a26]" id="slider-before-layer" style="width: 50%;">
+                    <img id="slider-before-img" src="assets/before_classroom.png" class="absolute top-0 left-0 h-full object-cover max-w-none" alt="Before: Abandoned Classroom">
+                    <div class="absolute bottom-8 left-8 w-[280px] md:w-[350px] bg-black/75 p-4 rounded-2xl text-white border border-white/10 shadow-sm z-20">
+                        <span class="text-[9px] font-extrabold bg-red-800 text-white px-2.5 py-0.5 rounded-full tracking-wider uppercase mb-1.5 inline-block">ORIGINAL RUINS ── 昔</span>
+                        <h4 class="font-extrabold text-sm text-editorial-paper">廢棄的石筆黑板與寂靜校舍</h4>
+                        <p class="text-[11px] text-editorial-paper/80 mt-1 leading-relaxed">停辦後，走廊覆蓋上落葉，教室內部僅留下缺腳木課桌椅與未擦乾淨的粉筆黑板，充斥著荒廢感與遺忘。</p>
+                    </div>
+                </div>
+
+                <!-- Sliding Handle -->
+                <div class="comparison-handle" id="slider-handle" style="left: 50%;">
+                    <div class="comparison-handle-button">
+                        <i data-lucide="chevrons-left-right" class="w-4 h-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaflet Dynamic Mapping & Search Block -->
+    <section id="map-narrative" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+            <span class="text-[10px] font-extrabold tracking-[0.25em] text-editorial-rust uppercase bg-editorial-rust/10 px-3 py-1.5 rounded-md">
+                空間探索 ── 地理地圖敘事
+            </span>
+            <h2 class="serif-editorial text-3xl md:text-4xl text-editorial-forest font-bold">點擊地圖：尋找身邊默默轉型的小學</h2>
+            <p class="text-xs text-editorial-ink/60 font-light">下方整合了真實地圖，我們收錄了全台經典的廢校轉型代表，點擊發光圖標即可即時調閱該點位的空間重構檔案與現狀導覽。</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <!-- Left map panel -->
+            <div class="lg:col-span-8 space-y-4">
+                <div class="relative">
+                    <div id="leaflet-map"></div>
+                </div>
+                <p class="text-[10px] text-editorial-ink/50 text-right uppercase tracking-wider">地圖底圖：© OpenStreetMap contributors, CartoDB Positron</p>
+            </div>
+
+            <!-- Right search and interaction panel -->
+            <div class="lg:col-span-4 bg-white p-6 rounded-3xl border border-editorial-clay shadow-sm space-y-6">
+                <!-- Search & Predictive Input -->
+                <div class="space-y-3">
+                    <h4 class="font-bold text-editorial-forest text-sm flex items-center gap-1.5">
+                        <i data-lucide="search" class="w-4 h-4 text-editorial-rust"></i>
+                        搜尋轉型地標 (自動預測輸入)
+                    </h4>
+                    <div class="relative">
+                        <input type="text" id="map-search-input" oninput="handlePredictiveSearch()" placeholder="輸入關鍵字如：屏東、茶藝、長照..." class="w-full bg-editorial-paper border border-editorial-clay px-4 py-2.5 rounded-xl text-xs focus:outline-none focus:border-editorial-rust shadow-inner">
+                        <div id="predictive-box" class="hidden absolute left-0 right-0 mt-1 bg-white border border-editorial-clay rounded-xl shadow-lg z-50 text-xs divide-y divide-editorial-clay/40 overflow-hidden">
+                            <!-- Suggestion items dynamically inserted -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Highlight Card details -->
+                <div class="border-t border-editorial-clay/50 pt-5 space-y-4">
+                    <span class="text-[9px] font-extrabold tracking-widest text-editorial-rust uppercase bg-editorial-paleGold px-2.5 py-1 rounded" id="map-detail-tag">🌱 青創農業</span>
+                    <h3 class="serif-editorial text-xl font-bold text-editorial-forest" id="map-detail-title">屏東智慧農業學校</h3>
+                    <p class="text-xs text-editorial-ink/80 leading-relaxed text-justify" id="map-detail-desc">
+                        原屏東縣廣興國小關福分校。停辦後改造為青年農創孵化器，結合無人機飛行培訓與在地小農直鋪，重塑偏鄉產業鏈。
+                    </p>
+                    <div class="pt-4 border-t border-editorial-clay/30 space-y-2">
+                        <div class="flex items-center text-[10px] text-editorial-ink/50 gap-1.5 font-bold">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-editorial-rust"></i>
+                            <span id="map-detail-addr">屏東縣高樹鄉世興路134-1號</span>
+                        </div>
+                        <div class="flex items-center text-[10px] text-editorial-ink/50 gap-1.5 font-bold">
+                            <i data-lucide="clock" class="w-3.5 h-3.5 text-editorial-rust"></i>
+                            <span>週二至週日 09:00 - 17:00 開放</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gamified Sandbox Decision Simulation (遊戲化決策沙盒) -->
+    <section id="decision-game" class="py-24 bg-editorial-forest text-editorial-paper px-6 md:px-12 overflow-hidden">
+        <div class="max-w-4xl mx-auto space-y-12">
+            <div class="text-center space-y-4">
+                <span class="text-[10px] font-extrabold tracking-[0.25em] text-editorial-gold uppercase bg-white/10 px-3 py-1.5 rounded-md">
+                    決策沙盒 ── 互動模擬體驗
+                </span>
+                <h2 class="serif-editorial text-3xl md:text-5xl text-white font-bold">假如你是鎮長：廢校活化生死抉擇</h2>
+                <p class="text-xs text-editorial-paper/70 max-w-2xl mx-auto">
+                    你被委任為偏鄉大武鎮的鎮長。鎮上的「大武國小大溪分校」今年因為只有1名新生，正式面臨裁併。
+                    你面臨著 1,500 萬的轉型撥款，必須在民意衝突、永續預算與法規限制下做出關鍵抉擇。
+                </p>
+            </div>
+
+            <!-- Game Box -->
+            <div class="bg-white/10 border border-white/15 p-6 md:p-10 rounded-3xl backdrop-blur-md space-y-6" id="game-panel">
+                <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="wallet" class="w-4 h-4 text-editorial-gold"></i>
+                        <span class="text-xs font-bold">剩餘預算: <span id="game-budget" class="text-editorial-gold">1,500 萬</span></span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="users" class="w-4 h-4 text-editorial-gold"></i>
+                        <span class="text-xs font-bold">民意滿意度: <span id="game-approval" class="text-green-400">80%</span></span>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h4 class="font-bold text-white text-base md:text-lg" id="game-scenario-title">階段 1：如何處理老舊危險校舍？</h4>
+                    <p class="text-xs md:text-sm text-editorial-paper/85 leading-relaxed text-justify" id="game-scenario-desc">
+                        學校有一棟歷史50年的舊紅磚危樓禮堂，結構有安全隱憂。地方老一輩強烈抗議拆除，要求保留共同記憶；而專家評估補強需要極高費用。你會如何決定？
+                    </p>
+                </div>
+
+                <!-- Branching choices -->
+                <div class="space-y-3" id="game-choices-box">
+                    <button onclick="makeGameChoice(1)" class="w-full text-left bg-white/5 hover:bg-white/15 border border-white/10 hover:border-editorial-gold p-4 rounded-xl text-xs md:text-sm transition-all duration-300">
+                        【全數拆除】徹底排除安全隱憂，省下預算用於蓋新日照場館。(-0預算，-20%民意)
+                    </button>
+                    <button onclick="makeGameChoice(2)" class="w-full text-left bg-white/5 hover:bg-white/15 border border-white/10 hover:border-editorial-gold p-4 rounded-xl text-xs md:text-sm transition-all duration-300">
+                        【高額補強】爭取全額補強，打造成懷舊記憶故事館。(-1,000萬預算，+15%民意)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- X-Ray blueprint & 360 Panorama section -->
+    <section class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <!-- Left Block: Hotspots Blueprint -->
+            <div class="space-y-6">
+                <span class="text-[10px] font-extrabold tracking-[0.25em] text-editorial-rust uppercase bg-editorial-rust/10 px-3 py-1.5 rounded-md">
+                    智慧藍圖 ── 探照結構
+                </span>
+                <h2 class="serif-editorial text-3xl md:text-4xl text-editorial-forest font-bold">點擊圖紙細節：智慧生態教室解剖</h2>
+                <p class="text-xs text-editorial-ink/70">
+                    這是一座由停辦小學普通教室改造的「科技生態與農業培訓室」藍圖，點擊圖紙中發光的熱點針腳（Hotspots），即可查看細部的功能重構與科技導入。
+                </p>
+
+                <!-- Interactive SVG Hotspot blueprint -->
+                <div class="relative bg-editorial-forest rounded-2xl p-4 border border-editorial-clay/50 shadow-inner flex justify-center">
+                    <svg viewBox="0 0 300 200" class="w-full max-w-[400px] h-auto">
+                        <defs>
+                            <pattern id="blue-grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+                            </pattern>
+                        </defs>
+                        <rect width="300" height="200" fill="url(#blue-grid)" rx="10"/>
+                        <!-- Outwall -->
+                        <rect x="20" y="20" width="260" height="160" rx="8" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-dasharray="2,2"/>
+                        
+                        <!-- Middle Tables -->
+                        <rect x="80" y="70" width="140" height="60" rx="4" fill="none" stroke="#b7791f" stroke-width="1.2"/>
+                        
+                        <!-- Hotspot 1: Plant grow wall -->
+                        <g class="cursor-pointer group" onclick="showBlueprintDetail(1)">
+                            <circle cx="45" cy="50" r="10" fill="rgba(184, 90, 56, 0.2)" class="animate-pulse"/>
+                            <circle cx="45" cy="50" r="4" fill="#b85a38" />
+                            <text x="45" y="35" fill="#f0e6d2" font-size="7" text-anchor="middle" font-weight="bold">熱點 A</text>
+                        </g>
+
+                        <!-- Hotspot 2: Smart Hydroponics table -->
+                        <g class="cursor-pointer group" onclick="showBlueprintDetail(2)">
+                            <circle cx="150" cy="100" r="10" fill="rgba(183, 121, 31, 0.2)" class="animate-pulse"/>
+                            <circle cx="150" cy="100" r="4" fill="#b7791f"/>
+                            <text x="150" y="85" fill="#f0e6d2" font-size="7" text-anchor="middle" font-weight="bold">熱點 B</text>
+                        </g>
+
+                        <!-- Hotspot 3: Control dashboard -->
+                        <g class="cursor-pointer group" onclick="showBlueprintDetail(3)">
+                            <circle cx="240" cy="140" r="10" fill="rgba(30, 45, 36, 0.2)" class="animate-pulse"/>
+                            <circle cx="240" cy="140" r="4" fill="#1e2d24" stroke="rgba(255,255,255,0.4)"/>
+                            <text x="240" y="125" fill="#f0e6d2" font-size="7" text-anchor="middle" font-weight="bold">熱點 C</text>
+                        </g>
+                    </svg>
+                </div>
+                
+                <div id="blueprint-detail-box" class="bg-white p-4 rounded-xl border border-editorial-clay shadow-sm text-xs space-y-1.5">
+                    <span class="font-bold text-editorial-rust" id="bp-tag">【選取熱點解剖】</span>
+                    <h5 class="font-extrabold text-editorial-forest text-sm" id="bp-title">請點擊上圖的橘、黃、綠發光點</h5>
+                    <p class="text-editorial-ink/80 leading-relaxed text-justify" id="bp-desc">我們將為您詳細解說空間再造時所導入的現代功能構造。</p>
+                </div>
+            </div>
+
+            <!-- Right Block: 360 Panorama View -->
+            <div class="space-y-6">
+                <span class="text-[10px] font-extrabold tracking-[0.25em] text-editorial-rust uppercase bg-editorial-rust/10 px-3 py-1.5 rounded-md">
+                    虛擬導覽 ── 360° 全景體驗
+                </span>
+                <h2 class="serif-editorial text-3xl md:text-4xl text-editorial-forest font-bold">用滑鼠拖動：360度環伺智慧教室</h2>
+                <p class="text-xs text-editorial-ink/70">
+                    下方區域為互動式360度虛擬實景教室繪圖。用滑鼠點擊並水平按住、或用手指在手機螢幕上左右拖曳，即可在舊校舍中自由漫步。
+                </p>
+
+                <div class="relative bg-editorial-paper border border-editorial-clay rounded-2xl overflow-hidden shadow-md">
+                    <canvas id="pano-canvas" class="w-full h-[250px] md:h-[300px]"></canvas>
+                    <div class="absolute bottom-3 left-3 bg-black/75 px-3 py-1 rounded-lg text-[9px] text-white font-bold uppercase tracking-wider flex items-center gap-1">
+                        <i data-lucide="hand" class="w-3.5 h-3.5 text-editorial-gold"></i>
+                        手動拖曳可環顧四周
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Trend line chart -->
+    <section class="py-24 bg-white border-y border-editorial-clay/50 px-6 md:px-12">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-5 space-y-6">
+                <span class="text-[10px] font-extrabold tracking-[0.25em] text-editorial-rust uppercase bg-editorial-rust/10 px-3 py-1.5 rounded-md">
+                    趨勢追蹤 ── 世紀曲線
+                </span>
+                <h2 class="serif-editorial text-3xl md:text-4xl text-editorial-forest font-bold">氣候式的巨變：少子化與廢校累積曲線</h2>
+                <p class="text-xs text-editorial-ink/80 leading-relaxed text-justify">
+                    如同 NASA 追蹤大氣二氧化碳濃度的陡升趨勢，全台灣自 1990 年起的生源與廢併校數消長曲線，同樣呈現驚心動魄的交叉走勢。
+                </p>
+                <div class="space-y-4 text-xs font-light text-editorial-ink/80">
+                    <div class="flex items-start gap-2">
+                        <span class="w-2.5 h-2.5 bg-editorial-rust rounded-full mt-1"></span>
+                        <p><b>出生人口急劇下滑：</b>從 1990 年的年產 32 萬新生兒，降至當前的歷史谷底，且斜率仍在加劇。</p>
+                    </div>
+                    <div class="flex items-start gap-2">
+                        <span class="w-2.5 h-2.5 bg-editorial-forest rounded-full mt-1"></span>
+                        <p><b>廢校累積陡增：</b>隨著學區瓦解，偏鄉閒置公有校舍累積總數呈等比級數攀升，空間活化成為刻不容緩的國家級命題。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="lg:col-span-7 bg-editorial-paper p-6 rounded-3xl border border-editorial-clay/80 shadow-inner">
+                <div class="h-[280px] md:h-[350px] w-full relative">
+                    <canvas id="nasaStyleChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expert Trivia Quiz (里長事務知多少 style) -->
+    <section id="expert-quiz" class="py-24 px-6 md:px-12 max-w-4xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+            <span class="text-[10px] font-extrabold tracking-[0.25em] text-editorial-rust uppercase bg-editorial-rust/10 px-3 py-1.5 rounded-md">
+                常識測驗 ── 里長知多少？
+            </span>
+            <h2 class="serif-editorial text-3xl md:text-4xl text-editorial-forest font-bold">測驗：空間再造常識大作戰</h2>
+            <p class="text-xs text-editorial-ink/60">你知道偏鄉學校停辦後，如何變更土地嗎？還是對日照場景法規有所不解？透過這 4 道模擬里長挑戰題，測測你的公共政策洞察力！</p>
+        </div>
+
+        <div class="bg-white p-8 rounded-3xl border border-editorial-clay shadow-sm space-y-8" id="quiz-root">
+            <!-- Question 1 -->
+            <div class="quiz-question space-y-4" id="q-1">
+                <div class="flex items-center space-x-2">
+                    <span class="w-6 h-6 rounded-full bg-editorial-rust text-white flex items-center justify-center font-bold text-xs">1</span>
+                    <h4 class="font-extrabold text-editorial-forest text-sm md:text-base">當一所偏鄉小學停辦後，其原有的「學校用地」土地變更，最主要的法規窒礙通常是什麼？</h4>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pl-8">
+                    <button onclick="answerQuiz(1, 'A', true, this)" class="option-btn bg-editorial-paper border border-editorial-clay hover:bg-editorial-paleGold hover:border-editorial-rust p-3.5 rounded-xl text-left text-xs transition-colors">
+                        A. 受限於「非都市土地使用管制規則」，變更地目行政程序極為繁複漫長。
+                    </button>
+                    <button onclick="answerQuiz(1, 'B', false, this)" class="option-btn bg-editorial-paper border border-editorial-clay hover:bg-editorial-paleGold hover:border-editorial-rust p-3.5 rounded-xl text-left text-xs transition-colors">
+                        B. 法規規定必須保留地目至少50年不能更動。
+                    </button>
+                </div>
+                <div class="hidden quiz-feedback p-4 bg-green-50 text-green-800 border border-green-200 rounded-xl text-xs pl-8" 
+                     data-correct-msg="「非都市土地使用管制規則」通常是校地活化的行政大山，需要跨多個政府局處、進行繁冗評估及公聽會流程。"
+                     data-wrong-msg="答錯了。非都市土地的使用地類別變更，是面臨最繁複漫長的跨局處行政大山。">
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="quiz-question space-y-4 opacity-40 pointer-events-none" id="q-2">
+                <div class="flex items-center space-x-2">
+                    <span class="w-6 h-6 rounded-full bg-editorial-rust text-white flex items-center justify-center font-bold text-xs">2</span>
+                    <h4 class="font-extrabold text-editorial-forest text-sm md:text-base">根據衛生福利部規定，學校普通教室要改造為合法的老人日間照顧中心，首要符合以下哪項關鍵物理要求？</h4>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pl-8">
+                    <button onclick="answerQuiz(2, 'A', true, this)" class="option-btn bg-editorial-paper border border-editorial-clay hover:bg-editorial-paleGold hover:border-editorial-rust p-3.5 rounded-xl text-left text-xs transition-colors">
+                        A. 鋪設安全防滑無障礙坡道、加裝防撞扶手並具備良好的採光及自然通風。
+                    </button>
+                    <button onclick="answerQuiz(2, 'B', false, this)" class="option-btn bg-editorial-paper border border-editorial-clay hover:bg-editorial-paleGold hover:border-editorial-rust p-3.5 rounded-xl text-left text-xs transition-colors">
+                        B. 必須全數加裝隔音防彈鋼板以維持安全安靜。
+                    </button>
+                </div>
+                <div class="hidden quiz-feedback p-4 bg-green-50 text-green-800 border border-green-200 rounded-xl text-xs pl-8"
+                     data-correct-msg="無障礙空間是樂齡活化的生命線，特別是防滑軟墊地板、通風採光與友善高度的洗手間環境。"
+                     data-wrong-msg="答錯了。無障礙斜坡、防撞防滑與採光通風才是最核心且法定的物理要求。">
+                </div>
+            </div>
+            
+            <!-- Question 3 -->
+            <div class="quiz-question space-y-4 opacity-40 pointer-events-none" id="q-3">
+                <div class="flex items-center space-x-2">
+                    <span class="w-6 h-6 rounded-full bg-editorial-rust text-white flex items-center justify-center font-bold text-xs">3</span>
+                    <h4 class="font-extrabold text-editorial-forest text-sm md:text-base">教育部在閒置校舍活化管理中，通常要求縣市政府優先評估哪一種空間用途？</h4>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pl-8">
+                    <button onclick="answerQuiz(3, 'A', false, this)" class="option-btn bg-editorial-paper border border-editorial-clay hover:bg-editorial-paleGold hover:border-editorial-rust p-3.5 rounded-xl text-left text-xs transition-colors">
+                        A. 商業購物中心與大型高檔影城，增加地方稅收。
+                    </button>
+                    <button onclick="answerQuiz(3, 'B', true, this)" class="option-btn bg-editorial-paper border border-editorial-clay hover:bg-editorial-paleGold hover:border-editorial-rust p-3.5 rounded-xl text-left text-xs transition-colors">
+                        B. 社區公共托育、樂齡長照據點與地方創生中心等公益與社福用途。
+                    </button>
+                </div>
+                <div class="hidden quiz-feedback p-4 bg-green-50 text-green-800 border border-green-200 rounded-xl text-xs pl-8"
+                     data-correct-msg="政府明文規定，廢校舍活化應以公益性、社會福利用途為首要評估方向，藉以回饋地方社區。"
+                     data-wrong-msg="答錯了。教育部政策方向要求閒置校地優先提供公益、社福及創生使用，而非單純的商業開發。">
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="quiz-question space-y-4 opacity-40 pointer-events-none" id="q-4">
+                <div class="flex items-center space-x-2">
+                    <span class="w-6 h-6 rounded-full bg-editorial-rust text-white flex items-center justify-center font-bold text-xs">4</span>
+                    <h4 class="font-extrabold text-editorial-forest text-sm md:text-base">當面臨偏鄉學校停辦裁併時，聯合國教科文組織（UNESCO）建議如何保持地方歷史脈絡？</h4>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pl-8">
+                    <button onclick="answerQuiz(4, 'A', true, this)" class="option-btn bg-editorial-paper border border-editorial-clay hover:bg-editorial-paleGold hover:border-editorial-rust p-3.5 rounded-xl text-left text-xs transition-colors">
+                        A. 保留部分校舍結構作為社區紀念館、校史記憶展示角，或建立數位檔案館。
+                    </button>
+                    <button onclick="answerQuiz(4, 'B', false, this)" class="option-btn bg-editorial-paper border border-editorial-clay hover:bg-editorial-paleGold hover:border-editorial-rust p-3.5 rounded-xl text-left text-xs transition-colors">
+                        B. 將校舍徹底拆除夷平，不留下任何人工痕跡，使土地完全還原荒野。
+                    </button>
+                </div>
+                <div class="hidden quiz-feedback p-4 bg-green-50 text-green-800 border border-green-200 rounded-xl text-xs pl-8"
+                     data-correct-msg="將老舊校園的代表性地標（如升旗台、百年老樹、校碑）保留並結合故事館，是維繫偏鄉社區歷史認同的關鍵。"
+                     data-wrong-msg="答錯了。全數拆毀會導致社區共同歷史記憶的永久斷裂，保留故事角與紀念館才是推薦的文化作法。">
+                </div>
+            </div>
+            
+            <!-- Quiz Score Panel -->
+            <div id="quiz-score-panel" class="hidden text-center p-6 bg-editorial-paleGold/50 rounded-2xl border border-editorial-clay/80 space-y-2">
+                <h4 class="font-bold text-editorial-forest text-lg">🎉 里長常識挑戰完成！</h4>
+                <p class="text-sm text-editorial-ink/80">您的政策洞察力得分是：<strong id="quiz-score-display" class="text-editorial-rust text-xl">0</strong> / 100 分</p>
+                <p id="quiz-eval-display" class="text-xs text-editorial-forest font-bold italic mt-1"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Editorial Premium Footer -->
+    <footer class="bg-editorial-forest text-editorial-paper/60 py-16 px-6 md:px-12 border-t border-editorial-clay/10 text-xs md:text-sm">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3 text-white">
+                    <span class="p-2 bg-editorial-gold text-editorial-forest rounded-xl shadow-inner">
+                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                    </span>
+                    <span class="font-bold tracking-widest text-sm">消失的小學 互動數據專題</span>
+                </div>
+                <p class="max-w-md font-light text-editorial-paper/50 leading-relaxed text-justify">
+                    本專題融合了多媒體地理地圖、動態指標圖表、時空翻轉故事與沉浸式網頁音訊，期盼重喚對土地記憶與地方永續的探討。
+                </p>
+            </div>
+            
+            <div class="space-y-3">
+                <h5 class="text-white font-bold tracking-widest text-xs uppercase">專題設計團隊</h5>
+                <ul class="space-y-2.5 font-light text-editorial-paper/55">
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-editorial-gold"></span> 專題編採與數據治理：歷史空間演化研究組</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-editorial-gold"></span> 地理與美感工程：Gemini Flash 3</li>
+                    <li class="flex items-center gap-2"><span class="w-1 h-1 rounded-full bg-editorial-gold"></span> 發布時間：2026年6月</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto border-t border-white/5 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-editorial-paper/40">
+            <div>© 2026 消失的小學專題研究小組. 本專題為學術與公共議題探討使用。</div>
+            <div class="flex space-x-6">
+                <a href="#" class="hover:text-white transition-colors">隱私與引註條款</a>
+                <a href="#" class="hover:text-white transition-colors">學術資料鏈結</a>
+                <a href="#" class="hover:text-white transition-colors">反饋管道</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script Segment -->
+    <script>
+        // --- TONE.JS AMBIENT SOUND ARCHITECTURE ---
+        let synth = null;
+        let reverb = null;
+        let ambientSynth = null;
+        let isAudioPlaying = false;
+        let ambientInterval = null;
+
+        function initAudio() {
+            if (synth) return; 
+
+            reverb = new Tone.Reverb({
+                decay: 5.5,
+                wet: 0.45
+            }).toDestination();
+
+            // Westminster Chime Synth
+            synth = new Tone.Synth({
+                oscillator: { type: "triangle" },
+                envelope: {
+                    attack: 0.005,
+                    decay: 2.0,
+                    sustain: 0.1,
+                    release: 3.5
+                }
+            }).connect(reverb);
+
+            // Ambient soft piano-chord synth
+            ambientSynth = new Tone.PolySynth(Tone.Synth, {
+                oscillator: { type: "sine" },
+                envelope: {
+                    attack: 2.0,
+                    decay: 4.5,
+                    sustain: 0.7,
+                    release: 6.0
+                }
+            });
+
+            // Apply a low-pass filter to make the piano sound warm, cozy and distant (muffled effect)
+            const lowPassFilter = new Tone.Filter({
+                frequency: 850,
+                type: "lowpass"
+            }).connect(reverb);
+
+            ambientSynth.connect(lowPassFilter);
+            ambientSynth.volume.value = -30; // Soft volume
+        }
+
+        const ambientChords = [
+            ["C3", "E3", "G3", "B3"], // Cmaj7
+            ["A2", "C3", "E3", "G3"], // Am7
+            ["F2", "A2", "C3", "E3"], // Fmaj7
+            ["G2", "B2", "D3", "F3"]  // G7
+        ];
+        let chordIndex = 0;
+
+        function playNextAmbientChord() {
+            if (!isAudioPlaying) return;
+            const chord = ambientChords[chordIndex];
+            const now = Tone.now();
+            ambientSynth.triggerAttackRelease(chord, "5.0", now);
+            chordIndex = (chordIndex + 1) % ambientChords.length;
+        }
+
+        function startAmbientLoop() {
+            playNextAmbientChord();
+            ambientInterval = setInterval(playNextAmbientChord, 7000);
+        }
+
+        function stopAmbientLoop() {
+            if (ambientInterval) {
+                clearInterval(ambientInterval);
+                ambientInterval = null;
+            }
+        }
+
+        function playNostalgicBell() {
+            if (!isAudioPlaying) return;
+            initAudio();
+            const now = Tone.now();
+            // Classical Westminster Chime Part 1 (喚起國小下課鐘聲)
+            const chimeNotes = ["E5", "G#5", "F#5", "B4", "E5", "F#5", "G#5", "E5"];
+            const noteDurations = [0.4, 0.4, 0.4, 0.8, 0.4, 0.4, 0.4, 1.2];
+            const noteDelays = [0, 0.5, 1.0, 1.5, 2.5, 3.0, 3.5, 4.0];
+            
+            chimeNotes.forEach((note, idx) => {
+                synth.triggerAttackRelease(note, noteDurations[idx], now + noteDelays[idx]);
+            });
+        }
+
+        function toggleGlobalAudio() {
+            initAudio();
+            const btn = document.getElementById('global-audio-btn');
+            const icon = document.getElementById('audio-icon');
+            const text = document.getElementById('audio-status-text');
+
+            if (!isAudioPlaying) {
+                Tone.start();
+                isAudioPlaying = true;
+                icon.setAttribute('data-lucide', 'volume-2');
+                text.innerText = "環境音: 開啟";
+                btn.className = "flex items-center space-x-2 bg-editorial-rust text-white px-3 py-1.5 rounded-full text-xs transition-all duration-300 shadow-md";
+                startAmbientLoop();
+                playNostalgicBell();
+            } else {
+                stopAmbientLoop();
+                isAudioPlaying = false;
+                icon.setAttribute('data-lucide', 'volume-x');
+                text.innerText = "環境音: 關閉";
+                btn.className = "flex items-center space-x-2 bg-editorial-clay/40 hover:bg-editorial-clay/80 border border-editorial-clay text-editorial-forest px-3 py-1.5 rounded-full text-xs transition-all duration-300";
+            }
+            lucide.createIcons();
+        }
+
+        function playBellAndScroll(targetId) {
+            if (!isAudioPlaying) {
+                toggleGlobalAudio();
+            } else {
+                playNostalgicBell();
+            }
+            document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- PERSONALIZED REPORT LOGIC ---
+        function generatePersonalizedReport() {
+            const birthYearStr = document.getElementById('user-birth-year').value;
+            const county = document.getElementById('user-county').value;
+            const resultBox = document.getElementById('personalized-result');
+            
+            if (!birthYearStr) {
+                alert("請輸入您的出生年份");
+                return;
+            }
+            
+            const birthYear = parseInt(birthYearStr);
+            const totalYears = 115 - birthYear;
+            const estimatedClosures = Math.max(12, Math.floor(totalYears * 4.5));
+            const countyClosureRank = (county === '屏東縣' || county === '台東縣' || county === '新北市') ? '極其嚴峻' : '中等偏高';
+
+            let reportHtml = `
+                <div class="space-y-4">
+                    <h4 class="font-extrabold text-editorial-forest text-base flex items-center gap-1.5">
+                        <i data-lucide="compass" class="w-5 h-5 text-editorial-rust"></i>
+                        少子化浪潮專屬報告 ── 民國 ${birthYear} 年出生的你
+                    </h4>
+                    <p class="font-light">
+                        當你在民國 ${birthYear} 年誕生於這片土地時，全台尚有超過 2,600 所活力四射的小學。
+                        在你的成長生命歷程（${birthYear} 年至今）中，全台灣累計共有約 <strong>${estimatedClosures} 所</strong> 小學因少子化浪潮重創而裁撤、併校。
+                    </p>
+                    <p class="font-light">
+                        在你的居住縣市 <strong>${county}</strong>，少子化衝擊係數被評定為 <strong>${countyClosureRank}</strong>。
+                        近年全台有多達 60% 閒置空間轉型為老人關懷據點，這代表在你步入中年時，你身邊那些曾裝載孩童跑鬧、放學鐘聲的土地，正大量演變為承載長輩後半生的重要社區綠洲。
+                    </p>
+                </div>
+            `;
+            
+            resultBox.innerHTML = reportHtml;
+            resultBox.classList.remove('hidden');
+            playNostalgicBell();
+            lucide.createIcons();
+        }
+
+        // --- ROLE SWITCHER LOGIC ---
+        const roleMonologues = {
+            student: {
+                title: "鄉村學童阿吉的自白",
+                monologue: "「以前下課鐘一響，我們都往那棵大榕樹衝，看誰先爬上去。併校後，新學校好大好漂亮，可是上學要坐半小時客運，回到家大門鎖著，再也沒有人在圍牆邊大喊我的名字了...」",
+                tag: "情境：面對宣布廢校的那一天"
+            },
+            teacher: {
+                title: "退休校長張校長的自白",
+                monologue: "「站在最後一屆的畢業典禮上，我的眼淚根本止不住。這座講台我站了三十年，最後一個孩子的名冊，是我顫抖著手蓋章的。看著那些空著的課桌，感覺像看著家園慢慢被潮水淹沒...」",
+                tag: "情境：最後一屆畢業典禮落幕後"
+            },
+            grandma: {
+                title: "社區長輩秀枝阿嬤的自白",
+                monologue: "「我以前送孫子上學就坐在外面的涼亭。沒想到現在學校沒了，被改成日照沙龍。我又走回這間教室，不過現在黑板沒寫國語，而是寫我們中午吃什麼。老朋友在這裡聊天，感覺孩子們還在操場玩...」",
+                tag: "情境：轉型後在舊校舍中復健與聚餐"
+            },
+            mayor: {
+                title: "地方首長曾鎮長的自白",
+                monologue: "「廢校不只是行政名目，更是社區自信心的撕裂。長輩怪我不守家鄉基業、青壯派要求保留青創，但教育基金赤字是事實。如何頂住排山倒海的公聽會壓力、爭取預算做多功能改建，真的是極大難題。」",
+                tag: "情境：主持裁併公聽會的前夕"
+            }
+        };
+
+        function switchRole(roleId) {
+            const btns = document.querySelectorAll('.role-btn');
+            btns.forEach(b => {
+                b.className = "role-btn p-4 rounded-2xl border-l-4 border-transparent bg-white/60 hover:bg-editorial-paleGold/30 text-left transition-all flex items-center space-x-3";
+                b.querySelector('span').className = "p-2 bg-editorial-ink/10 text-editorial-ink/65 rounded-lg";
+            });
+
+            const activeBtn = document.getElementById(`role-btn-${roleId}`);
+            activeBtn.className = "role-btn active p-4 rounded-2xl border-l-4 border-editorial-rust bg-white hover:bg-editorial-paleGold/30 text-left transition-all flex items-center space-x-3";
+            activeBtn.querySelector('span').className = "p-2 bg-editorial-rust/15 text-editorial-rust rounded-lg";
+
+            const data = roleMonologues[roleId];
+            document.getElementById('role-indicator-title').innerText = data.title;
+            document.getElementById('role-monologue').innerText = data.monologue;
+            document.getElementById('role-context-tag').innerText = data.tag;
+            
+            playNostalgicBell();
+        }
+
+        function triggerVoiceHint() {
+            playNostalgicBell();
+            // Basic indicator modal mock
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-4 right-4 bg-editorial-forest text-white px-4 py-2 rounded-xl text-xs z-[999] shadow-lg flex items-center space-x-2";
+            toast.innerHTML = `<i data-lucide="volume-2" class="w-4 h-4 text-editorial-gold animate-bounce"></i> <span>正在啟用背景情感導讀機制...</span>`;
+            document.body.appendChild(toast);
+            lucide.createIcons();
+            setTimeout(() => toast.remove(), 2500);
+        }
+
+        // --- IMAGE COMPARISON SLIDER LOGIC ---
+        const sliderRoot = document.getElementById('slider-root');
+        const sliderHandle = document.getElementById('slider-handle');
+        const sliderBefore = document.getElementById('slider-before-layer');
+
+        let isDragging = false;
+
+        function updateSlider(clientX) {
+            const rect = sliderRoot.getBoundingClientRect();
+            let x = clientX - rect.left;
+            if (x < 0) x = 0;
+            if (x > rect.width) x = rect.width;
+            
+            const percent = (x / rect.width) * 100;
+            sliderHandle.style.left = `${percent}%`;
+            sliderBefore.style.width = `${percent}%`;
+
+            // Fix the width of the nested image to the slider container's full clientWidth
+            const beforeImg = document.getElementById('slider-before-img');
+            if (beforeImg) {
+                beforeImg.style.width = `${rect.width}px`;
+            }
+        }
+
+        function initSliderWidth() {
+            const rect = sliderRoot.getBoundingClientRect();
+            const beforeImg = document.getElementById('slider-before-img');
+            if (beforeImg) {
+                beforeImg.style.width = `${rect.width}px`;
+            }
+        }
+
+        sliderRoot.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            updateSlider(e.clientX);
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            updateSlider(e.clientX);
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        sliderRoot.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            updateSlider(e.touches[0].clientX);
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            updateSlider(e.touches[0].clientX);
+        });
+
+        window.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        // --- REAL LEAFLET MAP NARRATIVE & AUTOCOMPLETE ---
+        let map = null;
+        const locations = [
+            {
+                name: "屏東智慧農業學校",
+                lat: 22.7932,
+                lng: 120.6214,
+                tag: "🌱 青創農業",
+                addr: "屏東縣高樹鄉世興路134-1號",
+                desc: "原廣興國小關福分校。停辦後改造為科技農業與智慧農創園區，引入科技培訓、青年返鄉及在地直鋪平台。"
+            },
+            {
+                name: "阿里磅生態茶藝文創園區",
+                lat: 25.2678,
+                lng: 121.5794,
+                tag: "🎨 藝術再造",
+                addr: "新北市石門區茂林村阿里磅84號",
+                desc: "原石門乾華國小阿里磅分校。因偏遠高齡裁併，如今華麗變身為融入有機茶農與自然美育的綠色探索教室。"
+            },
+            {
+                name: "信義樂齡森林照護中心",
+                lat: 23.6934,
+                lng: 120.8412,
+                tag: "👵🏼 長照社區",
+                addr: "南投縣信義鄉廣興村",
+                desc: "原廣興國小部落分校。結合在地林業與原民高齡照護，改造為森林式健康日照據點，為部落注入溫暖。"
+            },
+            {
+                name: "電光原民體驗博物館",
+                lat: 23.0112,
+                lng: 121.1689,
+                tag: "🎭 文化遺產",
+                addr: "台東縣關山鎮電光里",
+                desc: "裁併分校後保留原有阿美族竹砲及釀酒特色，結合創生工坊與野外實境劇場，吸引國際遊客深度朝聖。"
+            }
+        ];
+
+        function initLeafletMap() {
+            map = L.map('leaflet-map', {
+                scrollWheelZoom: false
+            }).setView([23.8, 121.0], 7.5);
+
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '© OpenStreetMap & CartoDB'
+            }).addTo(map);
+
+            // Custom styled Glowing Pin Marker for Leaflet
+            const customIcon = L.divIcon({
+                className: 'custom-map-marker',
+                html: `
+                    <div class="relative flex items-center justify-center w-8 h-8">
+                        <span class="absolute inline-flex h-full w-full rounded-full bg-editorial-rust/30 animate-ping opacity-75"></span>
+                        <div class="relative flex items-center justify-center w-4 h-4 rounded-full bg-editorial-rust border-2 border-white shadow-md">
+                            <div class="w-1.5 h-1.5 rounded-full bg-editorial-paper"></div>
+                        </div>
+                    </div>
+                `,
+                iconSize: [32, 32],
+                iconAnchor: [16, 16],
+                popupAnchor: [0, -10]
+            });
+
+            locations.forEach(loc => {
+                const marker = L.marker([loc.lat, loc.lng], { icon: customIcon }).addTo(map);
+                marker.bindPopup(`
+                    <div class="space-y-1 font-sans p-1">
+                        <span class="text-[9px] text-editorial-rust font-extrabold uppercase">${loc.tag}</span>
+                        <h4 class="font-bold text-sm text-editorial-forest">${loc.name}</h4>
+                        <p class="text-[11px] text-editorial-ink/80 leading-relaxed">${loc.desc}</p>
+                    </div>
+                `);
+
+                marker.on('click', () => {
+                    selectLocation(loc);
+                });
+            });
+        }
+
+        function selectLocation(loc) {
+            document.getElementById('map-detail-tag').innerText = loc.tag;
+            document.getElementById('map-detail-title').innerText = loc.name;
+            document.getElementById('map-detail-desc').innerText = loc.desc;
+            document.getElementById('map-detail-addr').innerText = loc.addr;
+            playNostalgicBell();
+        }
+
+        function handlePredictiveSearch() {
+            const query = document.getElementById('map-search-input').value.toLowerCase();
+            const predictBox = document.getElementById('predictive-box');
+            predictBox.innerHTML = '';
+
+            if (!query) {
+                predictBox.classList.add('hidden');
+                return;
+            }
+
+            const matches = locations.filter(loc => 
+                loc.name.toLowerCase().includes(query) || 
+                loc.desc.toLowerCase().includes(query) || 
+                loc.addr.toLowerCase().includes(query)
+            );
+
+            if (matches.length === 0) {
+                predictBox.classList.add('hidden');
+                return;
+            }
+
+            predictBox.classList.remove('hidden');
+            matches.forEach(m => {
+                const item = document.createElement('div');
+                item.className = "p-3 hover:bg-editorial-paleGold cursor-pointer font-bold text-editorial-forest transition-colors";
+                item.innerText = m.name;
+                item.onclick = () => {
+                    selectLocation(m);
+                    map.setView([m.lat, m.lng], 12);
+                    predictBox.classList.add('hidden');
+                    document.getElementById('map-search-input').value = m.name;
+                };
+                predictBox.appendChild(item);
+            });
+        }
+
+        // --- GAMIFIED DECISION SANDBOX ---
+        let gameStage = 1;
+        let gameBudget = 1500;
+        let gameApproval = 80;
+
+        function updateGameDashboard() {
+            document.getElementById('game-budget').innerText = `${gameBudget} 萬`;
+            document.getElementById('game-approval').innerText = `${gameApproval}%`;
+        }
+
+        function makeGameChoice(choiceId) {
+            const scenarioTitle = document.getElementById('game-scenario-title');
+            const scenarioDesc = document.getElementById('game-scenario-desc');
+            const choicesBox = document.getElementById('game-choices-box');
+
+            if (gameStage === 1) {
+                if (choiceId === 1) {
+                    gameApproval -= 20;
+                    playNostalgicBell();
+                } else {
+                    gameBudget -= 1000;
+                    gameApproval += 15;
+                    playNostalgicBell();
+                }
+                updateGameDashboard();
+
+                // Setup Stage 2
+                gameStage = 2;
+                scenarioTitle.innerText = "階段 2：轉型產業路線挑選";
+                scenarioDesc.innerText = "剩下的校舍，地方上有兩派爭執。青年派要求打造科技農創包裝基地，帶動創生；高齡關懷派要求打造免費老人送餐及輔助復健中心。你的決定是？";
+                choicesBox.innerHTML = `
+                    <button onclick="makeGameChoice(3)" class="w-full text-left bg-white/5 hover:bg-white/15 border border-white/10 hover:border-editorial-gold p-4 rounded-xl text-xs md:text-sm transition-all duration-300">
+                        【發展青創農業】吸引青年返鄉，但短期內長輩照護問題未解決。(-400萬預算，-10%民意，+30%創生發展)
+                    </button>
+                    <button onclick="makeGameChoice(4)" class="w-full text-left bg-white/5 hover:bg-white/15 border border-white/10 hover:border-editorial-gold p-4 rounded-xl text-xs md:text-sm transition-all duration-300">
+                        【發展銀髮照護】全面解決長輩送餐與安養痛點，但無法促成二代返鄉。(-300萬預算，+25%民意)
+                    </button>
+                `;
+            } else if (gameStage === 2) {
+                if (choiceId === 3) {
+                    gameBudget -= 400;
+                    gameApproval -= 10;
+                } else {
+                    gameBudget -= 300;
+                    gameApproval += 25;
+                }
+                updateGameDashboard();
+
+                // Setup Ending
+                gameStage = 3;
+                scenarioTitle.innerText = "決策沙盒終局結果";
+                let endingText = "";
+                if (gameApproval >= 75 && gameBudget >= 100) {
+                    endingText = "【模範創生鎮長】你成功在保留居民安全、民意期待與預算平衡間取得了黃金比例！大武國小大溪分校順利走入永續重生的第二人生。";
+                } else if (gameBudget < 0) {
+                    endingText = "【財政赤字危機】你對所有轉型訴求有求必應，導致大武鎮財政陷入深度赤字，後續空間維護因缺乏資金，一年後再度荒廢。";
+                } else {
+                    endingText = "【民意反彈重挫】雖然你嚴控預算，但你的決策缺乏與長輩溝通、強行拆除危樓，導致公聽會抗議不斷，空間使用率大幅下滑。";
+                }
+                scenarioDesc.innerText = endingText;
+                choicesBox.innerHTML = `
+                    <button onclick="resetGame()" class="w-full text-center bg-editorial-gold hover:bg-editorial-rust text-editorial-forest hover:text-white border border-transparent p-4 rounded-xl text-xs md:text-sm font-bold transition-all duration-300">
+                        重新進入活化決策沙盒
+                    </button>
+                `;
+                playNostalgicBell();
+            }
+        }
+
+        function resetGame() {
+            gameStage = 1;
+            gameBudget = 1500;
+            gameApproval = 80;
+            updateGameDashboard();
+            
+            document.getElementById('game-scenario-title').innerText = "階段 1：如何處理老舊危險校舍？";
+            document.getElementById('game-scenario-desc').innerText = "學校有一棟歷史50年的舊紅磚危樓禮堂，結構有安全隱憂。地方老一輩強烈抗議拆除，要求保留共同記憶；而專家評估補強需要極高費用。你會如何決定？";
+            document.getElementById('game-choices-box').innerHTML = `
+                <button onclick="makeGameChoice(1)" class="w-full text-left bg-white/5 hover:bg-white/15 border border-white/10 hover:border-editorial-gold p-4 rounded-xl text-xs md:text-sm transition-all duration-300">
+                    【全數拆除】徹底排除安全隱憂，省下預算用於蓋新日照場館。(-0預算，-20%民意)
+                </button>
+                <button onclick="makeGameChoice(2)" class="w-full text-left bg-white/5 hover:bg-white/15 border border-white/10 hover:border-editorial-gold p-4 rounded-xl text-xs md:text-sm transition-all duration-300">
+                    【高額補強】爭取全額補強，打造成懷舊記憶故事館。(-1,000萬預算，+15%民意)
+                </button>
+            `;
+            playNostalgicBell();
+        }
+
+        // --- BLUEPRINT DETAILED REVEAL ---
+        const bpDetails = {
+            1: {
+                tag: "熱點 A ── 智慧綠牆",
+                title: "自動化立體植栽灌溉系統",
+                desc: "原有冷硬的普通教室窗台外側，重構為微型垂直綠意花牆。內嵌光感應智慧微灌技術，收集教室頂樓雨水，在課堂提供生動的自然生態科普教材。"
+            },
+            2: {
+                tag: "熱點 B ── 多功能中島",
+                title: "白鋼食品級烘培中島",
+                desc: "實驗室舊有的抗酸鹼實驗桌拆除後，更換為全不鏽鋼潔淨式研磨與包裝中島。供地方青年農創客在週末進行水果低溫烘焙與真空乾燥。"
+            },
+            3: {
+                tag: "熱點 C ── 數據看板",
+                title: "環境微氣候與物流調配儀表板",
+                desc: "這面黑板是智慧教室大腦，透過Lora溫照度與土壤濕度感測器，動態呈現在地小農網室中的農產實況，完美整合科技與教育。"
+            }
+        };
+
+        function showBlueprintDetail(id) {
+            const data = bpDetails[id];
+            document.getElementById('bp-tag').innerText = `【${data.tag}】`;
+            document.getElementById('bp-title').innerText = data.title;
+            document.getElementById('bp-desc').innerText = data.desc;
+            playNostalgicBell();
+        }
+
+        // --- 360 PANORAMA CANVAS INTERACTIVE VIEW ---
+        const panoCanvas = document.getElementById('pano-canvas');
+        const panoCtx = panoCanvas.getContext('2d');
+        let panoAngle = 0;
+        let isPanning = false;
+        let lastX = 0;
+        let panoImg = new Image();
+        panoImg.src = 'assets/classroom_panorama.png';
+        
+        panoImg.onload = function() {
+            drawPanorama();
+        };
+
+        function drawPanorama() {
+            const w = panoCanvas.width;
+            const h = panoCanvas.height;
+            panoCtx.clearRect(0,0,w,h);
+
+            if (panoImg.complete && panoImg.naturalWidth > 0) {
+                const imgW = panoImg.width;
+                const imgH = panoImg.height;
+                
+                // Scale height to match canvas height
+                const scale = h / imgH;
+                const scaledW = imgW * scale;
+                
+                // Loop offset horizontally
+                let offset = panoAngle % scaledW;
+                if (offset < 0) {
+                    offset += scaledW;
+                }
+                
+                // Draw main and repeating segments
+                panoCtx.drawImage(panoImg, -offset, 0, scaledW, h);
+                if (offset > 0) {
+                    panoCtx.drawImage(panoImg, scaledW - offset, 0, scaledW, h);
+                }
+                
+                // Overlay dynamic glowing hotspots on canvas
+                // Hotspot A: Smart Hydroponics (placed at 25% of image width)
+                let spotAX = (scaledW * 0.25 - offset + scaledW) % scaledW;
+                drawCanvasHotspot("A: 智慧植栽牆", spotAX, h * 0.5);
+                
+                // Hotspot B: Multi-functional island (placed at 75% of image width)
+                let spotBX = (scaledW * 0.70 - offset + scaledW) % scaledW;
+                drawCanvasHotspot("B: 農業培訓中島", spotBX, h * 0.58);
+            } else {
+                panoCtx.fillStyle = "#1e2d24";
+                panoCtx.fillRect(0,0,w,h);
+                panoCtx.fillStyle = "#f0e6d2";
+                panoCtx.font = "12px sans-serif";
+                panoCtx.fillText("全景虛擬生態教室影像載入中...", w/2 - 80, h/2);
+            }
+        }
+
+        function drawCanvasHotspot(text, x, y) {
+            panoCtx.fillStyle = "rgba(184, 90, 56, 0.85)";
+            panoCtx.beginPath();
+            panoCtx.arc(x, y, 6, 0, Math.PI * 2);
+            panoCtx.fill();
+            
+            panoCtx.strokeStyle = "rgba(255, 255, 255, 0.8)";
+            panoCtx.lineWidth = 1.5;
+            panoCtx.beginPath();
+            panoCtx.arc(x, y, 12 + Math.sin(Date.now() / 150) * 3, 0, Math.PI * 2);
+            panoCtx.stroke();
+            
+            panoCtx.fillStyle = "#ffffff";
+            panoCtx.font = "bold 10px Inter, 'Noto Serif TC', sans-serif";
+            panoCtx.fillText(text, x + 15, y + 3);
+        }
+
+        function resizePanoCanvas() {
+            const container = panoCanvas.parentElement;
+            panoCanvas.width = container.clientWidth;
+            panoCanvas.height = 300;
+            drawPanorama();
+        }
+
+        panoCanvas.addEventListener('mousedown', (e) => {
+            isPanning = true;
+            lastX = e.clientX;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isPanning) return;
+            const deltaX = e.clientX - lastX;
+            panoAngle += deltaX * 1.5;
+            lastX = e.clientX;
+            drawPanorama();
+        });
+
+        window.addEventListener('mouseup', () => {
+            isPanning = false;
+        });
+
+        // Touch support for mobile panorama dragging
+        panoCanvas.addEventListener('touchstart', (e) => {
+            isPanning = true;
+            lastX = e.touches[0].clientX;
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if (!isPanning) return;
+            const deltaX = e.touches[0].clientX - lastX;
+            panoAngle += deltaX * 1.5;
+            lastX = e.touches[0].clientX;
+            drawPanorama();
+        });
+
+        window.addEventListener('touchend', () => {
+            isPanning = false;
+        });
+
+        // Loop to render canvas (makes hotspot outline pulse smoothly)
+        function animateCanvas() {
+            drawPanorama();
+            requestAnimationFrame(animateCanvas);
+        }
+
+        // --- NASA STYLE ATMOSPHERIC CHART ---
+        function renderNasaStyleChart() {
+            const ctx = document.getElementById('nasaStyleChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ["1995", "2000", "2005", "2010", "2015", "2020", "2026(預估)"],
+                    datasets: [
+                        {
+                            label: "年均出生嬰兒人口數 (千名)",
+                            borderColor: "#b85a38",
+                            backgroundColor: "rgba(184, 90, 56, 0.05)",
+                            data: [325, 305, 205, 166, 213, 165, 125],
+                            borderWidth: 3,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: "全台廢併校累積校舍數 (所)",
+                            borderColor: "#1e2d24",
+                            backgroundColor: "rgba(30, 45, 36, 0.05)",
+                            data: [12, 35, 58, 85, 112, 145, 185],
+                            borderWidth: 3,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: '出生人口 (千人)',
+                                font: { weight: 'bold' }
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            grid: { drawOnChartArea: false },
+                            title: {
+                                display: true,
+                                text: '累積廢校數 (所)',
+                                font: { weight: 'bold' }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- TRIVIA QUIZ LOGIC ---
+        let quizScore = 0;
+        function answerQuiz(qId, option, isCorrect, btnElement) {
+            const qBox = document.getElementById(`q-${qId}`);
+            const feedback = qBox.querySelector('.quiz-feedback');
+            
+            if (qBox.classList.contains('answered')) return;
+            qBox.classList.add('answered');
+
+            // Highlight options and disable
+            const btns = qBox.querySelectorAll('.option-btn');
+            btns.forEach(b => {
+                b.classList.add('opacity-50');
+                b.disabled = true;
+            });
+
+            // Highlight selected button
+            btnElement.classList.remove('opacity-50');
+            btnElement.classList.add('ring-2', 'ring-editorial-rust', 'bg-editorial-paleGold');
+
+            feedback.classList.remove('hidden');
+            if (isCorrect) {
+                quizScore += 25;
+                feedback.innerHTML = `<strong>🎉 答對了！</strong> ` + feedback.dataset.correctMsg;
+                feedback.className = "quiz-feedback p-4 bg-green-50 text-green-800 border border-green-200 rounded-xl text-xs pl-8";
+            } else {
+                feedback.innerHTML = `<strong>❌ 答錯了！</strong> ` + feedback.dataset.wrongMsg;
+                feedback.className = "quiz-feedback p-4 bg-red-50 text-red-800 border border-red-200 rounded-xl text-xs pl-8";
+            }
+            playNostalgicBell();
+
+            // Progress to next question
+            setTimeout(() => {
+                if (qId < 4) {
+                    const nextQ = document.getElementById(`q-${qId + 1}`);
+                    nextQ.classList.remove('opacity-40', 'pointer-events-none');
+                    nextQ.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    const scorePanel = document.getElementById('quiz-score-panel');
+                    scorePanel.classList.remove('hidden');
+                    document.getElementById('quiz-score-display').innerText = quizScore;
+                    
+                    let evaluation = "";
+                    if (quizScore === 100) {
+                        evaluation = "🌟 傳奇地方推手！你對公共政策與空間轉型有著極其敏銳且正確的洞察！";
+                    } else if (quizScore >= 75) {
+                        evaluation = "👍 優秀社區推手！你非常了解校舍活化的法規與實務運作！";
+                    } else {
+                        evaluation = "📖 空間學習者！多看看我們的地圖與分析，你也能成為活化專家！";
+                    }
+                    document.getElementById('quiz-eval-display').innerText = evaluation;
+                    scorePanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 1200);
+        }
+
+        // --- WINDOW ONLOAD LIFE CYCLE ---
+        window.onload = function() {
+            lucide.createIcons();
+            initLeafletMap();
+            resizePanoCanvas();
+            renderNasaStyleChart();
+            initSliderWidth();
+            animateCanvas();
+
+            window.addEventListener('resize', () => {
+                resizePanoCanvas();
+                initSliderWidth();
+            });
+
+            // Scroll progress indicator
+            window.addEventListener('scroll', function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progress-bar').style.width = scrolled + '%';
+            });
+        }
+    </script>
+</body>
+</html>

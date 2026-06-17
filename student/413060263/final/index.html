@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>震盪新莊：無法選擇的「家」 - 深度互動新聞遊戲</title>
+    <meta name="description" content="這是一部探討新莊地質、土壤液化與社會居住不平等問題的深度互動新聞網頁遊戲。透過扮演不同社會階層的角色，體驗天災前夕的抉擇與制度高牆。">
+    <!-- 載入 Google Fonts: Noto Serif TC (文學感) 與 Noto Sans TC (易讀黑體) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- 載入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 載入自訂 CSS 樣式系統 -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <!-- 頂部精緻導覽列 -->
+    <header class="editorial-header">
+        <div class="editorial-header-inner">
+            <div class="header-brand">
+                <span class="badge-tag">深度互動專題</span>
+                <h1 class="serif-text" style="font-size: 1.1rem; font-weight: 700;">震盪新莊：無法選擇的「家」</h1>
+            </div>
+            <!-- 音量切換與重置按鈕 -->
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <button id="mute-btn" class="volume-toggle" title="切換音效">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-container" style="margin-top: 1.5rem; margin-bottom: 3rem;">
+
+        <!-- ==================== 第一部分：開頭分頁敘事 ==================== -->
+        
+        <!-- 專題首頁封面 -->
+        <section id="screen-cover" class="screen-section active">
+            <div class="editorial-card" style="max-width: 760px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; gap: 1.5rem; padding: 3rem 2rem;">
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                    <span style="font-size: 0.8rem; color: var(--color-alarm); font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;">
+                        ── 深度互動新聞專題 ──
+                    </span>
+                    <h2 class="serif-text" style="font-size: 2.8rem; font-weight: 900; line-height: 1.25; margin-top: 0.5rem; margin-bottom: 0.5rem; letter-spacing: 0.05em; color: var(--text-primary);">
+                        震盪新莊
+                    </h2>
+                    <h3 class="serif-text" style="font-size: 1.6rem; font-weight: 700; color: var(--color-alarm); letter-spacing: 0.05em; margin-bottom: 1rem;">
+                        無法選擇的「家」
+                    </h3>
+                </div>
+
+                <!-- 封面精美插圖 -->
+                <div style="max-width: 600px; margin: 0 auto; width: 100%;">
+                    <img src="cover.png" alt="震盪新莊專題插圖" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);" />
+                </div>
+
+                <div class="serif-text" style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; max-width: 580px; margin: 1rem auto 1.5rem auto; text-align: justify;">
+                    <p>
+                        在大漢溪底萬年飽和細砂之上，在「100% 所有權人同意」的都更與耐震補強的高牆前，我們與強震的距離到底有多遠？這是一場無情天災的考驗，還是一次社會資源、法規政策與階級差距的無情宣判？
+                    </p>
+                    <p style="margin-top: 0.75rem; text-align: center; font-weight: 700; color: var(--text-primary);">
+                        邀請您進入新莊的地下深處，體驗這場無法迴避的抉擇。
+                    </p>
+                </div>
+
+                <div>
+                    <button class="btn btn-primary" onclick="changeScreen('intro1')" style="font-size: 1.05rem; padding: 1rem 2.5rem; box-shadow: 0 4px 15px rgba(140, 37, 30, 0.2);">
+                        <span>開始閱讀專題</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 開頭第一頁：古河道的祕密 -->
+        <section id="screen-intro1" class="screen-section">
+            <div class="editorial-card" style="max-width: 720px; margin: 0 auto;">
+                <div style="margin-bottom: 2rem;">
+                    <span style="font-size: 0.75rem; color: var(--color-alarm); font-weight: 700; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem;">
+                        <i class="fa-solid fa-water"></i> 第一章：大漢溪底的萬年祕密
+                    </span>
+                    <h2 class="serif-text" style="font-size: 2rem; font-weight: 900; line-height: 1.3; margin-bottom: 1.5rem;">
+                        地表之下的古老呼吸
+                    </h2>
+                    <div class="serif-text" style="color: var(--text-secondary); font-size: 1.05rem; display: flex; flex-direction: column; gap: 1.2rem; text-align: justify;">
+                        <p>
+                            在現代新莊喧囂的車水馬龍之下，地表深處其實隱藏著數萬年前留下來的印記。
+                        </p>
+                        <p>
+                            這裡曾是古台北盆地大漢溪的河道。當潮水與河水日復一日地退去，留下了大量極其鬆軟的細細砂層。而新莊的地下水位，至今依然高得驚人，普遍距離地表僅僅只有二至六公尺。
+                        </p>
+                        <p>
+                            土木地質專家指出，當<strong>「鬆軟砂層」</strong>、<strong>「高地下水」</strong>以及<strong>「足夠強度的地震」</strong>三者在某個瞬間相遇，原本堅硬的地盤就會在幾秒鐘內化為一灘液體——這就是「土壤液化」。
+                        </p>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button class="btn btn-primary" onclick="changeScreen('intro2')">
+                        <span>下一步：看見平行的新莊</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 開頭第二頁：平行的新莊日常 -->
+        <section id="screen-intro2" class="screen-section">
+            <div class="editorial-card" style="max-width: 720px; margin: 0 auto;">
+                <div style="margin-bottom: 2rem;">
+                    <span style="font-size: 0.75rem; color: var(--color-alarm); font-weight: 700; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem;">
+                        <i class="fa-solid fa-arrows-left-right"></i> 第二章：平行的新莊日常
+                    </span>
+                    <h2 class="serif-text" style="font-size: 2rem; font-weight: 900; line-height: 1.3; margin-bottom: 1.5rem;">
+                        一邊是震動，一邊是安靜
+                    </h2>
+                    <div class="serif-text" style="color: var(--text-secondary); font-size: 1.05rem; display: flex; flex-direction: column; gap: 1.2rem; text-align: justify;">
+                        <p>
+                            在南新莊西盛里的老公寓一樓，經營水果行三十年的李老闆正吃力地拉開鐵門。每當大卡車經過，斑駁的柏油路面會發出劇烈的顫動，天花板上細微的泥灰便撲簌簌地落在他斑白的頭髮上。「老房子了，到底還能震多久？」他嘆著氣。
+                        </p>
+                        <p>
+                            與此同時，幾公里外的新莊副都心。科技業經理 Kevin 站在全新落成的 24 樓景觀陽台，隔著厚實的雙層氣密窗與抗震鋼骨，看著同一個日出。他感覺不到卡車的震動，甚至想不起來自己也踩在同一片鬆軟的液化潛勢區上。
+                        </p>
+                        <p>
+                            同樣一塊地質，因興建年代、法規防禦力與社會資源的落差，讓新舊居民默默承受著截然不同的居住風險。
+                        </p>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <button class="btn btn-secondary" onclick="changeScreen('intro1')">
+                        <i class="fa-solid fa-chevron-left"></i> 返回上一步
+                    </button>
+                    <button class="btn btn-primary" onclick="changeScreen('intro3')">
+                        <span>下一步：逼近的末日危機</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 開頭第三頁：逼近的斷層危機 -->
+        <section id="screen-intro3" class="screen-section">
+            <div class="editorial-card" style="max-width: 720px; margin: 0 auto;">
+                <div style="margin-bottom: 2rem;">
+                    <span style="font-size: 0.75rem; color: var(--color-alarm); font-weight: 700; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem;">
+                        <i class="fa-solid fa-triangle-exclamation"></i> 第三章：靜默的斷層
+                    </span>
+                    <h2 class="serif-text" style="font-size: 2rem; font-weight: 900; line-height: 1.3; margin-bottom: 1.5rem;">
+                        無法輕忽的 6.6 強震模擬
+                    </h2>
+                    <div class="serif-text" style="color: var(--text-secondary); font-size: 1.05rem; display: flex; flex-direction: column; gap: 1.2rem; text-align: justify;">
+                        <p>
+                            橫亙大台北西側的<strong>「山腳斷層」</strong>一直保持著沉睡。然而科學界與防災單位從不敢掉以輕心。
+                        </p>
+                        <p>
+                            國家災害防救科技中心（NCDR）曾做過一項極其嚴謹的模擬：一旦山腳斷層南段（樹林至北投）活動，引發<strong>芮氏規模 6.6 的地震</strong>，在盆地效應與高度土壤液化的加成摧毀下——
+                        </p>
+                        <p class="serif-text" style="border-left: 4px solid var(--color-alarm); padding-left: 1.25rem; font-style: italic; background-color: #fcfcfc; padding-top: 0.75rem; padding-bottom: 0.75rem; color: var(--text-primary); font-weight: 700;">
+                            推估雙北將在一瞬間倒塌 17,034 棟建築，死傷估計高達 3,963 人，將有近 6 萬人失去家園、流離失所。
+                        </p>
+                        <p>
+                            面對即將到來的考驗，你，能安然度過嗎？
+                        </p>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <button class="btn btn-secondary" onclick="changeScreen('intro2')">
+                        <i class="fa-solid fa-chevron-left"></i> 返回上一步
+                    </button>
+                    <button class="btn btn-primary" onclick="changeScreen('role_select')">
+                        <span>開始做出抉擇</span>
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== 第二部分：選擇扮演角色 ==================== -->
+        
+        <section id="screen-role_select" class="screen-section">
+            <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem;">
+                <div style="text-align: center;">
+                    <h3 class="serif-text" style="font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem;">請選擇你要扮演的角色</h3>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">不同的角色背景，代表著在大地動搖前，你所擁有的法規武器與社會籌碼。</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+                    <style>
+                        @media (min-width: 768px) {
+                            .role-grid-container {
+                                display: grid !important;
+                                grid-template-columns: 1fr 1fr !important;
+                                gap: 2rem !important;
+                            }
+                        }
+                    </style>
+                    <div class="role-grid-container" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <!-- 角色 A：老屋主 阿源 -->
+                        <div onclick="selectRole('A')" class="editorial-card" style="cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--color-alarm); height: 100%;">
+                            <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="background-color: var(--color-alarm-light); color: var(--color-alarm); font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.4rem; border-radius: 2px;">
+                                        老公寓老屋主
+                                    </span>
+                                    <span style="font-size: 0.75rem; color: var(--text-light);">南新莊公寓（40年）</span>
+                                </div>
+                                <h4 class="serif-text" style="font-size: 1.35rem; font-weight: 700; color: var(--color-alarm);">阿源</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6; text-align: justify;">
+                                    你今年五十六歲，在老舊住宅密集的西盛里經營水果行。房子是你大半輩子的血汗，但屋齡老舊，地基是無連續壁的淺基礎，一樓挑高形成防災上的「軟腳結構」。
+                                </p>
+                            </div>
+                            <button class="btn btn-secondary" style="width: 100%; font-size: 0.75rem; border-color: var(--color-alarm); color: var(--color-alarm);">
+                                扮演 阿源 (地獄難度)
+                            </button>
+                        </div>
+
+                        <!-- 角色 B：新大樓 Kevin -->
+                        <div onclick="selectRole('B')" class="editorial-card" style="cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--color-kevin); height: 100%;">
+                            <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="background-color: var(--color-kevin-light); color: var(--color-kevin); font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.4rem; border-radius: 2px;">
+                                        新大樓住戶
+                                    </span>
+                                    <span style="font-size: 0.75rem; color: var(--text-light);">副都心重劃區（3年）</span>
+                                </div>
+                                <h4 class="serif-text" style="font-size: 1.35rem; font-weight: 700; color: var(--color-kevin);">Kevin</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6; text-align: justify;">
+                                    三十八歲的科技業主管。在規劃完善的副都心重劃區購置新房。建商依照最新建築法規，施作了深連續壁與筏式基礎防震工法，將地質液化風險降到最低。
+                                </p>
+                            </div>
+                            <button class="btn btn-secondary" style="width: 100%; font-size: 0.75rem; border-color: var(--color-kevin); color: var(--color-kevin);">
+                                扮演 Kevin (極低難度)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== 第三部分：遊戲抉擇畫面 ==================== -->
+        
+        <section id="screen-gameplay" class="screen-section">
+            <div class="game-grid">
+                
+                <!-- 左側：抉擇核心區 -->
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    
+                    <!-- 隨機事件卡 -->
+                    <div id="event-card" class="editorial-card" style="border-top: 4px solid var(--color-alarm); display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <div style="display: flex; items-center: center; gap: 0.75rem;">
+                                <span class="badge-tag" style="background-color: var(--color-alarm); font-size: 0.6rem; padding: 0.15rem 0.35rem;">
+                                    命運抉擇點
+                                </span>
+                                <span id="game-round-title" style="color: var(--text-light); font-size: 0.75rem; font-weight: 500;">第一階段</span>
+                            </div>
+                            <h3 id="event-title" class="serif-text" style="font-size: 1.5rem; font-weight: 700; margin-top: 0.5rem;">
+                                事件標題讀取中...
+                            </h3>
+                            <p id="event-desc" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; text-align: justify;">
+                                事件故事內容...
+                            </p>
+                        </div>
+
+                        <!-- 選項容器 -->
+                        <div id="event-options" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <!-- JS 動態注入 -->
+                        </div>
+
+                        <!-- 事實註解 -->
+                        <div id="event-footnote" class="fact-footnote" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--color-alarm); font-weight: 700;">
+                                <i class="fa-solid fa-feather-pointed" style="font-size: 0.7rem;"></i>
+                                <span>【事實註解】真實報導與研究</span>
+                            </div>
+                            <p id="footnote-text" style="font-style: italic; font-weight: 300; line-height: 1.5;">
+                                註解內容...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側：數據指標與動態 SVG 模擬器 -->
+                <div class="status-sidebar">
+                    
+                    <!-- 數據指標卡 -->
+                    <div class="status-card">
+                        <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem;">
+                            <span id="player-avatar-icon" style="font-size: 2rem;">🏚️</span>
+                            <div>
+                                <h4 id="player-display-name" class="serif-text" style="font-size: 0.95rem; font-weight: 700;">阿源</h4>
+                                <p style="font-size: 0.65rem; color: var(--text-light);">個人狀態與防禦資產</p>
+                            </div>
+                        </div>
+
+                        <!-- 指標 1：結構安全度 -->
+                        <div class="status-row">
+                            <div class="status-label-container">
+                                <span class="status-label">
+                                    <i class="fa-solid fa-house-shield" style="font-size: 0.75rem; color: var(--color-alarm);"></i>
+                                    結構安全度
+                                </span>
+                                <span id="val-integrity" class="status-value">30%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div id="bar-integrity" class="progress-bar bg-risk" style="width: 30%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- 指標 2：鄰里協商共識 -->
+                        <div class="status-row">
+                            <div class="status-label-container">
+                                <span class="status-label">
+                                    <i class="fa-solid fa-users-rectangle" style="font-size: 0.75rem; color: var(--color-amber);"></i>
+                                    鄰里協調共識
+                                </span>
+                                <span id="val-consensus" class="status-value">10%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div id="bar-consensus" class="progress-bar bg-warning" style="width: 10%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- 指標 3：預算 -->
+                        <div style="border-top: 1px solid var(--border-color); padding-top: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 0.75rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fa-solid fa-wallet" style="color: var(--text-light);"></i> 可用防禦預算
+                            </span>
+                            <span id="player-funds" class="serif-text" style="font-weight: 700; font-size: 1.05rem; font-family: monospace;">NT$ 50,000</span>
+                        </div>
+                    </div>
+
+                    <!-- 動態 SVG 土壤液化模擬器 -->
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <span style="font-size: 0.7rem; color: var(--text-light); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
+                            地質與防抗震模擬斷面
+                        </span>
+                        <div class="svg-container">
+                            <svg id="sim-svg" viewBox="0 0 400 250" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                                <!-- 天空與背景 -->
+                                <rect width="400" height="250" fill="#fcfbf9" />
+                                <line x1="0" y1="130" x2="400" y2="130" stroke="#ccc" stroke-dasharray="3,3" />
+
+                                <!-- 地下水位標示線 -->
+                                <line id="water-table-line" x1="0" y1="150" x2="400" y2="150" stroke="#a5f3fc" stroke-width="1.5" stroke-dasharray="4,4" />
+                                <text x="10" y="146" fill="#06b6d4" font-size="8" font-family="sans-serif" font-weight="bold">地下水位 ~2m</text>
+
+                                <!-- 土壤層 2: 飽和細砂層 (液化高風險層) -->
+                                <rect x="0" y="150" width="400" height="70" fill="#f7f1e6" />
+                                <!-- 水波/砂粒背景點綴 -->
+                                <g id="sand-particles" opacity="0.6">
+                                    <circle cx="20" cy="160" r="1" fill="#cca772" />
+                                    <circle cx="50" cy="180" r="1.2" fill="#cca772" />
+                                    <circle cx="90" cy="165" r="1" fill="#cca772" />
+                                    <circle cx="120" cy="205" r="1" fill="#cca772" />
+                                    <circle cx="160" cy="170" r="1.5" fill="#cca772" />
+                                    <circle cx="200" cy="190" r="1.2" fill="#cca772" />
+                                    <circle cx="230" cy="160" r="1" fill="#cca772" />
+                                    <circle cx="270" cy="210" r="1" fill="#cca772" />
+                                    <circle cx="310" cy="175" r="1.5" fill="#cca772" />
+                                    <circle cx="350" cy="195" r="1.2" fill="#cca772" />
+                                    <circle cx="380" cy="165" r="1" fill="#cca772" />
+                                    
+                                    <path d="M 10 185 Q 25 180 40 185" fill="none" stroke="#a5f3fc" stroke-width="0.8" opacity="0.5"/>
+                                    <path d="M 140 195 Q 155 190 170 195" fill="none" stroke="#a5f3fc" stroke-width="0.8" opacity="0.5"/>
+                                    <path d="M 280 180 Q 295 175 310 180" fill="none" stroke="#a5f3fc" stroke-width="0.8" opacity="0.5"/>
+                                </g>
+                                <!-- 液化時沸騰起泡氣體 (地震時動態呈現) -->
+                                <g id="liquefaction-bubbles" opacity="0">
+                                    <circle cx="40" cy="210" r="2.5" fill="#a5f3fc" opacity="0.7" class="liquefying-bubble" style="animation-delay: 0.1s;"/>
+                                    <circle cx="80" cy="190" r="3" fill="#a5f3fc" opacity="0.7" class="liquefying-bubble" style="animation-delay: 0.5s;"/>
+                                    <circle cx="130" cy="200" r="2.5" fill="#a5f3fc" opacity="0.7" class="liquefying-bubble" style="animation-delay: 0.3s;"/>
+                                    <circle cx="170" cy="180" r="3.5" fill="#a5f3fc" opacity="0.7" class="liquefying-bubble" style="animation-delay: 0.7s;"/>
+                                    <circle cx="250" cy="210" r="2.5" fill="#a5f3fc" opacity="0.7" class="liquefying-bubble" style="animation-delay: 0.2s;"/>
+                                    <circle cx="330" cy="190" r="3" fill="#a5f3fc" opacity="0.7" class="liquefying-bubble" style="animation-delay: 0.6s;"/>
+                                </g>
+                                <text x="10" y="190" fill="#a16207" font-size="8" font-family="sans-serif" font-weight="bold">飽和細砂層 (易液化)</text>
+
+                                <!-- 土壤層 1: 表土層 -->
+                                <rect x="0" y="130" width="400" height="20" fill="#eddcc4" />
+                                <text x="10" y="141" fill="#78350f" font-size="8" font-family="sans-serif">回填表土層</text>
+
+                                <!-- 土壤層 3: 堅硬基岩 -->
+                                <rect x="0" y="220" width="400" height="30" fill="#d4cdbf" />
+                                <pattern id="bedrock-hatch" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+                                    <line x1="0" y1="0" x2="0" y2="10" stroke="#bbb19d" stroke-width="1.5" />
+                                </pattern>
+                                <rect x="0" y="220" width="400" height="30" fill="url(#bedrock-hatch)" />
+                                <line x1="0" y1="220" x2="400" y2="220" stroke="#b5a995" stroke-width="1.5" />
+                                <text x="10" y="238" fill="#5c5341" font-size="8" font-family="sans-serif" font-weight="bold">堅硬基岩</text>
+
+                                <!-- 角色 A: 阿源的老公寓 (無連續壁、無打入基岩) -->
+                                <g id="building-apartment" class="svg-building" transform="translate(0, 0)">
+                                    <!-- 淺基礎基礎地梁 -->
+                                    <rect x="50" y="122" width="90" height="8" fill="#a3a3a3" />
+                                    <rect x="55" y="115" width="80" height="7" fill="#888" />
+                                    
+                                    <!-- 水果行主立柱 (挑高軟腳層) -->
+                                    <!-- 左立柱 -->
+                                    <rect id="col-left" x="58" y="85" width="8" height="30" fill="#b3b3b3" />
+                                    <line id="crack-left" x1="58" y1="95" x2="66" y2="105" stroke="#444" stroke-width="1.5" opacity="0" />
+                                    <!-- 中立柱 -->
+                                    <rect id="col-mid" x="91" y="85" width="8" height="30" fill="#b3b3b3" />
+                                    <line id="crack-mid" x1="91" y1="90" x2="99" y2="105" stroke="#444" stroke-width="1.5" opacity="0" />
+                                    <!-- 右立柱 -->
+                                    <rect id="col-right" x="124" y="85" width="8" height="30" fill="#b3b3b3" />
+                                    <line id="crack-right" x1="124" y1="100" x2="132" y2="110" stroke="#444" stroke-width="1.5" opacity="0" />
+
+                                    <!-- 鋼鈑包覆加固層 (升級時呈現) -->
+                                    <rect id="reinforce-left" x="57" y="85" width="10" height="30" fill="#78716c" stroke="#44403c" stroke-width="0.5" opacity="0" />
+                                    <rect id="reinforce-mid" x="90" y="85" width="10" height="30" fill="#78716c" stroke="#44403c" stroke-width="0.5" opacity="0" />
+                                    <rect id="reinforce-right" x="123" y="85" width="10" height="30" fill="#78716c" stroke="#44403c" stroke-width="0.5" opacity="0" />
+
+                                    <!-- 一樓水果行招牌與店面 -->
+                                    <rect x="68" y="88" width="54" height="27" fill="#e2e8f0" opacity="0.9" />
+                                    <rect x="68" y="88" width="54" height="6" fill="#ef4444" />
+                                    <text x="75" y="93" fill="white" font-size="4" font-family="sans-serif" font-weight="bold">阿義水果行</text>
+                                    <!-- 水果箱點綴 -->
+                                    <rect x="72" y="103" width="10" height="7" fill="#d97706" />
+                                    <rect x="85" y="103" width="10" height="7" fill="#d97706" />
+                                    <circle cx="75" cy="105" r="1.2" fill="#ef4444" />
+                                    <circle cx="77" cy="105" r="1.2" fill="#ef4444" />
+                                    <circle cx="88" cy="105" r="1.2" fill="#f59e0b" />
+                                    <circle cx="90" cy="105" r="1.2" fill="#f59e0b" />
+
+                                    <!-- 2樓到4樓建築主體 -->
+                                    <rect x="50" y="5" width="90" height="80" fill="#fca5a5" stroke="#f87171" stroke-width="1" />
+                                    <!-- 公寓窗戶 -->
+                                    <!-- 4F -->
+                                    <rect x="58" y="13" width="14" height="12" fill="#bae6fd" stroke="#7dd3fc" />
+                                    <rect x="88" y="13" width="14" height="12" fill="#bae6fd" stroke="#7dd3fc" />
+                                    <rect x="118" y="13" width="14" height="12" fill="#bae6fd" stroke="#7dd3fc" />
+                                    <!-- 3F -->
+                                    <rect x="58" y="33" width="14" height="12" fill="#bae6fd" stroke="#7dd3fc" />
+                                    <rect x="88" y="33" width="14" height="12" fill="#bae6fd" stroke="#7dd3fc" />
+                                    <rect x="118" y="33" width="14" height="12" fill="#bae6fd" stroke="#7dd3fc" />
+                                    <!-- 2F -->
+                                    <rect x="58" y="53" width="14" height="12" fill="#bae6fd" stroke="#7dd3fc" />
+                                    <rect x="88" y="53" width="14" height="12" fill="#bae6fd" stroke="#7dd3fc" />
+                                    <rect x="118" y="53" width="14" height="12" fill="#bae6fd" stroke="#7dd3fc" />
+                                    
+                                    <!-- 鐵皮加蓋頂樓 -->
+                                    <polygon points="45,5 145,5 135,-3 55,-3" fill="#94a3b8" />
+                                    <rect x="55" y="-3" width="80" height="8" fill="#cbd5e1" />
+                                </g>
+
+                                <!-- 角色 B: Kevin 的新大樓 (深防震樁基打入岩盤、深連續壁阻絕) -->
+                                <g id="building-tower" class="svg-building" transform="translate(0, 0)">
+                                    <!-- 連續壁防滲牆 (打入岩盤) -->
+                                    <rect x="256" y="130" width="4" height="92" fill="#78716c" />
+                                    <rect x="340" y="130" width="4" height="92" fill="#78716c" />
+
+                                    <!-- 樁基 (深入基岩 220px 以下) -->
+                                    <rect x="268" y="130" width="6" height="105" fill="#a3a3a3" />
+                                    <rect x="297" y="130" width="6" height="105" fill="#a3a3a3" />
+                                    <rect x="326" y="130" width="6" height="105" fill="#a3a3a3" />
+
+                                    <!-- 地下室 (筏式基礎) -->
+                                    <rect x="260" y="130" width="80" height="35" fill="#525252" opacity="0.9" />
+                                    <text x="286" y="148" fill="#ccc" font-size="5" font-family="sans-serif">筏式基礎 B1-B3</text>
+
+                                    <!-- 地面層大廳 -->
+                                    <rect x="255" y="95" width="90" height="35" fill="#e2e8f0" stroke="#cbd5e1" />
+                                    <line x1="255" y1="130" x2="345" y2="130" stroke="#475569" stroke-width="2" />
+                                    <!-- 玻璃帷幕線條 -->
+                                    <line x1="285" y1="95" x2="285" y2="130" stroke="#94a3b8" stroke-dasharray="2,2" />
+                                    <line x1="315" y1="95" x2="315" y2="130" stroke="#94a3b8" stroke-dasharray="2,2" />
+                                    <text x="290" y="115" fill="#475569" font-size="7" font-family="sans-serif" font-weight="bold">大樓大廳</text>
+
+                                    <!-- 塔樓主體 (高層鋼骨) -->
+                                    <rect x="260" y="15" width="80" height="80" fill="#cbd5e1" stroke="#94a3b8" />
+                                    <!-- 玻璃窗網格 -->
+                                    <!-- 10F -->
+                                    <rect x="266" y="23" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="281" y="23" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="296" y="23" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="311" y="23" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="326" y="23" width="10" height="8" fill="#bae6fd" />
+                                    <!-- 9F -->
+                                    <rect x="266" y="38" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="281" y="38" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="296" y="38" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="311" y="38" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="326" y="38" width="10" height="8" fill="#bae6fd" />
+                                    <!-- 8F -->
+                                    <rect x="266" y="53" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="281" y="53" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="296" y="53" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="311" y="53" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="326" y="53" width="10" height="8" fill="#bae6fd" />
+                                    <!-- 7F -->
+                                    <rect x="266" y="68" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="281" y="68" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="296" y="68" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="311" y="68" width="10" height="8" fill="#bae6fd" />
+                                    <rect x="326" y="68" width="10" height="8" fill="#bae6fd" />
+
+                                    <!-- 阻尼器 (Damper Room) -->
+                                    <rect x="280" y="-1" width="40" height="16" fill="#475569" rx="2" />
+                                    <text x="286" y="6" fill="#f8fafc" font-size="4" font-family="sans-serif">阻尼器結構室</text>
+                                    
+                                    <!-- 懸吊鎢鋼阻尼球 -->
+                                    <!-- 懸吊繩索 -->
+                                    <line id="damper-cable" x1="300" y1="6" x2="300" y2="12" stroke="#f43f5e" stroke-width="1" />
+                                    <!-- 阻尼核心球 -->
+                                    <circle id="damper-sphere" cx="300" cy="12" r="3" fill="#f43f5e" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- 重新選擇按鈕 -->
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <button onclick="restartGame()" class="btn btn-secondary" style="font-size: 0.65rem; padding: 0.4rem 0.8rem;">
+                            <i class="fa-solid fa-rotate-left"></i> 重新選擇角色
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== 第四部分：決策後果回饋畫面 ==================== -->
+        
+        <section id="screen-feedback" class="screen-section">
+            <div class="editorial-card feedback-card" style="max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+                    <span style="font-size: 0.75rem; color: var(--text-light); font-weight: 700;">抉擇影響結果</span>
+                    <span id="feedback-round-label" style="font-size: 0.75rem; font-family: monospace;">階段 1/4 結束</span>
+                </div>
+                
+                <div>
+                    <h3 id="feedback-title" class="serif-text" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">
+                        決策執行回顧
+                    </h3>
+                    <p id="feedback-log" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; text-align: justify; padding-left: 1rem; border-left: 3px solid var(--border-color); font-style: italic;">
+                        決策回饋故事...
+                    </p>
+                </div>
+
+                <!-- 數據增減動態變化顯示 -->
+                <div style="background-color: rgba(0, 0, 0, 0.02); padding: 1.25rem; border-radius: 6px; display: flex; flex-direction: column; gap: 0.75rem;">
+                    <span style="font-size: 0.7rem; color: var(--text-light); font-weight: 700; text-transform: uppercase;">指標變動數據</span>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; text-align: center;">
+                        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                            <span style="font-size: 0.7rem; color: var(--text-secondary);">結構安全度</span>
+                            <span id="diff-integrity" class="diff-pill" style="align-self: center;">+0%</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                            <span style="font-size: 0.7rem; color: var(--text-secondary);">鄰里協商共識</span>
+                            <span id="diff-consensus" class="diff-pill" style="align-self: center;">+0%</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                            <span style="font-size: 0.7rem; color: var(--text-secondary);">防禦預算支用</span>
+                            <span id="diff-funds" class="diff-pill" style="align-self: center;">-NT$ 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 0.5rem;">
+                    <button id="btn-feedback-continue" class="btn btn-primary">
+                        <span>繼續前進</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== 第五部分：地震速報過渡 ==================== -->
+        
+        <section id="screen-earthquake" class="screen-section">
+            <div class="editorial-card" style="max-width: 520px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; gap: 1.5rem; padding: 2.5rem;">
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <h3 class="serif-text" style="font-size: 1.6rem; font-weight: 700; color: var(--color-alarm);">
+                        🚨 偵測到地震！正在進行模擬
+                    </h3>
+                    <div>
+                        <div class="flash-active" style="background-color: var(--color-alarm-light); color: var(--color-alarm); border: 1px solid #f5c2c2; padding: 0.6rem 1.25rem; font-weight: 700; border-radius: 4px; font-size: 0.9rem; margin: 0.25rem auto 0.5rem auto; display: inline-block;">
+                            ⚠️ 網頁正在模擬地震效果，畫面搖晃為震動特效 ⚠️
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; text-align: center; max-width: 440px; margin: 0.5rem auto 0 auto;">
+                        系統正模擬山腳斷層南段活動引發的 **芮氏規模 6.6 強烈地震**。此時地層正在受剪力影響，液化潛勢與建築結構承重力結算中...
+                    </p>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%; max-width: 320px; margin: 0 auto;">
+                    <div class="progress-track" style="height: 4px;">
+                        <div id="earthquake-bar" class="progress-bar bg-risk" style="width: 100%;"></div>
+                    </div>
+                    <p style="font-size: 0.7rem; color: var(--text-light); letter-spacing: 0.05em; margin-top: 0.25rem;">地盤剪力與耐震結構結算中...</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==================== 第六部分：結論與深入分頁敘事 ==================== -->
+        
+        <!-- 結局分頁 1/3：即時命運 (文學感官) -->
+        <section id="screen-ending1" class="screen-section">
+            <div class="editorial-card" style="max-width: 720px; margin: 0 auto;">
+                <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background-color: var(--color-alarm);"></div>
+                <div style="margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                        <span style="background-color: var(--color-alarm-light); color: var(--color-alarm); font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.4rem; border-radius: 2px;">
+                            落幕：大震之後的廢墟與平靜
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-light);">1 / 3 頁</span>
+                    </div>
+                    
+                    <h3 id="ending-title" class="serif-text" style="font-size: 1.65rem; font-weight: 700; line-height: 1.35; color: var(--text-primary);">
+                        結構性悲歌
+                    </h3>
+
+                    <div id="ending-narrative" class="serif-text" style="color: var(--text-secondary); font-size: 1.05rem; display: flex; flex-direction: column; gap: 1.2rem; text-align: justify; padding-left: 1.25rem; border-left: 2px solid var(--border-color); font-style: italic;">
+                        <!-- 動態載入深刻故事 -->
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end;">
+                    <button class="btn btn-primary" onclick="changeScreen('ending2')">
+                        <span>進入下一頁：凝視現實數據</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 結局分頁 2/3：結構性不平等的陷阱 -->
+        <section id="screen-ending2" class="screen-section">
+            <div class="editorial-card" style="max-width: 720px; margin: 0 auto;">
+                <div style="margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                        <span style="background-color: var(--color-alarm-light); color: var(--color-alarm); font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.4rem; border-radius: 2px;">
+                            結構的深重一擊
+                        </span>
+                        <span style="font-size: 0.75rem; color: var(--text-light);">2 / 3 頁</span>
+                    </div>
+
+                    <div style="text-align: center; padding: 1.5rem; background-color: rgba(0, 0, 0, 0.02); border: 1px solid var(--border-color); border-radius: 6px;">
+                        <p style="font-size: 0.7rem; color: var(--color-alarm); font-weight: 700; letter-spacing: 0.15em;">── 現實震撼數據 ──</p>
+                        <h4 class="serif-text" style="font-size: 1.75rem; font-weight: 900; margin-top: 0.5rem;">
+                            像你這樣的案例，全雙北預估有 <span style="color: var(--color-alarm); font-family: monospace; font-weight: 900;">17,034</span> 件
+                        </h4>
+                    </div>
+
+                    <div style="color: var(--text-secondary); font-size: 0.9rem; display: flex; flex-direction: column; gap: 1.1rem; text-align: justify; line-height: 1.7;">
+                        <p>
+                            <strong>你在剛才的遊戲中，是否感到深深的無力？</strong>
+                            如果是扮演阿源，無論你花費多少口舌，鄰居往往只關心都更後可以「分到多少坪數與補償金」，對隱形的地質與結構危機毫無警覺。
+                        </p>
+                        <p>
+                            新北市政府工務局雖然推動了「弱層補強補助」新制，然而<strong>「全棟 100% 同意簽字」</strong>的法規高牆，成為一條無法跨越的生死線。只要有一戶反對，整棟樓的生命保障計畫即宣告胎死腹中。
+                        </p>
+                        <p>
+                            在全台高達數萬棟的老舊公寓中，像阿源這樣渴望自救卻被制度與利益卡死的居民，占了絕大多數。天災固然無情，但法規門檻與社會共識的空缺，才是將他們推向深淵的推手。
+                        </p>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <button class="btn btn-secondary" onclick="changeScreen('ending1')">
+                        <i class="fa-solid fa-chevron-left"></i> 返回上一步
+                    </button>
+                    <button class="btn btn-primary" onclick="changeScreen('ending3')">
+                        <span>進入最後：防災避險指南</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 結局分頁 3/3：防災避險與一鍵查詢 (Follow-up) -->
+        <section id="screen-ending3" class="screen-section">
+            <div style="max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem;">
+                
+                <div style="text-align: center; display: flex; flex-direction: column; gap: 0.25rem;">
+                    <span style="font-size: 0.75rem; color: var(--text-light);">3 / 3 頁</span>
+                    <h3 class="serif-text" style="font-size: 1.75rem; font-weight: 700;">防災行動指南：我的家安全嗎？</h3>
+                    <p style="color: var(--text-light); font-size: 0.85rem;">這不是一場只留在螢幕上的遊戲。了解現實，是自救的第一步。</p>
+                </div>
+
+                <style>
+                    @media (min-width: 768px) {
+                        .ending3-grid {
+                            display: grid !important;
+                            grid-template-columns: 1fr 1fr !important;
+                            gap: 1.5rem !important;
+                        }
+                    }
+                </style>
+                <div class="ending3-grid" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    
+                    <!-- 左側：互動式新莊 SVG 地圖與點擊查詢 -->
+                    <div class="editorial-card" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; height: 100%;">
+                        <h4 class="serif-text" style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="color: var(--color-alarm);"><i class="fa-solid fa-magnifying-glass-location"></i></span> 
+                            <span>新莊重點路段液化潛勢互動地圖</span>
+                        </h4>
+                        
+                        <p style="font-size: 0.75rem; color: var(--text-secondary);">請直接點擊下方地圖的彩色路段或區塊，即時查看液化深度診斷：</p>
+
+                        <!-- 新莊簡化 SVG 地圖 -->
+                        <div class="map-container">
+                            <svg id="xz-map-svg" viewBox="0 0 320 240" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                                <!-- 地圖外框/淡灰色底 -->
+                                <rect width="320" height="240" fill="none" />
+                                
+                                <!-- 西盛街區塊 - 西南 (紅色高潛勢) -->
+                                <path id="region-xisheng" class="map-region" d="M 20 180 L 100 220 L 120 170 L 60 140 Z" onclick="selectMapRegion('西盛街')"/>
+                                
+                                <!-- 大觀街區塊 - 東側 (紅色高潛勢) -->
+                                <path id="region-daguan" class="map-region" d="M 200 130 L 290 150 L 270 210 L 190 190 Z" onclick="selectMapRegion('大觀街')"/>
+                                
+                                <!-- 中正路幹道 - 橫貫中間 (橙色中高度潛勢) -->
+                                <path id="region-zhongzheng" class="map-region" d="M 30 145 L 280 135 L 290 120 L 40 125 Z" onclick="selectMapRegion('中正路')"/>
+                                
+                                <!-- 新北大道區塊 - 北側副都心 (綠色低潛勢) -->
+                                <path id="region-newtaipei" class="map-region" d="M 120 40 L 260 50 L 240 100 L 110 80 Z" onclick="selectMapRegion('新北大道')"/>
+                                
+                                <!-- 中港路區塊 - 中北排水區 (紅色高潛勢) -->
+                                <path id="region-zhonggang" class="map-region" d="M 120 90 L 180 95 L 170 160 L 115 150 Z" onclick="selectMapRegion('中港路')"/>
+
+                                <!-- 路網/河流點綴線 -->
+                                <path d="M 0 130 Q 150 140 320 120" fill="none" stroke="#ddd" stroke-width="3" opacity="0.3" pointer-events="none" />
+                                
+                                <!-- 地圖文字標示 -->
+                                <text x="50" y="180" class="map-label">西盛街</text>
+                                <text x="225" y="175" class="map-label">大觀街</text>
+                                <text x="135" y="138" class="map-label">中正路幹道</text>
+                                <text x="160" y="65" class="map-label">新北大道</text>
+                                <text x="130" y="115" class="map-label">中港路</text>
+                            </svg>
+                        </div>
+
+                        <!-- 查詢診斷結果顯示面板 -->
+                        <div id="query-result" style="border: 1px solid var(--border-color); border-radius: 6px; padding: 1rem; background-color: rgba(0, 0, 0, 0.01); display: none;">
+                            <!-- 由 JS 動態注入內容 -->
+                        </div>
+                    </div>
+
+                    <!-- 右側：專家觀點與社會防禦 -->
+                    <div class="editorial-card" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; height: 100%;">
+                        <h4 class="serif-text" style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="color: var(--color-kevin);"><i class="fa-solid fa-hammer"></i></span> 
+                            <span>土木工程與社會自救對策</span>
+                        </h4>
+
+                        <div style="display: flex; flex-direction: column; gap: 1.25rem; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6;">
+                            <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+                                <p style="font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 0.4rem;">
+                                    <span style="width: 6px; height: 6px; background-color: var(--color-alarm); border-radius: 50%;"></span>
+                                    1. 土壤液化潛勢高 = 房屋一定會倒塌嗎？
+                                </p>
+                                <p style="padding-left: 0.75rem; text-align: justify;">
+                                    應用地質技師賴俊偉強調：<strong>不一定。</strong>土壤液化主要引發地表不均勻沉陷使房屋傾斜。新建大樓已透過樁基礎或筏式基礎避開風險。老屋若能做好基礎加固或弱層補強，安全性就能大幅提升。
+                                </p>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+                                <p style="font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 0.4rem;">
+                                    <span style="width: 6px; height: 6px; background-color: var(--color-alarm); border-radius: 50%;"></span>
+                                    2. 老舊公寓如何進行低成本自救？
+                                </p>
+                                <p style="padding-left: 0.75rem; text-align: justify;">
+                                    土木技師賴俊安建議，老舊公寓可申請政府「耐震能力初步評估」與「弱層補強補助」。不必動輒斥資數億拆除都更，僅需針對一樓的軟腳支柱包覆鋼鈑或局部增設剪力牆，就能在強震時硬生生撐住整棟樓的生命安全。
+                                </p>
+                            </div>
+                        </div>
+
+                        <div style="border-top: 1px solid var(--border-color); padding-top: 0.75rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem;">
+                            <a href="https://ehp.ogis.gov.tw/tw/ehp/map" target="_blank" style="color: var(--color-alarm); text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 0.25rem;">
+                                <span>🔗 經濟部地調美管中心官方液化圖資</span> <i class="fa-solid fa-chevron-right" style="font-size: 0.6rem;"></i>
+                            </a>
+                            <button onclick="restartGame()" class="btn btn-secondary" style="font-size: 0.65rem; padding: 0.35rem 0.75rem;">
+                                重新體驗
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer style="width: 100%; py: 1.5rem; padding-top: 1.5rem; padding-bottom: 1.5rem; text-align: center; font-size: 0.7rem; color: var(--text-light); border-top: 1px solid var(--border-color); background-color: var(--bg-primary); transition: var(--transition-smooth);">
+        <p>© 深度互動新聞遊戲．本專題人物論述與科學數據均基於【記者陳珮甄】真實報導製成。</p>
+    </footer>
+
+    <!-- 載入自訂 JavaScript 邏輯 -->
+    <script src="index.js"></script>
+</body>
+</html>

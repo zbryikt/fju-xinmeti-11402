@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>學生作品集 — 新媒體內容與技術課程 11402</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f13;
+      --surface: #1a1a22;
+      --card: #21212e;
+      --border: #2e2e40;
+      --accent: #7c6ff7;
+      --accent2: #f76fc0;
+      --text: #e8e8f0;
+      --muted: #888899;
+      --tag-bg: #2a2a3a;
+      --tag-text: #aaa8cc;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0,0,0,.5);
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1a1040 0%, #0f0f1e 60%);
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,111,247,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    header h1 {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: .03em;
+      background: linear-gradient(135deg, #a09bff 0%, #f76fc0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header p {
+      margin-top: .6rem;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    /* ── Layout ── */
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* ── Student section ── */
+    .student-section {
+      margin-bottom: 3rem;
+    }
+    .student-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: .75rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1.25rem;
+    }
+    .student-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      color: #fff;
+    }
+    .student-info h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .student-info .sid {
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: .15rem;
+      font-family: monospace;
+    }
+
+    /* ── Work grid ── */
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 32px rgba(124,111,247,.25);
+    }
+    .card-thumb {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 */
+      overflow: hidden;
+      background: #111;
+    }
+    .card-thumb img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform .35s ease;
+    }
+    .card:hover .card-thumb img {
+      transform: scale(1.04);
+    }
+    .card-thumb .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.55) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .card-body {
+      padding: .85rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+      flex: 1;
+    }
+    .card-title {
+      font-size: .95rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-meta {
+      display: flex;
+      gap: .4rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .tag {
+      font-size: .72rem;
+      padding: .18em .55em;
+      border-radius: 4px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      font-family: monospace;
+    }
+    .tag.week {
+      background: rgba(124,111,247,.18);
+      color: #a09bff;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--muted);
+      font-size: .8rem;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>學生作品集</h1>
+  <p>新媒體內容與技術課程 ｜ 2024－2025 學年第二學期 ｜ 11402</p>
+</header>
+
+<main>
+
+  <!-- ── 413060017 張宸瑜 ── -->
+  <section class="student-section">
+    <div class="student-header">
+      <div class="student-avatar">張</div>
+      <div class="student-info">
+        <h2>張宸瑜</h2>
+        <div class="sid">413060017</div>
+      </div>
+    </div>
+    <div class="works-grid">
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060017/07/background.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060017_07_background.png" alt="第七週 background" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第七週 — background</div>
+          <div class="card-meta">
+            <span class="tag week">Week 07</span>
+            <span class="tag">background.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060017/07/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060017_07_index.png" alt="第七週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第七週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 07</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060017/08/eat.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060017_08_eat.png" alt="第八週 eat" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — eat</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">eat.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060017/08/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060017_08_index.png" alt="第八週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── 413060081 林庭安 ── -->
+  <section class="student-section">
+    <div class="student-header">
+      <div class="student-avatar">林</div>
+      <div class="student-info">
+        <h2>林庭安</h2>
+        <div class="sid">413060081</div>
+      </div>
+    </div>
+    <div class="works-grid">
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060081/08/eat.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060081_08_eat.png" alt="第八週 eat" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — eat</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">eat.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060081/08/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060081_08_index.png" alt="第八週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060081/game.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060081_game.png" alt="打地鼠遊戲" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">打地鼠遊戲</div>
+          <div class="card-meta">
+            <span class="tag">game.html</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── 413060108 黃子馨 ── -->
+  <section class="student-section">
+    <div class="student-header">
+      <div class="student-avatar">黃</div>
+      <div class="student-info">
+        <h2>黃子馨</h2>
+        <div class="sid">413060108</div>
+      </div>
+    </div>
+    <div class="works-grid">
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060108/07/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060108_07_index.png" alt="第七週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第七週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 07</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060108/08/eat.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060108_08_eat.png" alt="第八週 eat" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — eat</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">eat.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060108/08/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060108_08_index.png" alt="第八週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060108/Game.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060108_Game.png" alt="Game" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Game</div>
+          <div class="card-meta">
+            <span class="tag">Game.html</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── 413060263 陳珮甄 ── -->
+  <section class="student-section">
+    <div class="student-header">
+      <div class="student-avatar">陳</div>
+      <div class="student-info">
+        <h2>陳珮甄</h2>
+        <div class="sid">413060263</div>
+      </div>
+    </div>
+    <div class="works-grid">
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060263/07/background.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060263_07_background.png" alt="第七週 background" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第七週 — background</div>
+          <div class="card-meta">
+            <span class="tag week">Week 07</span>
+            <span class="tag">background.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060263/07/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060263_07_index.png" alt="第七週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第七週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 07</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── 413060316 吳翊安 ── -->
+  <section class="student-section">
+    <div class="student-header">
+      <div class="student-avatar">吳</div>
+      <div class="student-info">
+        <h2>吳翊安</h2>
+        <div class="sid">413060316</div>
+      </div>
+    </div>
+    <div class="works-grid">
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060316/07/background.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060316_07_background.png" alt="第七週 background" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第七週 — background</div>
+          <div class="card-meta">
+            <span class="tag week">Week 07</span>
+            <span class="tag">background.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060316/07/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060316_07_index.png" alt="第七週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第七週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 07</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060316/08/eat.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060316_08_eat.png" alt="第八週 eat" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — eat</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">eat.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060316/08/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060316_08_index.png" alt="第八週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── 413060330 陳佩宜 ── -->
+  <section class="student-section">
+    <div class="student-header">
+      <div class="student-avatar">陳</div>
+      <div class="student-info">
+        <h2>陳佩宜</h2>
+        <div class="sid">413060330</div>
+      </div>
+    </div>
+    <div class="works-grid">
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060330/07/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060330_07_index.png" alt="第七週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第七週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 07</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060330/08/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060330_08_index.png" alt="第八週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── 413060445 賴韋彤 ── -->
+  <section class="student-section">
+    <div class="student-header">
+      <div class="student-avatar">賴</div>
+      <div class="student-info">
+        <h2>賴韋彤</h2>
+        <div class="sid">413060445</div>
+      </div>
+    </div>
+    <div class="works-grid">
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060445/07/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060445_07_index.png" alt="第七週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第七週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 07</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060445/08/eat.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060445_08_eat.png" alt="第八週 eat" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — eat</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">eat.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060445/08/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060445_08_index.png" alt="第八週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060445/fghj.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060445_fghj.png" alt="fghj" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">fghj</div>
+          <div class="card-meta">
+            <span class="tag">fghj.html</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── 413060500 松田撫子 ── -->
+  <section class="student-section">
+    <div class="student-header">
+      <div class="student-avatar">松</div>
+      <div class="student-info">
+        <h2>松田撫子</h2>
+        <div class="sid">413060500</div>
+      </div>
+    </div>
+    <div class="works-grid">
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060500/07/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060500_07_index.png" alt="第七週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第七週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 07</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060500/08/eat.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060500_08_eat.png" alt="第八週 eat" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — eat</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">eat.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060500/08/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060500_08_index.png" alt="第八週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060500/index2.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060500_index2.png" alt="index2" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">index2</div>
+          <div class="card-meta">
+            <span class="tag">index2.html</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── 413060550 林晨涓 ── -->
+  <section class="student-section">
+    <div class="student-header">
+      <div class="student-avatar">林</div>
+      <div class="student-info">
+        <h2>林晨涓</h2>
+        <div class="sid">413060550</div>
+      </div>
+    </div>
+    <div class="works-grid">
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060550/08/index.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060550_08_index.png" alt="第八週 index" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">第八週 — index</div>
+          <div class="card-meta">
+            <span class="tag week">Week 08</span>
+            <span class="tag">index.html</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="https://zbryikt.github.io/fju-xinmeti-11402/student/413060550/princess_game.html" target="_blank" rel="noopener">
+        <div class="card-thumb">
+          <img src="img/student_413060550_princess_game.png" alt="Princess Game" loading="lazy">
+          <div class="overlay"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Princess Game</div>
+          <div class="card-meta">
+            <span class="tag">princess_game.html</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  新媒體內容與技術課程 ｜ 11402 ｜ 2025
+</footer>
+
+</body>
+</html>

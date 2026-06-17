@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>失聯 24HR：八萬分之一的生存遊戲</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+                    },
+                    colors: {
+                        darkBg: '#05070c',
+                        cyberRed: '#f87171', // 提升亮度，確保在深色背景的可讀性
+                        cyberOrange: '#fbbf24', // 提升為明亮琥珀橘
+                        cyberGreen: '#34d399', // 提升為明亮薄荷綠
+                        brightGray: '#f3f4f6', // 亮白灰
+                        silverGray: '#e5e7eb', // 高對比銀灰
+                        mediumGray: '#d1d5db', // 高亮度中灰
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glitch': 'glitch 1s linear infinite',
+                        'fadeIn': 'fadeIn 0.5s ease-out forwards',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #05070c;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        /* 自定義捲動條 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #05070c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f87171;
+        }
+        /* 電子裝置掃描線特效 */
+        .phone-screen::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), linear-gradient(90deg, rgba(248, 113, 113, 0.08), rgba(52, 211, 153, 0.04), rgba(59, 130, 246, 0.08));
+            z-index: 10;
+            background-size: 100% 4px, 4px 100%;
+            pointer-events: none;
+        }
+        /* 自定義拖曳解鎖拉條 */
+        .slider-thumb::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #f87171;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(248, 113, 113, 0.9);
+            transition: background 0.2s, transform 0.1s;
+        }
+        .slider-thumb::-webkit-slider-thumb:hover {
+            background: #fca5a5;
+            transform: scale(1.1);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-cyberRed selection:text-black">
+
+    <nav class="fixed top-0 left-0 w-full z-50 bg-darkBg/95 backdrop-blur-md border-b border-gray-800 px-4 py-3.5 flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <span class="w-3 h-3 bg-cyberRed rounded-full animate-ping"></span>
+            <span class="text-xs tracking-widest font-black uppercase text-silverGray">Project / 24HR Lost Contact</span>
+        </div>
+        <div class="hidden md:flex items-center space-x-6 text-xs text-silverGray font-bold">
+            <a href="#intro" class="hover:text-cyberRed transition">1. 消失的訊號</a>
+            <a href="#simulator" class="hover:text-cyberRed transition">2. 地獄模擬器 (5層)</a>
+            <a href="#deduction" class="hover:text-cyberRed transition font-extrabold text-cyberOrange">3. 剝削疊加</a>
+            <a href="#confrontation" class="hover:text-cyberRed transition">4. 誰是共犯</a>
+            <a href="#action" class="hover:text-cyberRed transition">5. 日常行動</a>
+        </div>
+        <div class="text-xs bg-gray-900 text-brightGray px-3 py-1.5 rounded-full border border-gray-700 shadow-md">
+            全台失聯移工估計: <span class="text-cyberRed font-black" id="nav-counter">84,000</span> 人
+        </div>
+    </nav>
+
+    <section id="intro" class="min-h-screen pt-24 flex flex-col items-center justify-center relative px-4 overflow-hidden">
+        <div class="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-center z-10">
+            <!-- 故事左側描述 -->
+            <div class="space-y-6">
+                <span class="text-xs font-bold tracking-wider text-cyberRed uppercase bg-cyberRed/10 px-3.5 py-1.5 rounded-full border border-cyberRed/50">
+                    第一階段 // 消失的訊號
+                </span>
+                <h1 class="text-3xl md:text-5xl font-black tracking-tight leading-tight text-white">
+                    失聯 24HR：<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyberRed via-pink-400 to-cyberOrange">
+                        八萬分之一的生存遊戲
+                    </span>
+                </h1>
+                <p class="text-silverGray leading-relaxed text-sm md:text-base">
+                    一通沒有接起的電話、一條永遠停留在「未讀」的 LINE 訊息。在台灣的某個暗處，一個原本合法的勞動齒輪，選擇脫離嚴密的管理軌道，成為眾人目光之外的「失聯移工」。
+                </p>
+                <div class="p-4 bg-gray-900/90 border border-gray-700 rounded-xl space-y-2">
+                    <p class="text-xs text-brightGray font-bold font-mono">// 互動指引</p>
+                    <p class="text-xs text-cyberOrange font-bold">
+                        <i class="fa-solid fa-arrow-down-long animate-bounce mr-2"></i>向下滾動頁面，目睹中斷聯繫那一刻的系統崩解與規模。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 右側手機互動模型 -->
+            <div class="flex justify-center relative">
+                <div class="w-[310px] h-[610px] bg-black rounded-[40px] border-[8px] border-gray-800 shadow-[0_0_50px_rgba(248,113,113,0.3)] relative overflow-hidden phone-screen flex flex-col justify-between p-4" id="phone-container">
+                    <!-- 聽筒凹槽 -->
+                    <div class="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-4 bg-gray-900 rounded-full z-35 flex justify-center items-center">
+                        <div class="w-3.5 h-3.5 bg-black rounded-full"></div>
+                    </div>
+                    
+                    <!-- 手機動態內容 -->
+                    <div id="phone-content" class="h-full flex flex-col justify-between pt-6 pb-2 transition-all duration-1000">
+                        <!-- 通知訊息流 -->
+                        <div class="space-y-3 overflow-y-auto max-h-[390px] pt-2" id="notif-stack">
+                            <div class="bg-gray-900/95 border-l-4 border-emerald-400 p-3 rounded-lg text-xs shadow-md animate-pulse">
+                                <div class="flex justify-between text-silverGray mb-1">
+                                    <span class="font-black text-emerald-300"><i class="fa-brands fa-line mr-1"></i>LINE (媽媽)</span>
+                                    <span class="text-silverGray">剛剛</span>
+                                </div>
+                                <p class="text-white font-bold">Nak, kenapa tidak angkat telepon? (孩子，為什麼不接電話？)</p>
+                            </div>
+                            <div class="bg-gray-900/95 border-l-4 border-cyberRed p-3 rounded-lg text-xs shadow-md">
+                                <div class="flex justify-between text-silverGray mb-1">
+                                    <span class="font-black text-cyberRed"><i class="fa-solid fa-phone mr-1"></i>未接來電</span>
+                                    <span class="text-silverGray">2分鐘前</span>
+                                </div>
+                                <p class="text-white font-bold">家鄉的媽媽 (3)</p>
+                            </div>
+                            <div class="bg-gray-900/95 border-l-4 border-cyberOrange p-3 rounded-lg text-xs shadow-md">
+                                <div class="flex justify-between text-silverGray mb-1">
+                                    <span class="font-black text-cyberOrange"><i class="fa-solid fa-triangle-exclamation mr-1"></i>系統警報</span>
+                                    <span class="text-silverGray">10分鐘前</span>
+                                </div>
+                                <p class="text-white font-bold">專案管理系統：您已逾期未報到，即將通報...</p>
+                            </div>
+                        </div>
+
+                        <!-- 手機下部控制 -->
+                        <div class="space-y-2 text-center" id="phone-footer">
+                            <div class="text-[10px] text-silverGray font-black tracking-widest uppercase">BATTERY 3%</div>
+                            <div class="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-cyberRed h-full animate-pulse-fast" style="width: 3%"></div>
+                            </div>
+                            <button onclick="triggerShutdown()" class="mt-4 bg-cyberRed/30 hover:bg-cyberRed/50 border border-cyberRed/70 text-white text-xs font-black rounded-full transition w-full py-3 tracking-wider">
+                                <i class="fa-solid fa-power-off mr-1.5 text-cyberRed"></i> 點擊手機手動關機
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 關機中斷訊號畫面 -->
+                    <div id="shutdown-screen" class="absolute inset-0 bg-black z-40 hidden flex flex-col justify-center items-center text-center p-6">
+                        <i class="fa-solid fa-circle-exclamation text-cyberRed text-4xl mb-4 animate-ping"></i>
+                        <p class="font-mono text-xs text-cyberRed uppercase tracking-widest mb-2 font-black">SIGNAL LOST // OFFLINE</p>
+                        <p class="text-xs text-silverGray leading-relaxed font-bold">已中斷電信基地台定位連線。GPS 已關閉。您已成功從官方管理體系名單中消失。</p>
+                        <div class="mt-6 w-8 h-8 border-2 border-t-cyberRed border-gray-800 rounded-full animate-spin"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 滾動引導 -->
+        <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 text-center z-10 pointer-events-none">
+            <span class="text-xs uppercase tracking-widest text-silverGray font-black">往下捲動觸發定位雷達</span>
+            <div class="w-1 h-12 bg-gray-700 mx-auto mt-2 rounded-full overflow-hidden relative">
+                <div class="w-full bg-cyberRed absolute top-0 h-1/2 animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="radar-section" class="min-h-screen flex flex-col justify-center items-center px-4 py-16 relative bg-gradient-to-b from-darkBg to-black overflow-hidden">
+        <div class="max-w-4xl w-full z-10 text-center space-y-4 mb-8">
+            <h3 class="text-2xl md:text-4xl font-black text-white">
+                這不是特例，而是全台每天上演的常態
+            </h3>
+            <p class="text-silverGray max-w-xl mx-auto text-sm md:text-base font-semibold">
+                在台灣，還有無數閃爍的紅色警示光點，散落於崇山嶺、私人家務與城市鷹架中。
+            </p>
+            <div class="text-4xl md:text-6xl font-mono font-black text-cyberRed tracking-wider" id="odometer-container">
+                <span id="odometer-val">0</span> 人
+            </div>
+            <p class="text-xs text-silverGray font-black font-mono uppercase tracking-wider">當前台灣失聯移工估計總數</p>
+        </div>
+
+        <!-- 台灣粒子地圖 -->
+        <div class="w-full max-w-xl h-[500px] relative border border-gray-800 bg-gray-900/30 rounded-2xl p-4 overflow-hidden shadow-2xl">
+            <div class="absolute top-4 left-4 z-10 bg-black/90 px-3 py-2 rounded border border-gray-700 text-[10px] font-mono text-cyberRed font-black">
+                <span class="inline-block w-2 h-2 bg-cyberRed rounded-full animate-ping mr-1"></span> LIVE SATELLITE RADAR
+            </div>
+            <canvas id="taiwan-map-canvas" class="w-full h-full"></canvas>
+        </div>
+    </section>
+
+    <section id="simulator" class="min-h-screen py-20 bg-gradient-to-b from-black to-darkBg flex flex-col justify-center items-center px-4 relative">
+        <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- 模擬器左側：生存指標狀態面板 -->
+            <div class="lg:col-span-5 space-y-6 lg:sticky lg:top-24">
+                <span class="text-xs font-bold tracking-wider text-cyberOrange uppercase bg-cyberOrange/10 px-3.5 py-1.5 rounded-full border border-cyberOrange/50">
+                    第二階段 // 地下勞動五層生存遊戲
+                </span>
+                <h2 class="text-3xl font-black text-white">
+                    五層地獄生存挑戰：<br>你能在這座孤島堅持到最後嗎？
+                </h2>
+                <p class="text-silverGray text-sm md:text-base leading-relaxed font-semibold">
+                    現在，你是剛切斷聯繫的移工「阿強」。你必須在重重壓榨與危機中做出五次抉擇。記住：沒有法律保障，任何一次「大膽」的決定都可能讓你被榨乾、一扣到底、遣送出境。
+                </p>
+
+                <!-- 狀態儀表板 -->
+                <div class="bg-gray-900/90 border border-gray-700 p-6 rounded-2xl space-y-5 shadow-lg relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-cyberOrange/5 rounded-full blur-2xl pointer-events-none"></div>
+                    <div class="flex justify-between items-center border-b border-gray-800 pb-2">
+                        <h4 class="text-xs uppercase font-mono tracking-widest text-silverGray font-black">
+                            阿強的即時生存指標
+                        </h4>
+                        <!-- 進度指示器 -->
+                        <span id="simulator-progress-badge" class="text-xs bg-cyberOrange/20 text-cyberOrange font-black px-2.5 py-0.5 rounded-full">
+                            階段 1/5
+                        </span>
+                    </div>
+                    
+                    <!-- 現金指標 -->
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-silverGray font-black"><i class="fa-solid fa-wallet text-cyberOrange mr-1.5"></i> 手頭現金 (台幣)</span>
+                            <span class="text-cyberOrange font-mono font-black text-sm" id="metric-cash">$12,000</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-2.5 rounded-full overflow-hidden">
+                            <div id="bar-cash" class="bg-gradient-to-r from-amber-600 to-cyberOrange h-full transition-all duration-500" style="width: 40%"></div>
+                        </div>
+                    </div>
+
+                    <!-- 體力指標 -->
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-silverGray font-black"><i class="fa-solid fa-bolt text-cyberGreen mr-1.5"></i> 生理體力</span>
+                            <span class="text-cyberGreen font-mono font-black text-sm" id="metric-stamina">100%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-2.5 rounded-full overflow-hidden">
+                            <div id="bar-stamina" class="bg-gradient-to-r from-emerald-600 to-cyberGreen h-full transition-all duration-500" style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                    <!-- 恐懼指標 -->
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-silverGray font-black"><i class="fa-solid fa-eye text-cyberRed mr-1.5"></i> 心理恐懼值</span>
+                            <span class="text-cyberRed font-mono font-black text-sm" id="metric-fear">15%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-2.5 rounded-full overflow-hidden">
+                            <div id="bar-fear" class="bg-gradient-to-r from-cyberRed to-rose-400 h-full transition-all duration-500" style="width: 15%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-xs text-cyberOrange font-bold bg-gray-950 p-4 rounded-xl border border-gray-800 leading-relaxed">
+                    * 警告：任何指標歸零或恐懼達 100% 時，將引發致命的「強制遣送結局」。請謹慎考量每一步的代價！
+                </div>
+            </div>
+
+            <!-- 右側：5層地獄沙盒互動面板 -->
+            <div class="lg:col-span-7 bg-gray-900/60 border border-gray-700 rounded-3xl p-6 lg:p-8 space-y-8 backdrop-blur shadow-2xl min-h-[580px] flex flex-col justify-between" id="game-card">
+                <div class="space-y-6" id="game-step-content">
+                    <!-- JavaScript 將在此動態注入 5 個關卡內容 -->
+                    <div class="text-center py-12">
+                        <i class="fa-solid fa-gamepad text-5xl text-silverGray animate-bounce mb-4"></i>
+                        <p class="text-silverGray font-bold">正在載入地下生存遊戲結構...</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="deduction" class="min-h-screen py-20 bg-black flex flex-col justify-center items-center px-4 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-darkBg to-black pointer-events-none"></div>
+        
+        <div class="max-w-4xl w-full z-10 space-y-6 text-center mb-12">
+            <span class="text-xs font-bold tracking-wider text-cyberRed uppercase bg-cyberRed/10 px-3.5 py-1.5 rounded-full border border-cyberRed/50">
+                第三階段 // 結構性的枷鎖 (Layered Data)
+            </span>
+            <h2 class="text-3xl md:text-5xl font-black text-white">
+                一層層剝離：被蠶食的勞動成果
+            </h2>
+            <p class="text-silverGray max-w-xl mx-auto text-sm md:text-base font-bold">
+                在合法的引進框架下，移工看似賺取了基本底薪。但點選下方分層按鈕，逐層揭露那些被掩蓋在合約暗處、重重扣除的血汗剝削。
+            </p>
+        </div>
+
+        <!-- 透明層疊互動區 -->
+        <div class="max-w-xl w-full bg-gray-900/70 border border-gray-700 rounded-2xl p-6 relative overflow-hidden shadow-2xl">
+            <!-- 層級導覽 -->
+            <div class="grid grid-cols-3 gap-2 mb-6">
+                <button onclick="setWageLayer(1)" id="btn-layer-1" class="py-2.5 px-3 text-xs font-black rounded-lg border border-cyberGreen/40 bg-cyberGreen/10 text-cyberGreen transition">
+                    第一層 // 合法薪資單
+                </button>
+                <button onclick="setWageLayer(2)" id="btn-layer-2" class="py-2.5 px-3 text-xs font-black rounded-lg border border-gray-800 bg-gray-950 text-silverGray hover:text-white transition">
+                    第二層 // 仲介高利扣除
+                </button>
+                <button onclick="setWageLayer(3)" id="btn-layer-3" class="py-2.5 px-3 text-xs font-black rounded-lg border border-gray-800 bg-gray-950 text-silverGray hover:text-white transition">
+                    第三層 // 真實實拿對比
+                </button>
+            </div>
+
+            <!-- 薪資單顯示器 -->
+            <div class="bg-gray-950 border border-gray-850 rounded-xl p-6 font-mono text-xs relative overflow-hidden min-h-[360px] flex flex-col justify-between">
+                
+                <!-- 網格背景 -->
+                <div class="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#f87171_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+                <!-- 薪資單頂部 -->
+                <div class="border-b border-gray-800 pb-4 flex justify-between items-start">
+                    <div>
+                        <h4 class="text-white font-black text-sm tracking-widest">WAGE STATEMENT (薪資單)</h4>
+                        <p class="text-silverGray text-[10px] mt-1 font-black">ISSUED BY: TAIWAN MANUFACTURING CO.</p>
+                    </div>
+                    <span class="text-right text-[10px] text-silverGray font-black">2026/05</span>
+                </div>
+
+                <!-- 薪資細項 -->
+                <div class="space-y-4 py-4 relative z-10">
+                    <div class="flex justify-between items-center py-1">
+                        <span class="text-silverGray font-bold">基本底薪 (Basic Wage)</span>
+                        <span class="text-cyberGreen font-black text-sm">+$27,470</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1">
+                        <span class="text-silverGray font-bold">加班補貼 (Overtime pay)</span>
+                        <span class="text-cyberGreen font-black">+$5,200</span>
+                    </div>
+
+                    <!-- 扣除項目層 (第二層與第三層顯示) -->
+                    <div id="deduction-overlay" class="space-y-2 pt-2 border-t border-dashed border-gray-850 opacity-0 transform translate-y-2 transition-all duration-700">
+                        <div class="flex justify-between items-center text-cyberRed font-black">
+                            <span>國外仲介貸款本息 (Loan & Interest)</span>
+                            <span class="font-black">-$7,500</span>
+                        </div>
+                        <div class="flex justify-between items-center text-cyberRed font-black">
+                            <span>國內仲介服務費 (Service Fee)</span>
+                            <span class="font-black">-$1,800</span>
+                        </div>
+                        <div class="flex justify-between items-center text-cyberRed font-black">
+                            <span>膳宿強制扣款 (Accommodation)</span>
+                            <span class="font-black">-$3,000</span>
+                        </div>
+                        <div class="flex justify-between items-center text-cyberRed font-black">
+                            <span>強迫儲蓄/保證金 (Compulsory Savings)</span>
+                            <span class="font-black">-$3,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 薪資單底部 -->
+                <div class="border-t border-gray-800 pt-4 flex justify-between items-center relative z-10">
+                    <span class="text-silverGray text-xs font-black uppercase tracking-wider" id="net-title">名義實領薪資 (Gross)</span>
+                    <span class="text-lg font-black text-cyberGreen" id="net-amount">+$32,670</span>
+                </div>
+
+                <!-- 說明文字 -->
+                <div id="layer-explanation" class="mt-4 p-3 bg-gray-900 border border-gray-800 rounded text-xs leading-relaxed text-silverGray font-bold transition-all duration-500">
+                    合約上的「基本工資」，看起來生活無虞。這也是在海外招募時，廣告裡最漂亮的糖衣。
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="confrontation" class="min-h-screen py-20 bg-gradient-to-b from-black to-darkBg flex flex-col justify-center items-center px-4 relative">
+        <div class="max-w-5xl w-full z-10 space-y-8">
+            <div class="text-center space-y-4">
+                <span class="text-xs font-bold tracking-wider text-cyberOrange uppercase bg-cyberOrange/10 px-3.5 py-1.5 rounded-full border border-cyberOrange/50">
+                    第四階段 // 誰是共犯 (多維度視角)
+                </span>
+                <h2 class="text-3xl md:text-5xl font-black text-white">
+                    一場沒有壞人的膠著共犯結構
+                </h2>
+                <p class="text-silverGray max-w-xl mx-auto text-sm md:text-base font-bold">
+                    移工的失聯，往往不是單一惡意造成的，而是社會結構與供需多方拉扯下的妥協。點選下方的系統角色，傾聽他們無可奈何的真實處境。
+                </p>
+            </div>
+
+            <!-- 浮動氣泡網格 -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+                <button onclick="selectBubble('employer')" id="bubble-employer" class="p-6 rounded-2xl border-2 border-cyberOrange bg-gray-950/90 hover:border-cyberOrange transition duration-300 flex flex-col items-center text-center space-y-3 group">
+                    <div class="w-12 h-12 rounded-full bg-cyberOrange/10 flex items-center justify-center text-cyberOrange group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-industry text-xl"></i>
+                    </div>
+                    <span class="font-extrabold text-white text-sm">【 雇主 】</span>
+                    <span class="text-xs text-silverGray font-bold">工廠與老齡家庭</span>
+                </button>
+
+                <button onclick="selectBubble('broker')" id="bubble-broker" class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-cyberRed transition duration-300 flex flex-col items-center text-center space-y-3 group">
+                    <div class="w-12 h-12 rounded-full bg-cyberRed/10 flex items-center justify-center text-cyberRed group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-handshake text-xl"></i>
+                    </div>
+                    <span class="font-extrabold text-white text-sm">【 仲介 】</span>
+                    <span class="text-xs text-silverGray font-bold">跨國市場代理人</span>
+                </button>
+
+                <button onclick="selectBubble('enforcer')" id="bubble-enforcer" class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-cyberOrange transition duration-300 flex flex-col items-center text-center space-y-3 group">
+                    <div class="w-12 h-12 rounded-full bg-amber-500/10 flex items-center justify-center text-cyberOrange group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-shield-halved text-xl"></i>
+                    </div>
+                    <span class="font-extrabold text-white text-sm">【 執法者 】</span>
+                    <span class="text-xs text-silverGray font-bold">法條與人力夾縫</span>
+                </button>
+
+                <button onclick="selectBubble('public')" id="bubble-public" class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-cyberGreen transition duration-300 flex flex-col items-center text-center space-y-3 group">
+                    <div class="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center text-cyberGreen group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-users text-xl"></i>
+                    </div>
+                    <span class="font-extrabold text-white text-sm">【 台灣民眾 】</span>
+                    <span class="text-xs text-silverGray font-bold">享受廉價勞動的我們</span>
+                </button>
+            </div>
+
+            <!-- 自白顯示對話區 -->
+            <div class="bg-gray-950 border border-gray-800 rounded-3xl p-6 md:p-10 relative overflow-hidden min-h-[300px] flex items-center shadow-xl">
+                <!-- 背景大圖示 -->
+                <div class="absolute right-0 bottom-0 opacity-10 text-9xl text-gray-800 select-none pointer-events-none">
+                    <i id="confession-bg-icon" class="fa-solid fa-industry"></i>
+                </div>
+                
+                <div class="space-y-6 relative z-10 max-w-3xl" id="confession-content">
+                    <div class="flex items-center space-x-3 text-cyberOrange">
+                        <i class="fa-solid fa-quote-left text-2xl"></i>
+                        <span class="text-xs uppercase tracking-widest font-mono font-black">雇主的真實無奈 / Voice of Employer</span>
+                    </div>
+                    <p class="text-lg md:text-2xl text-white font-black leading-relaxed" id="confession-text">
+                        「我這間金屬沖壓廠如果明天停工，我拿什麼交給德國跟美國的客戶？台灣年輕人來做半天就嫌熱不幹了，我不找失聯移工來應急，工廠明天就只能清算、倒閉。」
+                    </p>
+                    <div class="border-t border-gray-900 pt-4 flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs text-silverGray gap-2 font-black">
+                        <span>產業真實現狀：中南部中小製造業與急迫家庭面臨極限缺工困境。</span>
+                        <span class="text-cyberOrange font-black font-mono text-sm">衝突係數：★★★★☆</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="action" class="min-h-screen py-20 bg-darkBg flex flex-col justify-center items-center px-4 relative">
+        <div class="max-w-4xl w-full z-10 space-y-8">
+            <div class="text-center space-y-4">
+                <span class="text-xs font-bold tracking-wider text-cyberGreen uppercase bg-cyberGreen/10 px-3.5 py-1.5 rounded-full border border-cyberGreen/50">
+                    第五階段 // 日常中的微小挪步
+                </span>
+                <h2 class="text-3xl md:text-5xl font-black text-white">
+                    修補斷網：我們可以展開的行動
+                </h2>
+                <p class="text-silverGray max-w-xl mx-auto text-sm md:text-base font-bold">
+                    制度不公龐大如網，但並非無法撼動。拉動下方的物理滑桿，解鎖我們可以從日常開始實踐的微小改變。
+                </p>
+            </div>
+
+            <!-- 滑桿解鎖列表 -->
+            <div class="space-y-6 mt-8">
+                
+                <!-- 行動 1 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6 shadow-md transition-all duration-500" id="lock-card-1">
+                    <div class="flex items-center space-x-4 w-full md:w-1/3">
+                        <div class="w-12 h-12 rounded-full bg-cyberRed/20 flex items-center justify-center text-cyberRed" id="lock-icon-1">
+                            <i class="fa-solid fa-lock text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-white text-base">行動一 // 去標籤化</h4>
+                            <p class="text-xs text-cyberOrange font-black mt-0.5">重置對話定義</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 滑桿本體 -->
+                    <div class="w-full md:w-2/3 flex flex-col justify-center space-y-2">
+                        <div class="relative flex items-center h-12 bg-gray-950 rounded-full px-2 border border-gray-800">
+                            <input type="range" min="0" max="100" value="0" class="w-full bg-transparent appearance-none slider-thumb cursor-pointer relative z-10" id="unlock-slider-1" oninput="checkUnlock(1, this.value)">
+                            <div class="absolute inset-0 flex items-center justify-center text-xs text-silverGray font-black font-mono tracking-widest pointer-events-none" id="slide-text-1">
+                                SLIDE TO UNLOCK <i class="fa-solid fa-angles-right ml-1 animate-pulse text-cyberRed"></i>
+                            </div>
+                        </div>
+                        <div id="unlock-content-1" class="hidden text-xs text-brightGray bg-gray-950 p-4 rounded-xl border border-gray-850 leading-relaxed mt-2 animate-fadeIn font-bold">
+                            <strong>從日常語言開始：</strong>不再以「逃跑移工」、「非法」等具有刑事定調含義的標籤看待他們。改用「失聯」或「非正式僱傭」來理解其因債務、不合理住宿限制所做出的被動生存選擇。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 行動 2 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6 shadow-md transition-all duration-500" id="lock-card-2">
+                    <div class="flex items-center space-x-4 w-full md:w-1/3">
+                        <div class="w-12 h-12 rounded-full bg-cyberRed/20 flex items-center justify-center text-cyberRed" id="lock-icon-2">
+                            <i class="fa-solid fa-lock text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-white text-base">行動二 // 勞動改革</h4>
+                            <p class="text-xs text-cyberOrange font-black mt-0.5">引進源頭改革</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 滑桿本體 -->
+                    <div class="w-full md:w-2/3 flex flex-col justify-center space-y-2">
+                        <div class="relative flex items-center h-12 bg-gray-950 rounded-full px-2 border border-gray-800">
+                            <input type="range" min="0" max="100" value="0" class="w-full bg-transparent appearance-none slider-thumb cursor-pointer relative z-10" id="unlock-slider-2" oninput="checkUnlock(2, this.value)">
+                            <div class="absolute inset-0 flex items-center justify-center text-xs text-silverGray font-black font-mono tracking-widest pointer-events-none" id="slide-text-2">
+                                SLIDE TO UNLOCK <i class="fa-solid fa-angles-right ml-1 animate-pulse text-cyberRed"></i>
+                            </div>
+                        </div>
+                        <div id="unlock-content-2" class="hidden text-xs text-brightGray bg-gray-950 p-4 rounded-xl border border-gray-850 leading-relaxed mt-2 animate-fadeIn font-bold">
+                            <strong>倡議 G2G 直聘與跨國取消私仲：</strong>持續關注並支持政府對政府直接引進（Government-to-Government）機制。逐步取消黑箱的「跨國私人仲介」，從源頭切斷逼使移工因承受暴利債務而必須逃跑的制度枷鎖。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 行動 3 -->
+                <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6 shadow-md transition-all duration-500" id="lock-card-3">
+                    <div class="flex items-center space-x-4 w-full md:w-1/3">
+                        <div class="w-12 h-12 rounded-full bg-cyberRed/20 flex items-center justify-center text-cyberRed" id="lock-icon-3">
+                            <i class="fa-solid fa-lock text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-white text-base">行動三 // 科技賦權</h4>
+                            <p class="text-xs text-cyberOrange font-black mt-0.5">匿名數位存證支援</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 滑桿本體 -->
+                    <div class="w-full md:w-2/3 flex flex-col justify-center space-y-2">
+                        <div class="relative flex items-center h-12 bg-gray-950 rounded-full px-2 border border-gray-800">
+                            <input type="range" min="0" max="100" value="0" class="w-full bg-transparent appearance-none slider-thumb cursor-pointer relative z-10" id="unlock-slider-3" oninput="checkUnlock(3, this.value)">
+                            <div class="absolute inset-0 flex items-center justify-center text-xs text-silverGray font-black font-mono tracking-widest pointer-events-none" id="slide-text-3">
+                                SLIDE TO UNLOCK <i class="fa-solid fa-angles-right ml-1 animate-pulse text-cyberRed"></i>
+                            </div>
+                        </div>
+                        <div id="unlock-content-3" class="hidden text-xs text-brightGray bg-gray-950 p-4 rounded-xl border border-gray-850 leading-relaxed mt-2 animate-fadeIn font-bold">
+                            <strong>運用不對稱科技保全證據：</strong>推廣匿名、基於加密雜湊機制的勞動證據蒐集鏈。當弱勢移工在地下黑市遭遇無良雇主剝削或突發職災時，能在第一時間不暴露行蹤地數位存證，作為日後 NGO 爭取權益的鐵證。
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="outro" class="min-h-screen py-20 bg-gradient-to-b from-darkBg to-black flex flex-col justify-center items-center px-4 relative overflow-hidden">
+        
+        <div class="max-w-3xl w-full text-center space-y-8 z-10">
+            <!-- 暖心家庭簡訊推播 -->
+            <div class="flex justify-center mb-6">
+                <div class="w-[280px] h-[150px] bg-gray-950 border-2 border-gray-800 rounded-2xl p-4 text-left relative overflow-hidden shadow-2xl animate-pulse">
+                    <div class="flex justify-between text-silverGray text-[10px] mb-2 font-black font-mono">
+                        <span><i class="fa-brands fa-whatsapp text-cyberGreen mr-1"></i>WHATSAPP</span>
+                        <span>剛剛</span>
+                    </div>
+                    <p class="text-xs text-cyberGreen font-black mb-1">媽媽 Ibu</p>
+                    <p class="text-xs text-white leading-relaxed font-black">"Anakku, kami merindukanmu. Jaga kesehatan ya."<br><span class="text-silverGray text-[10px] italic font-bold">(孩子，我們想你。一定要照顧好自己的身體。)</span></p>
+                    <div class="absolute bottom-2 right-4 text-gray-650"><i class="fa-solid fa-heart text-xs text-cyberRed animate-ping"></i></div>
+                </div>
+            </div>
+
+            <h3 class="text-xl md:text-3xl font-black text-white leading-relaxed">
+                在數據中，他們是消失的訊號；<br>
+                在生活中，他們是支撐台灣社會運轉的齒輪。
+            </h3>
+            
+            <p class="text-silverGray leading-relaxed max-w-xl mx-auto text-sm md:text-base font-bold">
+                當我們關上螢幕，這場生存遊戲仍在全台的角落真實繼續著。但這一次，你已知曉這場遊戲背後殘酷且不公的規則。
+            </p>
+
+            <!-- 行動與分享按鈕 -->
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
+                <button onclick="copyShareText()" class="w-full sm:w-auto px-6 py-3 bg-cyberRed hover:bg-red-500 text-white font-black rounded-full transition-all duration-300 text-sm shadow-lg hover:shadow-cyberRed/30 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-share-nodes"></i> 分享我的生存結局
+                </button>
+                <a href="https://one-forty.org" target="_blank" class="w-full sm:w-auto px-6 py-3 bg-gray-900 hover:bg-gray-800 border border-gray-700 text-white font-black rounded-full transition-all duration-300 text-sm flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-heart text-cyberRed"></i> 關注 One-Forty 權益推廣
+                </a>
+            </div>
+
+            <!-- Toast 彈窗 -->
+            <div id="toast-message" class="fixed bottom-6 right-6 bg-emerald-600 border border-emerald-500 text-white text-xs px-4 py-3 rounded-lg shadow-2xl z-50 transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-2">
+                <i class="fa-solid fa-check text-white"></i> <span id="toast-text" class="font-black">已成功複製到剪貼簿！</span>
+            </div>
+        </div>
+
+        <div class="absolute bottom-6 text-center text-[10px] text-silverGray font-black font-mono tracking-widest uppercase">
+            Designed for Immersion // Explanatory Interactive Journalism
+        </div>
+    </section>
+
+    <script>
+        // 5層深度生存模擬器狀態機
+        let gameState = {
+            step: 1, // 1: 起點選擇, 2: 牛頭剝削, 3: 大掃蕩, 4: 職災崩潰, 5: 終極尊嚴與存證
+            cash: 12000,
+            stamina: 100,
+            fear: 15,
+            job: null, // 'tea', 'construction', 'caretaker'
+            verified: false
+        };
+
+        window.onload = function() {
+            initTaiwanCanvas();
+            renderSimulatorStep();
+            window.addEventListener('scroll', handlePageScroll);
+        };
+
+        // -----------------------------------------------------
+        // 地圖渲染器：台灣粒子雷達地圖
+        // -----------------------------------------------------
+        let canvas = document.getElementById('taiwan-map-canvas');
+        let ctx = canvas.getContext('2d');
+        let particles = [];
+        let maxDots = 84000;
+
+        function initTaiwanCanvas() {
+            const rect = canvas.parentNode.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = rect.height * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+            const cx = rect.width / 2;
+            const cy = rect.height / 2;
+            
+            for (let i = 0; i < 450; i++) {
+                let angle = Math.random() * Math.PI * 2;
+                let u = Math.random() + Math.random();
+                let r = u > 1 ? 2 - u : u;
+                
+                // 偏移計算建立台灣長條番薯型
+                let dx = r * Math.sin(angle) * (rect.width * 0.16);
+                let dy = r * Math.cos(angle) * (rect.height * 0.39) - (dx * 0.16); 
+                
+                particles.push({
+                    x: cx + dx + (Math.random() - 0.5) * 15,
+                    y: cy + dy + (Math.random() - 0.5) * 15,
+                    opacity: 0.15 + Math.random() * 0.6,
+                    pulseSpeed: 0.01 + Math.random() * 0.03,
+                    active: false
+                });
+            }
+            drawTaiwanMap();
+        }
+
+        function drawTaiwanMap() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 繪製雷達掃描外圈
+            ctx.strokeStyle = 'rgba(156, 163, 175, 0.4)';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            const cx = canvas.width / (2 * window.devicePixelRatio);
+            const cy = canvas.height / (2 * window.devicePixelRatio);
+            
+            ctx.ellipse(cx, cy - 10, cx * 0.32, cy * 0.75, -0.15, 0, Math.PI * 2);
+            ctx.stroke();
+
+            particles.forEach((p) => {
+                if (p.active) {
+                    p.opacity += p.pulseSpeed;
+                    if (p.opacity > 1 || p.opacity < 0.15) {
+                        p.pulseSpeed = -p.pulseSpeed;
+                    }
+                    
+                    ctx.fillStyle = `rgba(248, 113, 113, ${Math.max(0.2, p.opacity)})`;
+                    ctx.shadowBlur = 6;
+                    ctx.shadowColor = '#f87171';
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            });
+        }
+
+        // 監聽頁面滾動，同步雷達計數器與地圖活躍度
+        function handlePageScroll() {
+            const scrollY = window.scrollY;
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const radarSec = document.getElementById('radar-section');
+            const rect = radarSec.getBoundingClientRect();
+            
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / rect.height));
+                const currentDots = Math.floor(progress * maxDots);
+                document.getElementById('nav-counter').innerText = currentDots.toLocaleString();
+                document.getElementById('odometer-val').innerText = currentDots.toLocaleString();
+                
+                // 動態啟動地圖粒子
+                const countToActivate = Math.floor(progress * particles.length);
+                particles.forEach((p, idx) => {
+                    p.active = idx < countToActivate;
+                });
+                drawTaiwanMap();
+            }
+        }
+
+        // -----------------------------------------------------
+        // 第一階段：手機模擬斷訊
+        // -----------------------------------------------------
+        function triggerShutdown() {
+            const phoneContent = document.getElementById('phone-content');
+            const shutdownScreen = document.getElementById('shutdown-screen');
+            
+            phoneContent.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                phoneContent.classList.add('hidden');
+                shutdownScreen.classList.remove('hidden');
+                shutdownScreen.classList.add('animate-fadeIn');
+                
+                // 生存數值連動初始微調
+                gameState.fear = 30;
+                updateMetricsUI();
+            }, 600);
+        }
+
+        // -----------------------------------------------------
+        // 第二階段：地下生存模擬器指標控制與渲染邏輯
+        // -----------------------------------------------------
+        function updateMetricsUI() {
+            gameState.cash = Math.max(0, gameState.cash);
+            gameState.stamina = Math.max(0, Math.min(100, gameState.stamina));
+            gameState.fear = Math.max(0, Math.min(100, gameState.fear));
+
+            // 更新儀表板數值
+            document.getElementById('metric-cash').innerText = `$${gameState.cash.toLocaleString()}`;
+            document.getElementById('metric-stamina').innerText = `${gameState.stamina}%`;
+            document.getElementById('metric-fear').innerText = `${gameState.fear}%`;
+
+            // 更新進度條長度
+            document.getElementById('bar-cash').style.width = `${Math.min(100, (gameState.cash / 35000) * 100)}%`;
+            document.getElementById('bar-stamina').style.width = `${gameState.stamina}%`;
+            document.getElementById('bar-fear').style.width = `${gameState.fear}%`;
+
+            // 更新進度徽章文字
+            const badge = document.getElementById('simulator-progress-badge');
+            if (badge) {
+                if (gameState.step <= 5) {
+                    badge.innerText = `階段 ${gameState.step}/5`;
+                } else {
+                    badge.innerText = `已結算`;
+                }
+            }
+
+            if (gameState.cash <= 0) {
+                renderGameOver("資金徹底歸零！在黑市市場中沒有一分錢，你付不起地下大通鋪一晚 200 元的租金，也無法飽腹。工友因害怕受牽連將你趕出門外，你在冬夜寒雨的台北街頭因飢寒交迫而向警方自首，這場淘金夢在此無聲終結...");
+            } else if (gameState.stamina <= 0) {
+                renderGameOver("生理體力徹底崩潰！你因超負荷的密集勞動與疾病侵襲，猝死在不通風的幽暗工寮內。地下雇主為了避免非法聘僱曝光而遭到罰款，趁著深夜開車將你遺棄在偏僻的山區路口，不留一絲痕跡...");
+            } else if (gameState.fear >= 100) {
+                renderGameOver("心理恐懼值衝破極限！終日的精神緊繃與躲藏讓你產生強烈的幻聽幻覺，看見穿著深色制服的行人都以為是執法人員。你在人潮洶湧的十字路口徹底精神失常狂奔，隨即被交警包夾壓制，宣告遣返...");
+            }
+        }
+
+        function renderSimulatorStep() {
+            const container = document.getElementById('game-step-content');
+            
+            // --- 第一層：選擇起點 ---
+            if (gameState.step === 1) {
+                container.innerHTML = `
+                    <div class="space-y-4 animate-fadeIn">
+                        <div class="flex items-center space-x-2 text-cyberOrange">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                            <span class="text-xs tracking-wider uppercase font-mono font-black">第一層 // 命運的起點 (起點選擇)</span>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-black text-white leading-snug">為了生存，你選擇投入哪一個非正規勞動市場？</h3>
+                        <p class="text-silverGray text-xs md:text-sm leading-relaxed font-bold">
+                            你切斷了與官方的聯繫，此時身無分文且背負巨額債務。黑市的地下仲介為你指點了三條路，每個抉擇將直接決定你的起步數值：
+                        </p>
+                        
+                        <!-- 選擇 A -->
+                        <div class="border border-gray-800 hover:border-cyberRed/80 bg-gray-950 p-4 rounded-xl transition duration-300">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="text-white font-extrabold text-sm">【方案 A】阿里山深山採茶 (高風險 // 高回報)</h4>
+                                    <p class="text-xs text-silverGray mt-1 font-bold">日薪 $2,200。地處荒涼的陡峭高山，極易遭遇林務局聯合查緝，恐懼感隨之大增。</p>
+                                </div>
+                                <span class="text-xs text-cyberRed font-black font-mono">+$2,200 / 天</span>
+                            </div>
+                            <button onclick="selectJob('tea')" class="mt-3 px-4 py-2 bg-cyberRed/20 hover:bg-cyberRed text-white border border-cyberRed/50 text-xs font-black rounded-lg transition-all">
+                                選擇上山採茶
+                            </button>
+                        </div>
+
+                        <!-- 選擇 B -->
+                        <div class="border border-gray-800 hover:border-cyberOrange/80 bg-gray-950 p-4 rounded-xl transition duration-350">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="text-white font-extrabold text-sm">【方案 B】市區建案工地打雜 (工期穩 // 體能摧毀)</h4>
+                                    <p class="text-xs text-silverGray mt-1 font-bold">日薪 $1,650。需在毫無防護網的高空外牆搬運重物，體力消耗極快，受傷風險極高。</p>
+                                </div>
+                                <span class="text-xs text-cyberOrange font-black font-mono">+$1,650 / 天</span>
+                            </div>
+                            <button onclick="selectJob('construction')" class="mt-3 px-4 py-2 bg-cyberOrange/20 hover:bg-cyberOrange text-white border border-cyberOrange/50 text-xs font-black rounded-lg transition-all">
+                                選擇工地打雜
+                            </button>
+                        </div>
+
+                        <!-- 選擇 C -->
+                        <div class="border border-gray-800 hover:border-cyberGreen/80 bg-gray-950 p-4 rounded-xl transition duration-350">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="text-white font-extrabold text-sm">【方案 C】私人病患看護 (高隱蔽 // 24小時無休)</h4>
+                                    <p class="text-xs text-silverGray mt-1 font-bold">日薪 $1,300。關在無人監管的民宅內沒日沒夜照顧失智老人，生活極度壓抑且缺乏休息。</p>
+                                </div>
+                                <span class="text-xs text-cyberGreen font-black font-mono">+$1,300 / 天</span>
+                            </div>
+                            <button onclick="selectJob('caretaker')" class="mt-3 px-4 py-2 bg-cyberGreen/20 hover:bg-cyberGreen text-white border border-cyberGreen/50 text-xs font-black rounded-lg transition-all">
+                                選擇私人看護
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } 
+            // --- 第二層：地下牛頭的吸血 (剝削買路費) ---
+            else if (gameState.step === 2) {
+                container.innerHTML = `
+                    <div class="space-y-4 animate-fadeIn">
+                        <div class="flex items-center space-x-2 text-cyberOrange">
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                            <span class="text-xs tracking-wider uppercase font-mono font-black">第二層 // 地下牛頭的要挾 (剝削買路費)</span>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-black text-white leading-snug">剛到黑市，帶路的「地下牛頭(非法仲介)」突然獅子大開口：</h3>
+                        <p class="text-silverGray text-xs md:text-sm leading-relaxed font-bold">
+                            他向你強索 10,000 元的「安心保障金」，聲稱能幫你規避警察，否則立刻通報抓你。此時你手頭極度吃緊：
+                        </p>
+                        
+                        <div class="space-y-3 pt-2">
+                            <!-- 選擇 A：支付（扣慘） -->
+                            <button onclick="makeStep2Choice('pay')" class="w-full text-left p-3.5 bg-gray-955 hover:bg-gray-800 border border-gray-800 rounded-xl transition duration-300 flex justify-between items-center group">
+                                <div>
+                                    <span class="text-xs text-white font-extrabold block group-hover:text-cyberOrange transition">【咬牙支付】花錢消災，將大半積蓄拱手讓出。</span>
+                                    <span class="text-[10px] text-cyberRed font-black block mt-0.5">現金 -$10,000 // 恐懼值稍降 -5%</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-silverGray group-hover:translate-x-1 transition"></i>
+                            </button>
+                            
+                            <!-- 選擇 B：抗拒自幹（高危險） -->
+                            <button onclick="makeStep2Choice('refuse')" class="w-full text-left p-3.5 bg-gray-955 hover:bg-gray-800 border border-gray-800 rounded-xl transition duration-300 flex justify-between items-center group">
+                                <div>
+                                    <span class="text-xs text-white font-extrabold block group-hover:text-cyberOrange transition">【嚴詞拒絕】拒絕被吸血，決定連夜逃亡自己找工作。</span>
+                                    <span class="text-[10px] text-cyberRed font-black block mt-0.5">恐懼值爆增 +35% // 體力折損 -20</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-silverGray group-hover:translate-x-1 transition"></i>
+                            </button>
+
+                            <!-- 選擇 C：暴力衝突或報警（黑暗深淵：直接扣乾遣返） -->
+                            <button onclick="makeStep2Choice('conflict')" class="w-full text-left p-3.5 bg-red-950/40 hover:bg-red-950/80 border border-cyberRed/40 rounded-xl transition duration-300 flex justify-between items-center group">
+                                <div>
+                                    <span class="text-xs text-cyberRed font-black block group-hover:text-white transition"><i class="fa-solid fa-skull-crossbones mr-1.5 animate-pulse"></i> 【激烈反抗】與牛頭發生肉體肢體衝突，甚至威脅要報警玉石俱焚。</span>
+                                    <span class="text-[10px] text-cyberRed font-black block mt-0.5">⚠️ 極高危險：牛頭可能當場反向檢舉你，或直接洗劫你的所有資產！</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-silverGray group-hover:translate-x-1 transition"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } 
+            // --- 第三層：全台大掃蕩 (警報與大圍捕) ---
+            else if (gameState.step === 3) {
+                container.innerHTML = `
+                    <div class="space-y-4 animate-fadeIn">
+                        <div class="flex items-center space-x-2 text-cyberRed">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span class="text-xs tracking-wider uppercase font-mono font-black">第三層 // 聯合專案大掃蕩 (警報與大圍捕)</span>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-black text-white leading-snug">凌晨，查緝人員突然無預警突襲搜捕你所在的區域！</h3>
+                        <p class="text-silverGray text-xs md:text-sm leading-relaxed font-bold">
+                            鐵皮屋工寮外傳來混亂的腳步聲與手電筒刺眼強光，身旁的同伴紛紛尖叫逃竄。你打算往哪裡逃？
+                        </p>
+                        
+                        <div class="space-y-3 pt-2">
+                            <!-- 選擇 A -->
+                            <button onclick="makeStep3Choice('hide_hazardous')" class="w-full text-left p-3.5 bg-gray-955 hover:bg-gray-800 border border-gray-800 rounded-xl transition duration-300 flex justify-between items-center group">
+                                <div>
+                                    <span class="text-xs text-white font-extrabold block group-hover:text-cyberOrange transition">【高危險藏匿】鑽入毫無通風且堆滿劇毒農藥的夾板暗道中。</span>
+                                    <span class="text-[10px] text-cyberRed font-black block mt-0.5">體力重挫 -35 // 恐懼值 +20%</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-silverGray group-hover:translate-x-1 transition"></i>
+                            </button>
+                            
+                            <!-- 選擇 B -->
+                            <button onclick="makeStep3Choice('bribe_informant')" class="w-full text-left p-3.5 bg-gray-955 hover:bg-gray-800 border border-gray-800 rounded-xl transition duration-300 flex justify-between items-center group">
+                                <div>
+                                    <span class="text-xs text-white font-extrabold block group-hover:text-cyberOrange transition">【黑市買路】塞給現場白手套一筆大額過路費，換取後門逃離情報。</span>
+                                    <span class="text-[10px] text-cyberRed font-black block mt-0.5">現金大出血 -$5,000 // 恐懼值降 10%</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-silverGray group-hover:translate-x-1 transition"></i>
+                            </button>
+
+                            <!-- 選擇 C：直接通關失敗 -->
+                            <button onclick="makeStep3Choice('run_wild')" class="w-full text-left p-3.5 bg-red-950/40 hover:bg-red-950/80 border border-cyberRed/40 rounded-xl transition duration-300 flex justify-between items-center group">
+                                <div>
+                                    <span class="text-xs text-cyberRed font-black block group-hover:text-white transition">【盲目跳窗狂奔】不管三七二十一，直接跳窗往馬路上衝去。</span>
+                                    <span class="text-[10px] text-cyberRed font-black block mt-0.5">⚠️ 極高危險：街角早已部署紅外線臨檢卡，衝出極可能直接被捕！</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-silverGray group-hover:translate-x-1 transition"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } 
+            // --- 第四層：致命職災與黑市醫療 (肉體臨界點) ---
+            else if (gameState.step === 4) {
+                let disasterText = "";
+                if (gameState.job === 'tea') {
+                    disasterText = "在陡峭茶園搬運重物時，你失足滑落山谷。右腿骨折扭曲，劇痛讓你幾乎昏厥。";
+                } else if (gameState.job === 'construction') {
+                    disasterText = "工地鷹架突然在豪雨中鬆脫，你自二樓摔落，沉重的水泥塊直接砸斷了你的手臂。";
+                } else {
+                    disasterText = "因為長期24小時精神壓抑，你引發了嚴重的急性胃穿孔併發高燒，痛到無法站立。";
+                }
+
+                container.innerHTML = `
+                    <div class="space-y-4 animate-fadeIn">
+                        <div class="flex items-center space-x-2 text-cyberRed">
+                            <i class="fa-solid fa-house-medical"></i>
+                            <span class="text-xs tracking-wider uppercase font-mono font-black">第四層 // 致命職災與黑市醫療 (肉體臨界點)</span>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-black text-white leading-snug">${disasterText}</h3>
+                        <p class="text-silverGray text-xs md:text-sm leading-relaxed font-bold">
+                            因為你是失聯身分，沒有健保，如果去正規大型醫院，會因身分曝光而立刻被捕。工頭冷笑著塞給你幾顆止痛藥，這時你的生命面臨抉擇：
+                        </p>
+                        
+                        <div class="space-y-3 pt-2">
+                            <!-- 選擇 A -->
+                            <button onclick="makeStep4Choice('underground_clinic')" class="w-full text-left p-3.5 bg-gray-955 hover:bg-gray-800 border border-gray-800 rounded-xl transition duration-300 flex justify-between items-center group">
+                                <div>
+                                    <span class="text-xs text-white font-extrabold block group-hover:text-cyberOrange transition">【黑市診所】前往無照密醫診所，支付天價現金進行草率手術縫合。</span>
+                                    <span class="text-[10px] text-cyberRed font-black block mt-0.5">現金暴跌 -$7,000 // 體力勉強恢復 +20</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-silverGray group-hover:translate-x-1 transition"></i>
+                            </button>
+                            
+                            <!-- 選擇 B -->
+                            <button onclick="makeStep4Choice('drug_bear')" class="w-full text-left p-3.5 bg-gray-955 hover:bg-gray-800 border border-gray-800 rounded-xl transition duration-300 flex justify-between items-center group">
+                                <div>
+                                    <span class="text-xs text-white font-extrabold block group-hover:text-cyberOrange transition">【偏方止痛】吞服過量非法止痛藥強撐，拒絕就醫，繼續忍痛上工。</span>
+                                    <span class="text-[10px] text-cyberRed font-black block mt-0.5">體力重創 -40 // 恐懼值 +15%</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-silverGray group-hover:translate-x-1 transition"></i>
+                            </button>
+
+                            <!-- 選擇 C：直接扣乾體力崩潰 -->
+                            <button onclick="makeStep4Choice('give_up')" class="w-full text-left p-3.5 bg-red-950/40 hover:bg-red-950/80 border border-cyberRed/40 rounded-xl transition duration-300 flex justify-between items-center group">
+                                <div>
+                                    <span class="text-xs text-cyberRed font-black block group-hover:text-white transition">【放棄任何治療】在冰冷的宿舍通鋪躺著等死，賭身體自己好起來。</span>
+                                    <span class="text-[10px] text-cyberRed font-black block mt-0.5">⚠️ 極高危險：無保護措施可能引發傷口敗血症或徹底透支，導致體力直接扣到底！</span>
+                                </div>
+                                <i class="fa-solid fa-chevron-right text-silverGray group-hover:translate-x-1 transition"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } 
+            // --- 第五層：終極的自保抉擇 (尊嚴與鐵證) ---
+            else if (gameState.step === 5) {
+                container.innerHTML = `
+                    <div class="space-y-4 animate-fadeIn">
+                        <div class="flex items-center space-x-2 text-cyberGreen">
+                            <i class="fa-solid fa-fingerprint"></i>
+                            <span class="text-xs tracking-wider uppercase font-mono font-black">第五層 // 終極的尊嚴抉擇 (無可篡改的證據)</span>
+                        </div>
+                        <h3 class="text-lg md:text-xl font-black text-white leading-snug">雇主見你負傷且即將完工，突然拒絕支付你累積的所有非法薪資：</h3>
+                        <p class="text-silverGray text-xs md:text-sm leading-relaxed font-bold">
+                            他叫囂著：『你去檢舉我啊！你只要敢去，警察第一個把你抓起來遣返！』此時，他還惡意誣告你偷竊其私人物品，逼你放棄討薪。你決定：
+                        </p>
+                        
+                        <div class="p-4 bg-gray-950 border border-gray-800 rounded-xl space-y-4">
+                            <p class="text-xs font-black text-cyberOrange"><i class="fa-solid fa-shield-halved mr-1 animate-pulse"></i> 啟動不可篡改的「科技防禦盾牌」</p>
+                            <p class="text-[11px] text-silverGray leading-relaxed font-bold">
+                                我們可以透過無密鑰第三方防護鎖，為你受傷現場與工時對話記錄加上「數位時光膠囊（SHA-256）」。即使你日後遭到逮捕，雇主也絕對無法強迫你解鎖手機並刪除這些司法證據，這將成為你與 NGO 聯合索賠的致命王牌！
+                            </p>
+                            
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <button onclick="triggerVerification()" class="flex-1 py-3 px-4 bg-cyberGreen/20 hover:bg-cyberGreen border border-cyberGreen/50 text-white font-black text-xs rounded-xl transition duration-300 flex items-center justify-center gap-1.5 shadow-md">
+                                    <i class="fa-solid fa-lock text-cyberGreen"></i> 拍照錄音存證並掛載數位簽章
+                                </button>
+                                <button onclick="refuseVerification()" class="flex-1 py-3 px-4 bg-gray-950 hover:bg-gray-800 border border-gray-700 text-silverGray text-xs font-bold rounded-xl transition duration-300">
+                                    【妥協退縮】淨身出戶，自認倒楣
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            // --- 第六階段：成果結算與數位防護動態 (若選擇了驗證) ---
+            else if (gameState.step === 6) {
+                container.innerHTML = `
+                    <div class="space-y-4 animate-fadeIn">
+                        <div class="flex items-center space-x-2 text-cyberGreen">
+                            <i class="fa-solid fa-fingerprint animate-pulse"></i>
+                            <span class="text-xs tracking-wider uppercase font-mono font-black">密碼學防護盾 // CRYPTO EVIDENCE SECURITY LOCK</span>
+                        </div>
+                        <h3 class="text-xl font-black text-white">科技保障：防篡改數位證據包生成中</h3>
+                        <p class="text-xs text-silverGray leading-relaxed font-bold">
+                            為了確保證據的司法威脅力，我們為你蒐集的職災照片與薪資拖欠 LINE 對話截圖建立一個不可逆的數位雜湊標記。
+                        </p>
+
+                        <!-- 防篡改計算動態 -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 py-2">
+                            <div class="bg-gray-950 border border-gray-850 p-3 rounded-xl flex flex-col justify-between">
+                                <div class="text-[9px] text-silverGray uppercase font-black tracking-wider mb-2">STEP 01 // DATA HASH</div>
+                                <div class="text-xs font-black text-white">計算原始檔案 SHA-256</div>
+                                <div class="font-mono text-[9px] text-cyberRed truncate mt-1 font-black" id="hash-code-view">0xf39d8ac93e2...</div>
+                            </div>
+                            <div class="bg-gray-950 border border-gray-850 p-3 rounded-xl flex flex-col justify-between">
+                                <div class="text-[9px] text-silverGray uppercase font-black tracking-wider mb-2">STEP 02 // TIMESTAMP</div>
+                                <div class="text-xs font-black text-white">掛載可信賴國家時間源</div>
+                                <div class="font-mono text-[9px] text-cyberOrange mt-1 font-black" id="timestamp-view">LOADING...</div>
+                            </div>
+                            <div class="bg-gray-950 border border-gray-850 p-3 rounded-xl flex flex-col justify-between">
+                                <div class="text-[9px] text-silverGray uppercase font-black tracking-wider mb-2">STEP 03 // IMMUTABILITY</div>
+                                <div class="text-xs font-black text-white">去中心化時間鏈存鎖</div>
+                                <div class="font-mono text-[9px] text-cyberGreen mt-1 font-black" id="block-status-view">Pending Sign...</div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-cyberGreen/10 border border-cyberGreen/30 rounded-xl flex items-start gap-3">
+                            <i class="fa-solid fa-circle-info text-cyberGreen text-sm mt-0.5"></i>
+                            <p class="text-[11px] leading-relaxed text-silverGray font-bold">
+                                <strong>技術目的：</strong>當移工匿名向 NGO 尋求法律協助時，此證據將證明該資料確實在「某年某月某分」存在。即使無良雇主事後大肆刪除監視器畫面或否認曾雇用過你，這份無法篡改的時間截圖也能在法庭上產生強大的司法威懾力，迫使雇主進行庭外和解與賠償。
+                            </p>
+                        </div>
+
+                        <button onclick="finishSimulatedGame()" class="w-full py-3 bg-cyberGreen hover:bg-emerald-500 text-white font-black text-xs rounded-xl transition duration-300 shadow-lg">
+                            驗證鎖定完成，結算生存結局
+                        </button>
+                    </div>
+                `;
+                
+                // 模擬數據雜湊流動與簽名
+                setTimeout(() => {
+                    const alphabet = "abcdef0123456789";
+                    let hashStr = "";
+                    for(let i=0; i<32; i++) hashStr += alphabet[Math.floor(Math.random()*16)];
+                    document.getElementById('hash-code-view').innerText = "0x" + hashStr.substring(0, 16) + "...";
+                    document.getElementById('timestamp-view').innerText = new Date().toISOString().replace('T', ' ').substring(0, 19);
+                    document.getElementById('block-status-view').innerText = "✓ Cryptographically Signed";
+                }, 1000);
+            }
+            // --- 第七階段：遊戲結局結算 ---
+            else if (gameState.step === 7) {
+                let endingTitle = "";
+                let endingDesc = "";
+                
+                if (gameState.verified) {
+                    endingTitle = "結局：【不屈的暗夜追光者】";
+                    endingDesc = "你雖然負傷且失去了工作，但在民間權益組織的介入與「不可篡改數位證據包」的司法威懾下，雇主因害怕被課以數十萬重罰，被迫補償了你的醫療費並清償了所有欠薪。你用科技為自己點燃了八萬分之一的生存曙光，順利取得合法安置！";
+                } else {
+                    endingTitle = "結局：【無聲消散的秋風落葉】";
+                    endingDesc = "你選擇了息事寧人與屈服。事件過後，你受傷的手臂/腿部因缺乏妥善醫療而造成終身殘疾，失去了基本的地下勞動能力。在某個風雨交加的深夜，你被工頭無情遺棄在台北車站，隨之而來的是警車的警笛聲、冷冰冰的收容所與無聲的遣返...";
+                }
+
+                container.innerHTML = `
+                    <div class="space-y-4 animate-fadeIn text-center py-6">
+                        <i class="fa-solid fa-circle-check text-5xl text-cyberGreen animate-bounce"></i>
+                        <h3 class="text-xl md:text-2xl font-black text-white">${endingTitle}</h3>
+                        <p class="text-silverGray text-xs md:text-sm max-w-md mx-auto leading-relaxed font-bold">
+                            ${endingDesc}
+                        </p>
+                        <div class="bg-gray-950 p-4 rounded-xl border border-gray-850 inline-block text-left text-xs space-y-2">
+                            <div><span class="text-silverGray font-bold">生存結算現金：</span><span class="text-cyberOrange font-black font-mono text-sm">$${gameState.cash.toLocaleString()}</span></div>
+                            <div><span class="text-silverGray font-bold">生理身體損耗：</span><span class="text-cyberRed font-bold text-sm">${100 - gameState.stamina}% (身有殘疾)</span></div>
+                            <div><span class="text-silverGray font-bold">數位防護證據：</span><span class="text-cyberGreen font-bold text-sm">${gameState.verified ? '已建立防篡改司法證據包' : '無存證，失去任何抗衡籌碼'}</span></div>
+                        </div>
+                        <div class="pt-4">
+                            <button onclick="restartGame()" class="px-5 py-2.5 bg-gray-950 border border-gray-750 text-xs font-black text-white rounded-full hover:bg-gray-800 transition">
+                                <i class="fa-solid fa-rotate-right mr-1.5 text-cyberOrange"></i> 重新挑戰其他分流與抉擇
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // 觸發「一扣到底、直接失敗」提示畫面
+        function renderGameOver(msg) {
+            const container = document.getElementById('game-step-content');
+            
+            // 更新計步
+            const badge = document.getElementById('simulator-progress-badge');
+            if (badge) badge.innerText = `遣返失敗`;
+
+            container.innerHTML = `
+                <div class="space-y-4 animate-fadeIn text-center py-8">
+                    <i class="fa-solid fa-skull-crossbones text-5xl text-cyberRed animate-pulse"></i>
+                    <h3 class="text-2xl font-black text-white">模擬結束 // SYSTEM DETECTED</h3>
+                    <p class="text-silverGray text-xs md:text-sm max-w-md mx-auto leading-relaxed font-bold">
+                        ${msg}
+                    </p>
+                    <div class="pt-6">
+                        <button onclick="restartGame()" class="px-6 py-3 bg-cyberRed hover:bg-red-500 text-white font-black text-xs rounded-full transition shadow-lg shadow-cyberRed/25">
+                            <i class="fa-solid fa-rotate-right mr-1.5"></i> 重新挑戰這條不公生存戰役
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // -----------------------------------------------------
+        // 5層抉擇點處理函式
+        // -----------------------------------------------------
+        function selectJob(job) {
+            gameState.job = job;
+            if (job === 'tea') {
+                gameState.cash += 2200;
+                gameState.stamina -= 15;
+                gameState.fear += 15;
+            } else if (job === 'construction') {
+                gameState.cash += 1650;
+                gameState.stamina -= 30;
+                gameState.fear += 10;
+            } else if (job === 'caretaker') {
+                gameState.cash += 1300;
+                gameState.stamina -= 25;
+                gameState.fear += 10;
+            }
+            gameState.step = 2;
+            updateMetricsUI();
+            renderSimulatorStep();
+        }
+
+        function makeStep2Choice(choice) {
+            if (choice === 'pay') {
+                gameState.cash -= 10000; // 重扣！
+                gameState.fear -= 5;
+                gameState.step = 3;
+            } else if (choice === 'refuse') {
+                gameState.fear += 35;
+                gameState.stamina -= 20;
+                gameState.step = 3;
+            } else if (choice === 'conflict') {
+                // 直接扣到底的黑暗結局！
+                gameState.cash = 0;
+                gameState.stamina = 0;
+            }
+            updateMetricsUI();
+            if (gameState.cash > 0 && gameState.stamina > 0 && gameState.fear < 100) {
+                renderSimulatorStep();
+            }
+        }
+
+        function makeStep3Choice(choice) {
+            if (choice === 'hide_hazardous') {
+                gameState.stamina -= 35;
+                gameState.fear += 20;
+                gameState.step = 4;
+            } else if (choice === 'bribe_informant') {
+                gameState.cash -= 5000; // 重扣！
+                gameState.fear -= 10;
+                gameState.step = 4;
+            } else if (choice === 'run_wild') {
+                // 直接被捕！
+                gameState.fear = 100;
+            }
+            updateMetricsUI();
+            if (gameState.cash > 0 && gameState.stamina > 0 && gameState.fear < 100) {
+                renderSimulatorStep();
+            }
+        }
+
+        function makeStep4Choice(choice) {
+            if (choice === 'underground_clinic') {
+                gameState.cash -= 7000; // 天價密醫，重扣！
+                gameState.stamina += 20;
+                gameState.step = 5;
+            } else if (choice === 'drug_bear') {
+                gameState.stamina -= 40; // 體力大衰退，重扣！
+                gameState.fear += 15;
+                gameState.step = 5;
+            } else if (choice === 'give_up') {
+                // 敗血症直接死亡結局！
+                gameState.stamina = 0;
+            }
+            updateMetricsUI();
+            if (gameState.cash > 0 && gameState.stamina > 0 && gameState.fear < 100) {
+                renderSimulatorStep();
+            }
+        }
+
+        function triggerVerification() {
+            gameState.verified = true;
+            gameState.fear += 15;
+            gameState.step = 6;
+            updateMetricsUI();
+            renderSimulatorStep();
+        }
+
+        function refuseVerification() {
+            gameState.verified = false;
+            // 淨身出戶，扣乾現金
+            gameState.cash = 0;
+            updateMetricsUI();
+        }
+
+        function finishSimulatedGame() {
+            gameState.step = 7;
+            renderSimulatorStep();
+        }
+
+        function restartGame() {
+            gameState = {
+                step: 1,
+                cash: 12000,
+                stamina: 100,
+                fear: 15,
+                job: null,
+                verified: false
+            };
+            updateMetricsUI();
+            renderSimulatorStep();
+        }
+
+        // -----------------------------------------------------
+        // 第三階段：薪資剝削層疊展示控制
+        // -----------------------------------------------------
+        function setWageLayer(layerNum) {
+            const overlay = document.getElementById('deduction-overlay');
+            const netAmount = document.getElementById('net-amount');
+            const netTitle = document.getElementById('net-title');
+            const explanation = document.getElementById('layer-explanation');
+            
+            for (let i = 1; i <= 3; i++) {
+                const btn = document.getElementById(`btn-layer-${i}`);
+                btn.className = "py-2.5 px-3 text-xs font-black rounded-lg border border-gray-800 bg-gray-950 text-silverGray hover:text-white transition";
+            }
+
+            const activeBtn = document.getElementById(`btn-layer-${layerNum}`);
+            
+            if (layerNum === 1) {
+                activeBtn.className = "py-2.5 px-3 text-xs font-black rounded-lg border border-cyberGreen/40 bg-cyberGreen/10 text-cyberGreen transition";
+                overlay.classList.add('opacity-0', 'translate-y-2');
+                netAmount.innerText = "+$32,670";
+                netAmount.className = "text-lg font-black text-cyberGreen";
+                netTitle.innerText = "名義實領薪資 (Gross)";
+                explanation.innerText = "第一層：合約上的「基本工資＋加班費」，看起來生活無慮。這也是在海外招募時，廣告裡最漂亮的糖衣。";
+            } else if (layerNum === 2) {
+                activeBtn.className = "py-2.5 px-3 text-xs font-black rounded-lg border border-cyberRed/40 bg-cyberRed/10 text-cyberRed transition";
+                overlay.classList.remove('opacity-0', 'translate-y-2');
+                netAmount.innerText = "+$17,370";
+                netAmount.className = "text-lg font-black text-cyberOrange animate-pulse";
+                netTitle.innerText = "扣除必要代價後";
+                explanation.innerText = "第二層：無情覆蓋上來的各項隱藏成本。包括跨國仲介貸款本息、繁苛膳宿費及名目不明的強制保證金，直接剝奪了接近 50% 的血汗成果。";
+            } else if (layerNum === 3) {
+                activeBtn.className = "py-2.5 px-3 text-xs font-black rounded-lg border border-cyberRed/40 bg-cyberRed/10 text-cyberRed transition";
+                overlay.classList.remove('opacity-0', 'translate-y-2');
+                netAmount.innerText = "+$13,370";
+                netAmount.className = "text-lg font-black text-cyberRed";
+                netTitle.innerText = "最終可自由支配淨額 (Real Net)";
+                explanation.innerText = "第三層：最終到手的所剩無幾。若將其換算為實質工時，實質時薪遠遠落後於台灣法定基本時薪。這便是他們不惜逃跑，遁入地下勞動黑市換取一搏的「剝削厚度」。";
+            }
+        }
+
+        // -----------------------------------------------------
+        // 第四階段：共犯自白氣泡
+        // -----------------------------------------------------
+        const confessions = {
+            employer: {
+                title: "雇主的真實無奈 / Voice of Employer",
+                text: "「我這間金屬沖壓廠如果明天停工，我拿什麼交給德國跟美國的客戶？台灣年輕人來做半天就嫌熱不幹了，我不找失聯移工來應急，工廠明天就只能清算、倒閉。」",
+                footnote: "產業真實現狀：中南部中小製造業與急迫家庭面臨極限缺工困境。",
+                conflict: "★★★★☆",
+                icon: "fa-industry",
+                color: "text-cyberOrange"
+            },
+            broker: {
+                title: "中介代理人的商業邏輯 / Perspective of Broker",
+                text: "「引進一個移工要負責多長的售後、保險、突發法律責任？外國政府和私立招募商都有抽成，在這樣不對等的跨國制度與法律風險下，不收這筆服務費，根本沒有公司撐得過運營。」",
+                footnote: "政策真實現狀：高度依賴私人中介生態，缺乏政府直接引導直聘渠道。",
+                conflict: "★★★★★",
+                icon: "fa-handshake",
+                color: "text-cyberRed"
+            },
+            enforcer: {
+                title: "執法者的死胡同 / Dilemma of Law Enforcer",
+                text: "「查緝專案人力只有這麼多，但幾十萬移工都在各種小廠。我們去查一次，雇主就跪下說不能停工，工人在後門跑，整個社會系統其實心照不宣地在包庇這群隱形勞動力。」",
+                footnote: "系統真實現狀：查緝能量嚴重不足，法規僵固導致行政執法難度極高。",
+                conflict: "★★★☆☆",
+                icon: "fa-shield-halved",
+                color: "text-cyberOrange"
+            },
+            public: {
+                title: "台灣民眾的日常獲益 / Silent Beneficiaries",
+                text: "「如果我們完全抵制非法的低廉幫傭，家裡臥病在床、不能生活自理的老人要送去一個月六萬起跳的私立機構，有幾個中產家庭能夠承擔？我們也是在用默許來換取日常生活的苟延殘喘。」",
+                footnote: "社會真實現狀：少子化、高齡化，以及在廉價看護與昂貴制度間拉扯的每個人。",
+                conflict: "★★★★★",
+                icon: "fa-users",
+                color: "text-cyberGreen"
+            }
+        };
+
+        function selectBubble(role) {
+            const roles = ['employer', 'broker', 'enforcer', 'public'];
+            roles.forEach(r => {
+                const btn = document.getElementById(`bubble-${r}`);
+                btn.className = "p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-gray-500 transition duration-300 flex flex-col items-center text-center space-y-3 group";
+            });
+
+            const btn = document.getElementById(`bubble-${role}`);
+            const data = confessions[role];
+            
+            let colorBorderClass = "border-cyberOrange";
+            if (role === 'broker') colorBorderClass = "border-cyberRed";
+            if (role === 'enforcer') colorBorderClass = "border-cyberOrange";
+            if (role === 'public') colorBorderClass = "border-cyberGreen";
+            
+            btn.className = `p-6 rounded-2xl border-2 ${colorBorderClass} bg-gray-950/90 transition duration-300 flex flex-col items-center text-center space-y-3 group`;
+
+            const displayArea = document.getElementById('confession-content');
+            displayArea.innerHTML = `
+                <div class="flex items-center space-x-3 ${data.color} animate-fadeIn">
+                    <i class="fa-solid fa-quote-left text-2xl"></i>
+                    <span class="text-xs uppercase tracking-widest font-mono font-black">${data.title}</span>
+                </div>
+                <p class="text-lg md:text-2xl text-white font-black leading-relaxed" id="confession-text">
+                    ${data.text}
+                </p>
+                <div class="border-t border-gray-900 pt-4 flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs text-silverGray gap-2 font-black">
+                    <span>${data.footnote}</span>
+                    <span class="${data.color} font-black font-mono text-sm">衝突係數：${data.conflict}</span>
+                </div>
+            `;
+            
+            document.getElementById('confession-bg-icon').className = `fa-solid ${data.icon}`;
+        }
+
+        // -----------------------------------------------------
+        // 第五階段：物理拖曳解鎖
+        // -----------------------------------------------------
+        function checkUnlock(id, val) {
+            if (val >= 90) {
+                const content = document.getElementById(`unlock-content-${id}`);
+                const slideText = document.getElementById(`slide-text-${id}`);
+                const icon = document.getElementById(`lock-icon-${id}`);
+                const card = document.getElementById(`lock-card-${id}`);
+
+                content.classList.remove('hidden');
+                slideText.innerHTML = `<span class="text-cyberGreen font-black"><i class="fa-solid fa-lock-open mr-1 animate-bounce"></i> 已成功解鎖行動方案</span>`;
+                icon.className = "w-12 h-12 rounded-full bg-cyberGreen/20 flex items-center justify-center text-cyberGreen animate-pulse";
+                icon.innerHTML = `<i class="fa-solid fa-lock-open text-xl"></i>`;
+                card.className = "bg-gray-900/80 border-2 border-cyberGreen/45 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6 shadow-xl transition-all duration-500";
+                
+                document.getElementById(`unlock-slider-${id}`).disabled = true;
+            }
+        }
+
+        // -----------------------------------------------------
+        // 複製與社交分享邏輯
+        // -----------------------------------------------------
+        function copyShareText() {
+            const shareText = "我剛剛參與了沉浸式專題《失聯 24HR：八萬分之一的生存遊戲》生存決策模擬。理解了台灣 84,000 名失聯移工背後那些看不見的制度枷鎖，邀請你也來體驗探索！";
+            
+            // 使用 iframe 友善的傳統 execCommand 複製機制防止沙盒安全性阻擋
+            const tempInput = document.createElement("textarea");
+            tempInput.value = shareText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast("已成功複製生存結局分享訊息！快去貼上分享吧。");
+            } catch (err) {
+                console.error("Copy failed: ", err);
+            }
+            
+            document.body.removeChild(tempInput);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-message');
+            document.getElementById('toast-text').innerText = msg;
+            toast.classList.remove('opacity-0', 'translate-y-24');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'translate-y-0');
+                toast.classList.add('opacity-0', 'translate-y-24');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>

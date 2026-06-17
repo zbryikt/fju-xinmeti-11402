@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url=index.html">
+    <title>正在跳轉...</title>
+    <script>
+        window.location.href = "index.html";
+    </script>
+</head>
+<body>
+    <div style="font-family: system-ui, sans-serif; text-align: center; padding: 50px; color: #64748b;">
+        <h2>專案已優化完成！</h2>
+        <p>為提升網頁效能與動畫表現，專案已重構為獨立的模組化檔案：</p>
+        <ul style="list-style: none; padding: 0; line-height: 2;">
+            <li>主網頁：<a href="index.html" style="color: #6366f1; font-weight: bold; text-decoration: none;">index.html</a></li>
+            <li>樣式表：<a href="style.css" style="color: #ec4899; text-decoration: none;">style.css</a></li>
+            <li>腳本程式：<a href="app.js" style="color: #8b5cf6; text-decoration: none;">app.js</a></li>
+        </ul>
+        <p style="margin-top: 30px;">正在為您自動跳轉至主網頁...</p>
+    </div>
+</body>
+</html>

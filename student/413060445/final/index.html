@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《千絲網絡》：少年車手的深淵之路 | 多聊天室互動故事</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Background Grid Effect -->
+        <div class="network-grid"></div>
+        <div class="glow-orb" id="orb-1"></div>
+        <div class="glow-orb" id="orb-2"></div>
+
+        <!-- 1. Landing Screen -->
+        <header id="welcome-screen" class="active-screen">
+            <div class="branding">
+                <span class="badge">多聊天室沉浸式故事</span>
+            </div>
+            <div class="title-container">
+                <h1 class="main-title">千絲網絡</h1>
+                <h2 class="sub-title">少年車手的深淵之路</h2>
+            </div>
+            <p class="intro-text">
+                「只是幫忙跑腿拿錢，一天就能賺幾千塊，而且聽說未成年不會被關？」<br>
+                這不是一場輕鬆的模擬遊戲，而是一條一旦踏入就難以抽身的犯罪網絡。你將扮演16歲的高一學生「阿豪」，翻閱他的手機，體驗他在家庭壓力、同儕誘惑與犯罪集團威脅下的真實人生。
+            </p>
+            <div class="intro-stats">
+                <div class="stat-item">
+                    <span class="stat-num" id="stat-count-1">0</span>
+                    <span class="stat-label">近五年少年涉詐欺人數增幅</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num" id="stat-count-2">0</span>
+                    <span class="stat-label">少年犯罪類型中詐欺占比第一</span>
+                </div>
+            </div>
+            <button id="start-btn" class="btn primary-btn">
+                <span>進入阿豪的手機</span> <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </header>
+
+        <!-- 2. Interactive Main Section (Smartphone Simulator) -->
+        <main id="game-screen" class="hidden-screen">
+            <div class="phone-wrapper">
+                <div class="phone-container">
+                    <!-- Phone Header -->
+                    <div class="phone-header">
+                        <div class="speaker"></div>
+                        <div class="chat-contact-info">
+                            <span class="status-dot online"></span>
+                            <span class="contact-name" id="contact-name">媽媽</span>
+                        </div>
+                    </div>
+
+                    <!-- Push Notification Banner (Top of phone screen) -->
+                    <div class="push-notification" id="push-notification">
+                        <div class="push-avatar-box">
+                            <div class="push-avatar-glow"></div>
+                            <i class="fa-solid fa-bell" id="push-avatar-icon"></i>
+                        </div>
+                        <div class="push-content-box">
+                            <div class="push-sender" id="push-sender">聯絡人</div>
+                            <div class="push-preview" id="push-preview">新訊息預覽...</div>
+                        </div>
+                        <div class="push-click-indicator">
+                            <i class="fa-solid fa-message"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat History (Messages) -->
+                    <div class="chat-history" id="chat-history">
+                        <!-- Chat messages will be dynamically inserted here -->
+                    </div>
+
+                    <!-- 30-word brief legal cost explanation alert bubble -->
+                    <div class="brief-warning-alert" id="brief-warning-alert">
+                        <div class="alert-icon-box"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <p class="alert-text" id="alert-text">警示文字</p>
+                    </div>
+
+                    <!-- Choices Container -->
+                    <div class="choices-container" id="choices-container">
+                        <!-- Choices will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 3. Reflection & Endings Screen -->
+        <section id="ending-screen" class="hidden-screen">
+            <div class="ending-header">
+                <span class="badge" id="ending-type-badge">模擬結局</span>
+                <h2 class="ending-title" id="ending-title">結局名稱</h2>
+            </div>
+
+            <div class="ending-grid">
+                <!-- Left: Consequence Bill -->
+                <div class="consequence-bill">
+                    <h3><i class="fa-solid fa-receipt"></i> 少年車手的代價結算單</h3>
+                    <div class="bill-divider"></div>
+                    <div class="bill-item">
+                        <span class="bill-label">罪名罪責：</span>
+                        <span class="bill-value text-red font-bold" id="bill-charge">加重詐欺罪、組織犯罪條例</span>
+                    </div>
+                    <div class="bill-item">
+                        <span class="bill-label">司法審判：</span>
+                        <span class="bill-value" id="bill-sentencing">移送少年法庭、收容處分或交付感化教育</span>
+                    </div>
+                    <div class="bill-item">
+                        <span class="bill-label">民事賠償責任：</span>
+                        <span class="bill-value text-orange font-black" id="bill-compensation">NT$ 1,500,000 元</span>
+                    </div>
+                    <div class="bill-note">
+                        <p><strong>*民法第 187 條規定：</strong> 限制行為能力人（未成年人）不法侵害他人之權利者，其法定代理人（父母）連帶負損害賠償責任。</p>
+                    </div>
+                    <div class="bill-item">
+                        <span class="bill-label">信用影響：</span>
+                        <span class="bill-value text-red" id="bill-credit">列為警示帳戶，終身難以開戶、申請信用卡或貸款</span>
+                    </div>
+                    <div class="bill-divider"></div>
+                    <div class="bill-total">
+                        <span>家庭承受總損失：</span>
+                        <span class="total-value" id="bill-total-cost">一生信用 + NT$ 1,500,000</span>
+                    </div>
+                </div>
+
+                <!-- Right: Interactive Compensation Calculator -->
+                <div class="calc-panel">
+                    <h3><i class="fa-solid fa-calculator"></i> 「車手分成 vs 全額賠償」模擬計算器</h3>
+                    <p class="calc-desc">在台灣法律中，詐騙車手通常只拿到 1% 至 5% 的「車手分成」（佣金），但民事判決上，車手與其父母必須對被害人承擔 <strong>100% 的連帶全額賠償責任</strong>。</p>
+                    
+                    <div class="calculator-box">
+                        <div class="input-group">
+                            <label for="scam-amount">被害人遭詐騙總金額 (NT$):</label>
+                            <input type="number" id="scam-amount" value="1000000" step="100000" min="100000">
+                        </div>
+                        <div class="input-group">
+                            <label for="commission-rate">你的車手佣金成數 (%):</label>
+                            <div class="range-wrapper">
+                                <input type="range" id="commission-rate" min="1" max="10" value="3">
+                                <span id="rate-val">3%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="calc-results">
+                            <div class="calc-res-item">
+                                <span class="res-label">你實際拿到的佣金：</span>
+                                <span class="res-val text-green" id="calc-earnings">NT$ 30,000</span>
+                            </div>
+                            <div class="calc-res-item">
+                                <span class="res-label">你與父母面臨的賠償金：</span>
+                                <span class="res-val text-red" id="calc-liability">NT$ 1,000,000</span>
+                            </div>
+                            <div class="calc-ratio-warning">
+                                賠償金額是所得收益的 <strong id="calc-ratio">33.3</strong> 倍！
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deep Investigative Section -->
+            <div class="deep-dive-section">
+                <h3 class="dive-title"><i class="fa-solid fa-newspaper"></i> 專題深度調查：少年為何成為犯罪集團的棋子？</h3>
+                
+                <div class="dive-grid">
+                    <div class="dive-text">
+                        <h4>1. 法律盲區：被低估的司法代價</h4>
+                        <p>許多青少年誤以為「未成年犯罪沒關係，頂多去少年觀護所，出來又是一條好漢」。但實際上，除了《少年事件處理法》規定的收容、感化教育外，<strong>最沈重的打擊往往是「民事連帶賠償」</strong>。被害人依據民法第187條，直接向車手父母索賠。數百萬元的債務往往一夕之間壓垮少年的家庭，甚至導致父母工資被強制扣押、財產遭查封。</p>
+                        
+                        <h4>2. 溫水煮青蛙：從「幫忙拿東西」開始</h4>
+                        <p>詐騙集團的招募手法已高度精細化。他們在社群軟體以「代收包裹」、「幫博弈網站出金」為藉口，刻意規避「詐騙」字眼，並以同儕情誼或「只是跑腿」來降低少年的戒心。一旦少年賺取了第一次的快錢，或者拍下了身分證，詐騙集團就會利用暴力威脅或連帶責任要挾，逼迫少年繼續擔任風險更高的提款與面交車手。</p>
+                    </div>
+
+                    <div class="dive-chart-container">
+                        <h4>真實數據分析：台灣少年涉詐欺犯罪人數趨勢</h4>
+                        <p class="chart-desc">（數據來源：中華民國司法院統計年報，呈現近年來少年涉詐人數與犯罪年齡層的劇烈變動）</p>
+                        
+                        <!-- Dynamic CSS Bar Chart -->
+                        <div class="bar-chart">
+                            <div class="bar-row">
+                                <span class="bar-year">108年</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill" style="width: 55%;" data-val="8,102人"></div>
+                                </div>
+                            </div>
+                            <div class="bar-row">
+                                <span class="bar-year">109年</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill" style="width: 63%;" data-val="9,045人"></div>
+                                </div>
+                            </div>
+                            <div class="bar-row">
+                                <span class="bar-year">110年</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill" style="width: 68%;" data-val="9,820人"></div>
+                                </div>
+                            </div>
+                            <div class="bar-row">
+                                <span class="bar-year">111年</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill" style="width: 80%;" data-val="11,241人"></div>
+                                </div>
+                            </div>
+                            <div class="bar-row highlight-row">
+                                <span class="bar-year">112年</span>
+                                <div class="bar-track">
+                                    <div class="bar-fill animated-bar" style="width: 100%;" data-val="13,428人 (創歷史新高)"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-legend">
+                            <span>* 詐欺案件已蟬聯台灣少年犯罪原因之首，占比超過三成，且持續呈上升趨勢。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Self-Rescue and Resources -->
+                <div class="resources-box">
+                    <h4><i class="fa-solid fa-hand-holding-hand"></i> 防詐自救與諮詢管道</h4>
+                    <p>如果你或身邊的朋友不小心牽涉其中，或者對不明工作有疑慮，請立刻聯絡以下管道尋求協助，別因害怕而讓陷阱越滾越大：</p>
+                    <div class="resources-grid">
+                        <div class="resource-card">
+                            <i class="fa-solid fa-phone-volume"></i>
+                            <h5>165 反詐騙諮詢專線</h5>
+                            <p>內政部警政署24小時專線，可求證工作是否涉詐或進行即時檢舉。</p>
+                        </div>
+                        <div class="resource-card">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                            <h5>法律扶助基金會</h5>
+                            <p>電話：(02)412-8518。提供少年法律諮詢，協助面對司法訴訟與民事調解。</p>
+                        </div>
+                        <div class="resource-card">
+                            <i class="fa-solid fa-users"></i>
+                            <h5>學校輔導室與少年輔導委員會</h5>
+                            <p>各縣市少輔會可提供專業的個案輔導、心理諮商與家庭支持，協助脫離犯罪組織。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ending-actions">
+                <button id="restart-game-btn" class="btn primary-btn">重新體驗故事</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- JS -->
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寂靜的支柱：台灣單親家庭現況與變遷</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #020617; /* Slate 950 */
+            color: #f1f5f9; /* Slate 100 */
+        }
+        
+        /* 滾動文字透明度過渡 */
+        .step-trigger {
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .step-trigger.active {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        /* 呼應 Nicky Case 的按鈕與手繪感邊框 */
+        .sketch-btn {
+            border: 2px solid #334155;
+            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+            transition: all 0.2s ease;
+        }
+        .sketch-btn:hover {
+            border-color: #f43f5e;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- 1. HERO COVER (表紙) -->
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black opacity-95 z-0"></div>
+        <div class="relative z-10 max-w-4xl mx-auto space-y-6">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Nicky Case 風格：數位互動實驗專題
+            </span>
+            <h1 class="text-4xl md:text-6xl font-black text-white leading-tight">
+                寂靜的支柱 <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-amber-300 to-emerald-400">
+                    用粒子力學看見台灣單親困境
+                </span>
+            </h1>
+            <p class="text-base md:text-lg text-slate-400 max-w-2xl mx-auto font-light leading-relaxed">
+                這是一場將冷冰冰的數據轉化為「生命粒子」的視覺實驗。請向下滾動網頁，看見那些在街頭穿梭的小點，如何飛舞、凝聚、重組，揭開社會結構下的真實傷痕。
+            </p>
+            <div class="pt-8 flex flex-col items-center gap-2 text-slate-500 animate-bounce">
+                <span class="text-xs tracking-widest uppercase">往下滾動開始探索</span>
+                <i data-lucide="chevrons-down" class="w-5 h-5"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. SCROLLYTELLING MAIN SECTION (滾動核心：左文右圖) -->
+    <section class="relative min-h-screen w-full">
+        
+        <!-- RIGHT STICKY CANVAS CONTAINER (右側固定：畫布與比例尺) -->
+        <div class="sticky top-0 right-0 w-full lg:w-1/2 h-[50vh] lg:h-screen bg-slate-950 flex flex-col justify-center items-center p-4 lg:p-8 z-10 float-none lg:float-right border-b lg:border-b-0 lg:border-l border-slate-900">
+            
+            <!-- 粒子畫布框架 -->
+            <div class="w-full h-full max-h-[460px] bg-slate-950 border border-slate-800 rounded-2xl relative overflow-hidden flex flex-col justify-between p-4 shadow-2xl">
+                
+                <!-- 畫布頂端動態標示 -->
+                <div class="relative z-20 flex justify-between items-center px-2 pointer-events-none">
+                    <span id="canvas-stage-tag" class="px-2 py-0.5 rounded bg-slate-900 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
+                        Stage 1: 台北街景縮影
+                    </span>
+                    <span id="canvas-active-count" class="text-[10px] text-slate-500 flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping"></span>
+                        當前追蹤粒子：150 個家庭
+                    </span>
+                </div>
+
+                <!-- 物理粒子系統主要畫布 -->
+                <canvas id="scrollytelling-particle-canvas" class="absolute inset-0 z-10"></canvas>
+
+                <!-- 底部空間 -->
+                <div class="h-1"></div>
+            </div>
+
+            <!-- 比例尺/凡例卡（位於框架正下方） -->
+            <div id="canvas-ratio-legend" class="w-full max-w-lg mt-4 bg-slate-900/90 border border-slate-850 p-3.5 rounded-xl text-xs space-y-2.5 opacity-0 transition-all duration-500 shadow-xl">
+                <div id="legend-title" class="font-bold text-slate-300 text-center border-b border-slate-800 pb-1.5">台灣有未成年子女家庭比例 (N=150)</div>
+                <div id="legend-labels" class="flex flex-wrap justify-around items-center gap-4 text-[11px] pt-1">
+                    <span class="flex items-center gap-1.5 text-slate-400">
+                        <span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span> 雙親家庭 (138點) 約92.0%
+                    </span>
+                    <span class="flex items-center gap-1.5 text-rose-400 font-semibold animate-pulse">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> 單親媽媽 (9點) 約5.8%
+                    </span>
+                    <span class="flex items-center gap-1.5 text-amber-400 font-semibold animate-pulse">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 單親爸爸 (3點) 約2.2%
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- LEFT SCROLLING STORY (左側滾動敘事：四章) -->
+        <div class="w-full lg:w-1/2 px-6 md:px-16 space-y-[55vh] pb-[30vh]">
+            
+            <!-- STEP 1 -->
+            <div id="step-1" class="step-trigger opacity-25 transform translate-y-12 min-h-[50vh] flex flex-col justify-center space-y-4">
+                <div class="w-10 h-10 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center font-bold">1</div>
+                <h2 class="text-2xl md:text-3xl font-bold text-white">街頭的人流與喧囂</h2>
+                <p class="text-slate-400 leading-relaxed text-sm md:text-base">
+                    當你站在台北、新莊或台中的任何一個十字路口，150位市民在斜向的道路上擦肩而過。
+                    在傳統視角中，每個人都是一個個灰色的小點，過著大同小異的忙碌生活。這是一個看似寧靜、毫無波瀾的日常風景。
+                </p>
+                <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800/80 text-xs text-slate-500 flex items-center gap-2">
+                    <i data-lucide="mouse-pointer" class="w-4 h-4 text-slate-400 animate-bounce"></i>
+                    <span>請繼續向下滾動，我們將為你透視人群背後的真相...</span>
+                </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div id="step-2" class="step-trigger opacity-25 transform translate-y-12 min-h-[50vh] flex flex-col justify-center space-y-4">
+                <div class="w-10 h-10 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">2</div>
+                <h2 class="text-2xl md:text-3xl font-bold text-rose-400">解鎖身分：隱形弱勢</h2>
+                <p class="text-slate-400 leading-relaxed text-sm md:text-base">
+                    解開真相！依據內政部統計比例，這150個人當中，其實隱藏著 <strong>8% 的單親家庭</strong>。
+                    <br><br>
+                    此時，右側有9個粒子變成了象徵單親媽媽的<span class="text-rose-400 font-bold">紅色</span>、3個粒子變成了單親爸爸的<span class="text-amber-400 font-bold">琥珀色</span>。
+                    平時，他們隱沒在廣大的雙親人群中，若不主動標示，他們的孤立與艱辛根本無人知曉。
+                </p>
+                <div class="p-4 bg-rose-950/20 border border-rose-500/20 rounded-xl text-xs text-rose-300">
+                    <strong>🔍 數據透視：</strong>
+                    右側單親媽媽與單親爸爸的粒子此時正釋放著脈動與發光特效。他們承擔著同樣繁重的雙重天平，人數卻是如此稀少。
+                </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div id="step-3" class="step-trigger opacity-25 transform translate-y-12 min-h-[50vh] flex flex-col justify-center space-y-4">
+                <div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">3</div>
+                <h2 class="text-2xl md:text-3xl font-bold text-amber-400">粒子化堆疊：家庭形式落差</h2>
+                <p class="text-slate-400 leading-relaxed text-sm md:text-base">
+                    現在，讓我們打破空間的限制！
+                    <br><br>
+                    看著右側——原本在街上穿梭的活人粒子，<strong>突然飛散、凝聚，重組排列成了三個垂直柱狀圖</strong>！
+                    左側由 138 個灰色粒子堆疊起高聳的巨塔；而右側，只有零星的紅色與黃色粒子堆積在底層。這種強烈的視覺競爭，一眼便揭示了單親群體在社會上的稀少與弱勢。
+                </p>
+                <div class="p-4 bg-amber-950/20 border border-amber-500/20 rounded-xl text-xs text-amber-300">
+                    <strong>🌌 大師級連貫變化：</strong>
+                    我們保留了與街頭相同的150個生命圓點。他們不再只是一個數據，而是用他們的「物理飛行」為你訴說結構性不平等的力學。
+                </div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div id="step-4" class="step-trigger opacity-25 transform translate-y-12 min-h-[50vh] flex flex-col justify-center space-y-4">
+                <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">4</div>
+                <h2 class="text-2xl md:text-3xl font-bold text-emerald-400">時空變遷與撕裂實錄</h2>
+                <p class="text-slate-400 leading-relaxed text-sm md:text-base">
+                    最後，我們看見時間軸的拉扯。
+                    <br><br>
+                    粒子再度飛散，分成了 <strong>「2018年」與「2025年」兩大陣營</strong>。
+                    隨著高居不下的離婚率推移，左邊的家庭粒子在移動到右邊的過程中，**發生了當場變色與碎裂**。這正是這幾年來，無數台灣家庭在時代風暴中解體、重組，最終誕生出 37.2 萬戶單親支柱的血淋淋過程。
+                </p>
+                <div class="p-4 bg-emerald-950/20 border border-emerald-500/20 rounded-xl text-xs text-emerald-300">
+                    <strong>📈 2018 ➡️ 2025 的動態劇變：</strong>
+                    親眼看著圓點隨著時間走向破碎與轉換。單親家庭的紅線增長，背後是無數個家庭防線瓦解後的重組生命。
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. INTERACTIVE ROLEPLAY (新增：情境扮演分歧敘事 - Nicky Case style) -->
+    <section class="py-24 bg-slate-900 border-t border-slate-800 px-4">
+        <div class="max-w-4xl mx-auto space-y-12">
+            
+            <div class="text-center space-y-3">
+                <span class="px-2.5 py-1 rounded bg-rose-500/10 text-rose-400 text-xs font-semibold">互動抉擇</span>
+                <h2 class="text-3xl md:text-4xl font-black text-white">一個人的防線：單親一日寫實體驗</h2>
+                <p class="text-slate-400 max-w-xl mx-auto text-xs md:text-sm">
+                    當防線只剩下一雙手，如果是你，你能做出兩全其美的抉擇嗎？選擇一個身分開始。
+                </p>
+            </div>
+
+            <!-- 角色選擇與模擬器面板 -->
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-8">
+                
+                <!-- 角色選擇 -->
+                <div id="rp-char-select" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <button onclick="startRoleplay('mother')" class="sketch-btn p-5 bg-slate-900 text-left space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-rose-400">陳晴 (32歲)</span>
+                            <span class="text-xs px-2 py-0.5 rounded bg-rose-500/20 text-rose-300">單親媽媽</span>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            助理月薪 35,000 元。女兒 5 歲剛上幼兒園。在新北獨立租屋，沒有任何親友能協助臨托。
+                        </p>
+                    </button>
+                    <button onclick="startRoleplay('father')" class="sketch-btn p-5 bg-slate-900 text-left space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-amber-400">林志豪 (40歲)</span>
+                            <span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">單親爸爸</span>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            工廠技術領班月薪 45,000 元。兒子 9 歲。平時常需配合常態加班。
+                        </p>
+                    </button>
+                </div>
+
+                <!-- 遊戲主體面板（預設隱藏） -->
+                <div id="rp-game-panel" class="hidden space-y-6">
+                    <!-- 進度與計量 -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-b border-slate-800 pb-6">
+                        <div class="text-center md:text-left">
+                            <span class="text-[10px] text-slate-500 block uppercase">當前扮演</span>
+                            <span id="rp-active-name" class="font-bold text-white text-base">陳晴</span>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs text-slate-400">
+                                <span>存款防線</span>
+                                <span id="rp-val-money" class="text-emerald-400 font-bold">$20,000</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden">
+                                <div id="rp-bar-money" class="bg-emerald-500 h-full transition-all duration-300"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs text-slate-400">
+                                <span>精神能量</span>
+                                <span id="rp-val-energy" class="text-amber-400 font-bold">80%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden">
+                                <div id="rp-bar-energy" class="bg-amber-500 h-full transition-all duration-300"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 關卡內容 -->
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span id="rp-level-badge" class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 text-[10px] font-bold">事件 1 / 3</span>
+                            <span id="rp-level-title" class="text-xs text-slate-500">突發抉擇</span>
+                        </div>
+                        <h3 id="rp-question-text" class="text-lg font-bold text-white leading-snug">事件加載中...</h3>
+                        
+                        <!-- 選擇按鈕群 -->
+                        <div id="rp-options-box" class="grid grid-cols-1 gap-3">
+                            <!-- 動態生成按鈕 -->
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4. CONCLUSION & POLICIES (結尾與倡議) -->
+    <section class="py-24 bg-slate-950 border-t border-slate-900 px-4">
+        <div class="max-w-4xl mx-auto space-y-12">
+            <div class="text-center space-y-4">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white">建立社區共融的安全網</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
+                    透過數據的流動與生活情境的抉擇，我們能看見單親家長所面臨的，往往不是個人的怠惰，而是「時間」與「財務」剛性力學的悲劇。改善他們的處境，亟需社區公共托育安全網、更具彈性的職場，以及法制化的撫養費保障。
+                </p>
+            </div>
+
+            <!-- 政策卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-6 bg-slate-900/50 rounded-2xl border border-slate-850 hover:border-rose-500/30 transition-all space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-400">
+                        <i data-lucide="baby" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">友善公共托育</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        擴大社區型平價課後安親、托育網絡，延長接送緩衝，釋放單親家庭的勞動就業彈性。
+                    </p>
+                </div>
+
+                <div class="p-6 bg-slate-900/50 rounded-2xl border border-slate-850 hover:border-amber-500/30 transition-all space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400">
+                        <i data-lucide="scale" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">撫養費代催給付</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        建立由政府強制代催及先行給付撫養費的保障網絡，保障孩子的基本教育與生存權益。
+                    </p>
+                </div>
+
+                <div class="p-6 bg-slate-900/50 rounded-2xl border border-slate-850 hover:border-emerald-500/30 transition-all space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                        <i data-lucide="users-2" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">民間協作力量</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        支持家扶、勵馨等非營利機構，為單親家庭提供彈性就業培力、心靈諮商及深度法律扶助。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. FOOTER (頁尾) -->
+    <footer class="py-12 bg-black border-t border-slate-900 text-center px-4">
+        <div class="max-w-4xl mx-auto space-y-4">
+            <div class="flex justify-center gap-2 text-rose-500">
+                <i data-lucide="heart" class="w-6 h-6 fill-rose-500 animate-pulse"></i>
+            </div>
+            <p class="text-sm font-semibold text-white">寂靜的支柱：台灣單親家庭現況數據專題</p>
+            <p class="text-xs text-slate-500 max-w-xl mx-auto leading-relaxed">
+                本專案為新媒體數位新聞實作網頁。數據來源參考內政部戶政司人口統計、衛生福利部統計處歷年「單親家庭狀況調查報告」等公開文獻。
+            </p>
+            <div class="pt-4 text-xs text-slate-600">
+                &copy; 2026 新媒體實作小組. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Nicky Case 粒子系統與情境模擬器引擎 JavaScript -->
+    <script>
+        // 初始化 Lucide 圖標
+        lucide.createIcons();
+
+        // =========================================================================
+        // 🌌 1. CANVAS Nicky Case 物理粒子引擎
+        // =========================================================================
+        const canvas = document.getElementById('scrollytelling-particle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // 響應式畫布大小調整
+        let dpr = window.devicePixelRatio || 1;
+        function resizeCanvas() {
+            const rect = canvas.parentNode.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            canvas.style.width = rect.width + 'px';
+            canvas.style.height = rect.height + 'px';
+            ctx.scale(dpr, dpr);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // 粒子類別定義
+        class FamilyParticle {
+            constructor(id, type) {
+                this.id = id;
+                this.type = type; // 'normal' (雙親), 'mother' (單親媽), 'father' (單親爸)
+                
+                // 動態物理坐標
+                this.x = Math.random() * (canvas.width / dpr);
+                this.y = Math.random() * (canvas.height / dpr);
+                
+                // 目標引力中心 (由動態 Step 控制)
+                this.targetX = this.x;
+                this.targetY = this.y;
+
+                // 速度與摩擦係數 (Spring Physics)
+                this.vx = 0;
+                this.vy = 0;
+                this.spring = 0.045; // 彈力係數
+                this.friction = 0.88; // 摩擦力
+
+                // 街頭行走物理模式
+                this.dir = Math.random() > 0.5 ? 1 : -1; // 1 = 往右上, -1 = 往左下
+                this.speed = 0.4 + Math.random() * 0.5;
+                this.topLine = 15 + Math.random() * 60; // 街頭高低隨機散布
+
+                // 發光特效
+                this.glowSize = 0;
+                this.glowDir = 1;
+            }
+
+            update(stage) {
+                if (stage === 'step-1' || stage === 'step-2') {
+                    // 🌟 階段 1 & 2: 街頭自由走動（斜向 15 度平行移動）
+                    const angleRad = -15 * Math.PI / 180;
+                    this.x += Math.cos(angleRad) * this.speed * this.dir;
+                    this.y += Math.sin(angleRad) * this.speed * this.dir;
+
+                    // 越界重置（無限循環行軍）
+                    const width = canvas.width / dpr;
+                    const height = canvas.height / dpr;
+
+                    if (this.dir === 1 && (this.x > width + 50 || this.y < -50)) {
+                        this.x = -50;
+                        this.y = height * 0.6 + (Math.random() * 80 - 40);
+                    } else if (this.dir === -1 && (this.x < -50 || this.y > height + 50)) {
+                        this.x = width + 50;
+                        this.y = height * 0.3 + (Math.random() * 80 - 40);
+                    }
+
+                    // 記錄目前坐標，為切換第三階段時提供完美的物理起跑點
+                    this.targetX = this.x;
+                    this.targetY = this.y;
+                } else {
+                    // 🌟 階段 3 & 4: 物理力學引力（凝聚成圖表，滑順無縫飛行！）
+                    this.vx += (this.targetX - this.x) * this.spring;
+                    this.vy += (this.targetY - this.y) * this.spring;
+                    this.vx *= this.friction;
+                    this.vy *= this.friction;
+                    this.x += this.vx;
+                    this.y += this.vy;
+                }
+
+                // 呼吸發光脈動計算 (單親粒子專屬)
+                if (this.type !== 'normal') {
+                    this.glowSize += 0.2 * this.glowDir;
+                    if (this.glowSize > 8 || this.glowSize < 0) this.glowDir *= -1;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                const width = canvas.width / dpr;
+                const height = canvas.height / dpr;
+
+                // 根據身分上色
+                let color = '#475569'; // Slate 600 (雙親)
+                let radius = 3.5;
+
+                if (this.type === 'mother') {
+                    color = '#f43f5e'; // Rose 500
+                    radius = 5.5;
+                } else if (this.type === 'father') {
+                    color = '#f59e0b'; // Amber 500
+                    radius = 5.5;
+                }
+
+                // 繪製發光光暈
+                if (this.type !== 'normal') {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, radius + 4 + this.glowSize, 0, Math.PI * 2);
+                    ctx.fillStyle = this.type === 'mother' ? 'rgba(244,63,94,0.15)' : 'rgba(245,158,11,0.15)';
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, radius + 1 + this.glowSize * 0.5, 0, Math.PI * 2);
+                    ctx.fillStyle = this.type === 'mother' ? 'rgba(244,63,94,0.3)' : 'rgba(245,158,11,0.3)';
+                    ctx.fill();
+                }
+
+                // 繪製圓點核心
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.fill();
+
+                // 若是單親，畫出一個手繪風的外框
+                if (this.type !== 'normal') {
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        // 動態生成 150 個粒子，完全契合台灣實際家庭結構比例
+        // 單親家庭：約8%（其中媽媽72.4%，爸爸27.6%）
+        // 總數 150 點 ➡️ 媽媽 9 點 (6.0%)，爸爸 3 點 (2.0%)，雙親 138 點 (92.0%)
+        const particles = [];
+        const totalCount = 150;
+        
+        // 1. 生成 9 個單親媽媽
+        for(let i=0; i<9; i++) particles.push(new FamilyParticle(i, 'mother'));
+        // 2. 生成 3 個單親爸爸
+        for(let i=9; i<12; i++) particles.push(new FamilyParticle(i, 'father'));
+        // 3. 生成 138 個雙親家庭
+        for(let i=12; i<totalCount; i++) particles.push(new FamilyParticle(i, 'normal'));
+
+        let currentStage = 'step-1';
+
+        // 動態畫布渲染循環
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+
+            const width = canvas.width / dpr;
+            const height = canvas.height / dpr;
+
+            // 繪製斜向手繪道路線（僅在第一、第二階段出現，伴隨淡出效果）
+            if (currentStage === 'step-1' || currentStage === 'step-2') {
+                ctx.save();
+                ctx.strokeStyle = 'rgba(71,85,105,0.2)';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([8, 8]);
+                
+                // 畫出路段外框
+                const angleRad = -15 * Math.PI / 180;
+                ctx.beginPath();
+                ctx.moveTo(-100, height * 0.45);
+                ctx.lineTo(width + 100, height * 0.45 + Math.sin(angleRad) * (width + 200));
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(-100, height * 0.65);
+                ctx.lineTo(width + 100, height * 0.65 + Math.sin(angleRad) * (width + 200));
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            // 更新並繪製所有生命粒子
+            particles.forEach(p => {
+                p.update(currentStage);
+                p.draw();
+            });
+
+            // 如果在第二階段，額外繪製手繪對話引導線與泡泡標籤，突出單親家庭
+            if (currentStage === 'step-2') {
+                particles.forEach(p => {
+                    if (p.type !== 'normal') {
+                        ctx.save();
+                        // 畫出指引虛線
+                        ctx.strokeStyle = p.type === 'mother' ? 'rgba(244,63,94,0.4)' : 'rgba(245,158,11,0.4)';
+                        ctx.lineWidth = 1;
+                        ctx.setLineDash([2, 4]);
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p.x + (p.type === 'mother' ? -25 : 25), p.y - 25);
+                        ctx.stroke();
+
+                        // 標註一個精簡的小標題文字
+                        ctx.fillStyle = p.type === 'mother' ? '#fda4af' : '#fde047';
+                        ctx.font = 'bold 9px sans-serif';
+                        ctx.fillText(p.type === 'mother' ? '媽媽' : '爸爸', p.x + (p.type === 'mother' ? -48 : 28), p.y - 30);
+                        ctx.restore();
+                    }
+                });
+            }
+
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        // --------------------------------------------------
+        // 🔄 2. SCROLLYTELLING STAGE CONTROLLER (粒子重組位置計算)
+        // --------------------------------------------------
+        function calculateTargetPositions(stage) {
+            const w = canvas.width / dpr;
+            const h = canvas.height / dpr;
+
+            if (stage === 'step-3') {
+                // 📊 階段三：粒子物理集結，堆疊排列成柱狀圖！
+                // 左柱（雙親）138個，中柱（單親媽）9個，右柱（單親爸）3個
+                let normalCount = 0;
+                let motherCount = 0;
+                let fatherCount = 0;
+
+                particles.forEach(p => {
+                    if (p.type === 'normal') {
+                        // 堆疊計算：一排 6 個圓點，往上堆疊
+                        const colSize = 6;
+                        const colIndex = normalCount % colSize;
+                        const rowIndex = Math.floor(normalCount / colSize);
+                        
+                        p.targetX = w * 0.25 + (colIndex * 11);
+                        p.targetY = h * 0.85 - (rowIndex * 11);
+                        normalCount++;
+                    } else if (p.type === 'mother') {
+                        // 單親媽媽
+                        p.targetX = w * 0.55;
+                        p.targetY = h * 0.85 - (motherCount * 14);
+                        motherCount++;
+                    } else {
+                        // 單親爸爸
+                        p.targetX = w * 0.78;
+                        p.targetY = h * 0.85 - (fatherCount * 14);
+                        fatherCount++;
+                    }
+                });
+            } else if (stage === 'step-4') {
+                // 📈 階段四：時間軸撕裂（2018 ➡️ 2025 的演變）
+                // 模擬 2018 年，單親比例較低（左側），2025 年單親比例明顯上升（右側）
+                // 2018 左側群聚：95% 雙親，僅有 3% 單親
+                // 2025 右側群聚：大量灰色粒子在中間分裂、轉移，右側紅、黃粒子明顯密集堆疊
+                let count2018 = 0;
+                let count2025 = 0;
+
+                particles.forEach((p, idx) => {
+                    if (idx % 2 === 0) {
+                        // 2018 年板塊 (左半邊)
+                        const colSize = 5;
+                        const colIndex = count2018 % colSize;
+                        const rowIndex = Math.floor(count2018 / colSize);
+                        
+                        // 2018 年單親極少，將紅黃粒子強制重設為灰色
+                        p.targetX = w * 0.22 + (colIndex * 12);
+                        p.targetY = h * 0.75 - (rowIndex * 12);
+                        count2018++;
+                    } else {
+                        // 2025 年板塊 (右半邊)
+                        const colSize = 5;
+                        const colIndex = count2025 % colSize;
+                        const rowIndex = Math.floor(count2025 / colSize);
+
+                        p.targetX = w * 0.65 + (colIndex * 12);
+                        p.targetY = h * 0.75 - (rowIndex * 12);
+                        count2025++;
+                    }
+                });
+            }
+        }
+
+        // 滾動觸發與粒子狀態同步
+        function handleStepActivation(stepId) {
+            currentStage = stepId;
+            const tag = document.getElementById('canvas-stage-tag');
+            const legend = document.getElementById('canvas-ratio-legend');
+            const legendTitle = document.getElementById('legend-title');
+            const legendLabels = document.getElementById('legend-labels');
+
+            if (stepId === 'step-1') {
+                tag.innerText = "Stage 1: 台北街頭人群";
+                legend.classList.add('opacity-0');
+            } 
+            else if (stepId === 'step-2') {
+                tag.innerText = "Stage 2: 街頭身分透視 (真實比例)";
+                legend.classList.remove('opacity-0');
+                
+                legendTitle.innerText = "台灣有未成年子女家庭比例 (N=150)";
+                legendLabels.innerHTML = `
+                    <span class="flex items-center gap-1.5 text-slate-400">
+                        <span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span> 雙親家庭 (138點) 約92%
+                    </span>
+                    <span class="flex items-center gap-1.5 text-rose-400 font-semibold">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span> 單親媽媽 (9點) 約5.8%
+                    </span>
+                    <span class="flex items-center gap-1.5 text-amber-400 font-semibold">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span> 單親爸爸 (3點) 約2.2%
+                    </span>
+                `;
+            } 
+            else if (stepId === 'step-3') {
+                tag.innerText = "Stage 3: 150 個家庭的結構堆疊";
+                legend.classList.remove('opacity-0');
+                calculateTargetPositions('step-3');
+
+                legendTitle.innerText = "粒子重組排列：左（雙親）中（單親媽）右（單親爸）";
+                legendLabels.innerHTML = `
+                    <span class="flex items-center gap-1.5 text-slate-400">
+                        <span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span> 雙親家庭：138 個點
+                    </span>
+                    <span class="flex items-center gap-1.5 text-rose-400 font-semibold">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> 單親媽媽：9 個點
+                    </span>
+                    <span class="flex items-center gap-1.5 text-amber-400 font-semibold">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> 單親爸爸：3 個點
+                    </span>
+                `;
+            } 
+            else if (stepId === 'step-4') {
+                tag.innerText = "Stage 4: 家庭在時光河流中的撕裂與重組";
+                legend.classList.remove('opacity-0');
+                calculateTargetPositions('step-4');
+
+                legendTitle.innerText = "時空天平：2018年 (左側) ➡️ 2025年 (右側)";
+                legendLabels.innerHTML = `
+                    <span class="flex items-center gap-1.5 text-slate-500">
+                        <span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span> 2018年：單親數較低
+                    </span>
+                    <span class="flex items-center gap-1.5 text-rose-400 font-semibold">
+                        <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> 2025年：單親比例顯著上升
+                    </span>
+                `;
+            }
+        }
+
+        // 滾動觀測器設定
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.45 
+        };
+
+        const scrollyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.step-trigger').forEach(el => {
+                        el.classList.remove('active');
+                        el.style.opacity = "0.25";
+                    });
+
+                    entry.target.classList.add('active');
+                    entry.target.style.opacity = "1";
+
+                    handleStepActivation(entry.target.id);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.step-trigger').forEach(step => {
+            scrollyObserver.observe(step);
+        });
+
+
+        // =========================================================================
+        // 🎭 3. ROLEPLAY INTERACTIVE SIMULATOR (新增：分歧情境抉擇器)
+        // =========================================================================
+        const rpDatabase = {
+            mother: {
+                name: "陳晴 (單親媽媽)",
+                initMoney: 20000,
+                initEnergy: 80,
+                levels: [
+                    {
+                        q: "【抉擇一：安親班的學費催繳】新學期到了，女兒安親班寄來 6,000 元學費單，存摺已經見底。你該怎麼辦？",
+                        options: [
+                            { text: "咬牙全額付清。絕不能讓孩子覺得自己跟別人不一樣。", money: -6000, energy: -10, feedback: "你維持了孩子的尊嚴，但手邊所剩的生活應急資金變得極其危險。" },
+                            { text: "拉下面子，向主任請求分期先付 2,000 元。", money: -2000, energy: -20, feedback: "雖然覺得尷尬，但你保留了緊急周轉金。代價是心理壓力大增。" }
+                        ]
+                    },
+                    {
+                        q: "【抉擇二：發燒的星期三】女兒早上發高燒 39 度，但今天公司有極其重要的稽核盤點，主管再三申明不準請假。",
+                        options: [
+                            { text: "果斷請假帶孩子看病。全心在家陪她。", money: -1500, energy: -10, feedback: "你被主管狠扣日薪與考績。但女兒退燒後抱著你說：有媽媽在真好。" },
+                            { text: "塞給她退燒藥，拜託鄰居阿姨送去診所並給予 1,000 元答謝。", money: -1000, energy: -25, feedback: "你保住了工作，但在辦公室心神不寧，對孩子的虧欠感與自責讓你無比焦慮。" }
+                        ]
+                    },
+                    {
+                        q: "【抉擇三：突如其來的週末加班】公司主管通知，因為國外大單趕貨，週末兩天需要全員義務加班。無加班費，但未來可補休。",
+                        options: [
+                            { text: "拒絕加班。堅持週末必須是在家陪伴孩子的家庭時間。", money: 0, energy: 15, feedback: "你在公司被主管邊緣化，但你帶女兒去公園散步，獲得了無價的親子時光。" },
+                            { text: "妥協去加班，並將女兒帶去工廠角落，一邊包貨一邊看著她玩手機。", money: 0, energy: -25, feedback: "你完成了工作，但工廠粉塵讓孩子眼睛嚴重過敏。你也因為兩頭兼顧而感到筋疲力竭。" }
+                        ]
+                    }
+                ]
+            },
+            father: {
+                name: "林志豪 (單親爸爸)",
+                initMoney: 35000,
+                initEnergy: 75,
+                levels: [
+                    {
+                        q: "【抉擇一：直排輪社團費用】9歲的兒子帶回學費單，希望參加最熱門的直排輪社（4,500元），他的好朋友都參加了。",
+                        options: [
+                            { text: "高高興興簽字付款。這點錢爸爸還撐得住！", money: -4500, energy: 10, feedback: "兒子非常開心，每天在家練習滑步。看著他快樂的模樣，你的疲憊一掃而空。" },
+                            { text: "委婉拒絕。幫他改報名免費的閱讀寫作社。", money: -500, energy: -15, feedback: "兒子懂事地答應了，但眼中的失望讓你非常不捨與內疚。" }
+                        ]
+                    },
+                    {
+                        q: "【抉擇二：重要通勤機車壞了】在工廠上下班與接送兒子唯一依賴的機車，傳動軸在路中斷裂，更換需要 5,000 元。",
+                        options: [
+                            { text: "只能咬牙立刻更換零件。通勤安全是第一考量。", money: -5000, energy: -5, feedback: "你保證了通勤的流暢，但存摺餘額再次折損一大半。" },
+                            { text: "不修理。改帶兒子改搭極度不便的客運，每天通勤多耗費 2 小時。", money: 0, energy: -30, feedback: "你省下了修理費。但每天早上5點半就得把兒子挖起床趕車，父子倆都累到虛脫。" }
+                        ]
+                    },
+                    {
+                        q: "【抉擇三：工廠旺季夜間趕工】廠長通知，本週全體領班配合加班趕急單。一週加班費可多賺 8,000 元，但每天到家必定超過 10 點。",
+                        options: [
+                            { text: "答應加班。有錢能使生活寬裕，讓兒子自己買超商便當微波解決晚餐。", money: 8000, energy: -25, feedback: "你獲得了豐厚的外快。但兒子天天吃微波便當，回到空無一人的家，親子關係變得極度疏離。" },
+                            { text: "拒絕加班，按時接兒子放學。回家一起做簡單的三菜一湯。",
+                            money: 0, energy: 15, feedback: "你少賺了一筆大錢。但是父子倆坐在餐桌前分享學校趣事，讓你的心靈得到了溫暖與重整。" }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        let rpState = {
+            activeChar: null,
+            levelIndex: 0,
+            money: 0,
+            energy: 0
+        };
+
+        function startRoleplay(type) {
+            // 切換視圖
+            document.getElementById('rp-char-select').classList.add('hidden');
+            document.getElementById('rp-game-panel').classList.remove('hidden');
+
+            const charData = rpDatabase[type];
+            rpState.activeChar = type;
+            rpState.levelIndex = 0;
+            rpState.money = charData.initMoney;
+            rpState.energy = charData.initEnergy;
+
+            updateRoleplayUI();
+            loadRpLevel();
+        }
+
+        function loadRpLevel() {
+            const charData = rpDatabase[rpState.activeChar];
+            
+            // 結束判定
+            if (rpState.levelIndex >= charData.levels.length) {
+                showRpEnding();
+                return;
+            }
+
+            const currentLvl = charData.levels[rpState.levelIndex];
+            
+            document.getElementById('rp-level-badge').innerText = `事件 ${rpState.levelIndex + 1} / 3`;
+            document.getElementById('rp-question-text').innerText = currentLvl.q;
+
+            const optBox = document.getElementById('rp-options-box');
+            optBox.innerHTML = '';
+
+            currentLvl.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl border border-slate-800 bg-slate-900 hover:border-rose-500/50 hover:bg-rose-950/10 transition-all text-xs md:text-sm leading-relaxed text-slate-200 flex items-start gap-3 group";
+                btn.onclick = () => chooseOption(opt);
+                btn.innerHTML = `
+                    <span class="w-5 h-5 rounded-full bg-slate-800 flex items-center justify-center shrink-0 text-slate-400 group-hover:bg-rose-500 group-hover:text-white transition-colors text-xs font-bold font-mono">
+                        ${idx + 1}
+                    </span>
+                    <span>${opt.text} (存款 ${opt.money >= 0 ? '+' : ''}${opt.money.toLocaleString()} | 精神 ${opt.energy >= 0 ? '+' : ''}${opt.energy}%)</span>
+                `;
+                optBox.appendChild(btn);
+            });
+        }
+
+        function chooseOption(opt) {
+            // 更新計量
+            rpState.money += opt.money;
+            rpState.energy = Math.max(0, Math.min(100, rpState.energy + opt.energy));
+
+            updateRoleplayUI();
+
+            // 彈出 Nicky Case 招牌式的手寫感回饋視窗
+            const optBox = document.getElementById('rp-options-box');
+            optBox.innerHTML = `
+                <div class="p-4 bg-slate-900 border-2 border-dashed border-rose-500/50 rounded-xl text-xs md:text-sm text-rose-300 space-y-3">
+                    <p class="leading-relaxed font-medium">👉 抉擇回饋：${opt.feedback}</p>
+                    <button onclick="nextRpLevel()" class="px-5 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold transition-all text-xs flex items-center gap-1 mx-auto">
+                        繼續下一天 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function nextRpLevel() {
+            rpState.levelIndex++;
+            loadRpLevel();
+        }
+
+        function updateRoleplayUI() {
+            const charData = rpDatabase[rpState.activeChar];
+            document.getElementById('rp-active-name').innerText = charData.name;
+            document.getElementById('rp-val-money').innerText = `$ ${rpState.money.toLocaleString()}`;
+            document.getElementById('rp-val-energy').innerText = `${rpState.energy}%`;
+
+            // 長度百分比 (母數預設 50000元 & 100%)
+            const moneyPct = Math.max(0, Math.min(100, (rpState.money / 50000) * 100));
+            document.getElementById('rp-bar-money').style.width = `${moneyPct}%`;
+            document.getElementById('rp-bar-energy').style.width = `${rpState.energy}%`;
+        }
+
+        function showRpEnding() {
+            const optBox = document.getElementById('rp-options-box');
+            document.getElementById('rp-level-badge').innerText = "體驗結束";
+            document.getElementById('rp-level-title').innerText = "命運交叉口";
+            document.getElementById('rp-question-text').innerText = "你已過完這場生存實驗的一天。";
+
+            let endingTitle = "";
+            let endingDesc = "";
+
+            if (rpState.money <= 10000 && rpState.energy <= 40) {
+                endingTitle = "💔 紅色警報：崩潰與赤字的雙重深淵";
+                endingDesc = "生活像是一個巨大的碎肉機。你的存款已經所剩無幾，且身心能量近乎燃盡。一旦遇到突然感冒、生病，你們家將立刻陷入全面赤字。這正是多數台灣「邊緣戶」單親家庭最真實的呼吸痛楚。";
+            } else if (rpState.money <= 12000) {
+                endingTitle = "⚠️ 財務脆弱：經不起風吹雨打的薄冰";
+                endingDesc = "雖然你守住了精神狀態，也花時間陪伴了孩子，但你的財務防線薄弱無比。你沒有多餘的閒錢去應對未來的生活波動。";
+            } else {
+                endingTitle = "🌱 勉強平衡：帶著傷痕繼續前行";
+                endingDesc = "恭喜你，你以極高的智慧在時間與金錢的天平上找到了立足點。但請記住，這份平衡是你靠著嚴重壓榨自己的個人休息時間和精神健康，一人分飾兩角換來的。";
+            }
+
+            optBox.innerHTML = `
+                <div class="p-5 bg-slate-900 border border-slate-800 rounded-xl space-y-4 text-center">
+                    <h4 class="text-base font-bold text-amber-400">${endingTitle}</h4>
+                    <p class="text-xs md:text-sm text-slate-300 leading-relaxed max-w-lg mx-auto">${endingDesc}</p>
+                    <button onclick="restartRoleplay()" class="px-5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold border border-slate-700 transition-all text-xs flex items-center gap-1 mx-auto">
+                        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> 換個身分再試一次
+                    </button>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function restartRoleplay() {
+            document.getElementById('rp-game-panel').classList.add('hidden');
+            document.getElementById('rp-char-select').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

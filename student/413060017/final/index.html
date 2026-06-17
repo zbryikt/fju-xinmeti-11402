@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>平行台北：一條建國南路，隔開的兩個世界｜互動深度專題</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --morandi-bg: #F3EFE9;         /* 溫柔沙灰色 */
+            --morandi-card: #FAF9F5;       /* 純淨乳白 */
+            --morandi-sidebar: #EFECE5;    /* 淺粉灰 */
+            --morandi-border: #E1DBD2;     /* 柔和暖灰邊框 */
+            --morandi-text: #4E4941;       /* 深灰褐 */
+            --morandi-text-muted: #7E786E; /* 淺灰褐 */
+            --morandi-text-dark: #3A352D;  /* 沉穩黑褐 */
+            --morandi-primary: #C48F82;    /* 莫蘭迪煙粉 / 土橘 */
+            --morandi-primary-hover: #B57F73;
+            --morandi-success: #8FA382;    /* 莫蘭迪鼠尾草綠 */
+            --morandi-info: #8EA1A5;       /* 莫蘭迪霧霾藍 */
+        }
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: var(--morandi-bg);
+            color: var(--morandi-text);
+            overflow-x: hidden;
+        }
+        ::selection {
+            background-color: var(--morandi-primary);
+            color: #FFFFFF;
+        }
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.02); text-shadow: 0 0 8px rgba(196, 143, 130, 0.4); }
+        }
+        .danger-pulse {
+            animation: pulse-red 1.5s infinite;
+            color: #B26D5F !important;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #EAE5DB;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C8C2B7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--morandi-primary);
+        }
+        .split-container {
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+        }
+        .split-panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .split-slider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #FAF9F5;
+            cursor: ew-resize;
+            z-index: 30;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .split-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #FAF9F5;
+            border: 2px solid var(--morandi-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--morandi-primary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 18px;
+            pointer-events: none;
+        }
+        .term-tooltip {
+            border-bottom: 2px dashed var(--morandi-primary);
+            cursor: help;
+            display: inline-block;
+        }
+        .bg-labor {
+            background-image: linear-gradient(rgba(78, 73, 65, 0.55), rgba(78, 73, 65, 0.85)), url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .bg-capital {
+            background-image: linear-gradient(rgba(243, 239, 233, 0.45), rgba(243, 239, 233, 0.75)), url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1200&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .visualizer-bar {
+            width: 3px;
+            height: 8px;
+            background-color: var(--morandi-primary);
+            animation: soundwave 1s ease-in-out infinite alternate;
+        }
+        @keyframes soundwave {
+            0% { height: 4px; }
+            100% { height: 20px; }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <header class="border-b border-[#E1DBD2] bg-[#FAF9F5]/90 backdrop-blur sticky top-0 z-50 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#C48F82] animate-ping"></span>
+                <span class="text-xs tracking-wider text-[#C48F82] font-bold uppercase">獨立人文多媒體專題特刊</span>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-xs font-semibold text-[#7E786E]">
+                <a href="#lead" class="hover:text-[#C48F82] transition">雙線導言</a>
+                <a href="#argument" class="hover:text-[#C48F82] transition">階級計算</a>
+                <a href="#data" class="hover:text-[#C48F82] transition">分配數據</a>
+                <a href="#game" class="hover:text-[#C48F82] transition font-bold text-[#C48F82]">生存模擬器</a>
+                <a href="#transparency" class="hover:text-[#C48F82] transition">資料來源</a>
+            </nav>
+            <a href="#game" class="px-3.5 py-1.5 bg-[#C48F82] text-white text-xs font-bold rounded-lg hover:bg-[#B57F73] transition">
+                開始挑戰
+            </a>
+        </div>
+    </header>
+
+    <section class="split-container w-full h-[85vh] md:h-[90vh] bg-[#EFECE5]">
+        
+        <div class="absolute top-6 md:top-10 left-1/2 transform -translate-x-1/2 z-40 bg-[#FAF9F5]/95 backdrop-blur-md border border-[#E1DBD2] px-6 py-4 md:px-8 md:py-5 rounded-2xl shadow-xl text-center max-w-md w-[88%] md:w-[450px] pointer-events-none select-none transition-all duration-300">
+            <span class="text-[10px] tracking-widest text-[#C48F82] font-black uppercase block mb-1">2026 互動數據新聞深度特刊</span>
+            <h1 class="text-2xl md:text-4xl font-black text-[#3A352D] tracking-tight">平行台北</h1>
+            <p class="text-xs md:text-sm text-[#7E786E] mt-1.5 font-bold tracking-wide">一條建國南路，隔開的兩個世界</p>
+        </div>
+
+        <div class="absolute inset-0 bg-capital flex flex-col justify-center px-6 md:px-20 z-10 select-none">
+            <div class="max-w-xl bg-[#FAF9F5]/90 backdrop-blur-md border border-[#E1DBD2]/60 p-6 md:p-8 rounded-2xl shadow-lg transition duration-300 hover:shadow-xl ml-auto">
+                <span class="px-3 py-1 bg-[#8FA382]/20 border border-[#8FA382]/50 text-[#5C6E52] text-xs font-bold rounded-full">平行台北：資本積累篇</span>
+                <h2 class="text-2xl md:text-4xl font-black text-[#3A352D] mt-4 mb-4 leading-tight">
+                    在陽光灑落的露台，<br>
+                    看著資產配置與信託增值。
+                </h2>
+                <p class="text-[#4E4941] text-xs md:text-sm leading-relaxed font-semibold">
+                    一街之隔，豪宅落地窗外是一整片綠意。信託、房產與股票等多元資本利得，在睡眠中不間斷地生息。在這裡，財富的傳承已悄然跨越了世代。
+                </p>
+            </div>
+        </div>
+
+        <div id="rich-panel" class="split-panel z-20" style="width: 50%;">
+            <div class="absolute inset-0 bg-labor flex flex-col justify-center px-6 md:px-20 select-none" style="width: 100vw;">
+                <div class="max-w-xl bg-[#FAF9F5]/90 backdrop-blur-md border border-[#E1DBD2]/60 p-6 md:p-8 rounded-2xl shadow-lg transition duration-300 hover:shadow-xl">
+                    <span class="px-3 py-1 bg-[#C48F82]/15 border border-[#C48F82]/40 text-[#B26D5F] text-xs font-bold rounded-full">平行台北：勞動生存篇</span>
+                    <h2 class="text-2xl md:text-4xl font-black text-[#3A352D] mt-4 mb-4 leading-tight">
+                        雨夜裡兼差外送，<br>
+                        只為湊齊下個月頂加的房租。
+                    </h2>
+                    <p class="text-[#4E4941] text-xs md:text-sm leading-relaxed font-semibold">
+                        在建國南路的窄巷裡，老舊的公寓外牆斑駁，鐵皮加蓋的悶熱隔絕了台北的繁華。在沒有家族資產撐腰的情況下，青壯年人口正承受著「零容錯率」的生存磨損。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="split-slider" class="split-slider" style="left: 50%;">
+            <div class="split-button">
+                <svg class="w-5 h-5 text-[#C48F82] rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-4xl mx-auto px-4 py-16 text-center">
+        <h2 class="text-2xl md:text-4xl font-extrabold text-[#3A352D] mb-6">
+            一街之隔的兩個世界 · 貧富差距多媒體特刊
+        </h2>
+        <p class="text-[#7E786E] text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
+            當財富不再靠努力累積，而是靠「出身」決定——我們與階級翻身的距離，究竟有多遠？
+            本專題將透過數據、真實心聲與生存模擬遊戲，帶您走入這條看不見卻極其深邃的社會鴻溝。
+        </p>
+    </section>
+
+    <section id="lead" class="max-w-5xl mx-auto px-4 py-12 scroll-mt-24">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-[#FAF9F5] border border-[#E1DBD2] p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-md transition">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="w-12 h-12 rounded-full bg-[#C48F82]/15 flex items-center justify-center text-lg">🛵</div>
+                    <div>
+                        <h3 class="font-bold text-[#3A352D]">小豪</h3>
+                        <p class="text-xs text-[#7E786E]">24歲 · 全職外送員</p>
+                    </div>
+                </div>
+                <p class="text-sm text-[#4E4941] leading-relaxed space-y-4">
+                    早上 6:00，被濕冷的冷風凍醒。小豪必須在 8:00 前上線接單，才能爭取到平台的早鳥跑單獎勵。
+                    他在台北滾滾車流中，用時間與體力換取每單極微薄的報酬。
+                    <br><br>
+                    「如果哪天摔車了，就代表半個月沒收入。在台北，我們這種人，連生病、請假、出意外的權利都沒有。」
+                </p>
+            </div>
+            <div class="bg-[#FAF9F5] border border-[#E1DBD2] p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-md transition">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="w-12 h-12 rounded-full bg-[#8FA382]/15 flex items-center justify-center text-lg">💼</div>
+                    <div>
+                        <h3 class="font-bold text-[#3A352D]">Lawrence</h3>
+                        <p class="text-xs text-[#7E786E]">24歲 · 創投基金分析師</p>
+                    </div>
+                </div>
+                <p class="text-sm text-[#4E4941] leading-relaxed space-y-4">
+                    早上 8:30，Lawrence 在大安區豪宅旁的私人健身房跑完步。
+                    他父親在他 20 歲生日時為他規劃了信託房產，如今他正準備評估一筆新的海外資產與 AI 新創投資。
+                    <br><br>
+                    「資產配置是防禦通膨的關鍵。透過複利與被動投資，資產自己產生的增值效率，往往高於辛苦付出的純勞動。」
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="argument" class="bg-[#EFECE5] py-16 scroll-mt-24">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-xs font-bold uppercase tracking-wider text-[#C48F82]">倒三角寫實解剖</span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-[#3A352D] mt-2">
+                    結構性成因：為什麼我們越忙越窮？
+                </h2>
+            </div>
+            <div class="space-y-6">
+                <div class="bg-[#FAF9F5] p-6 rounded-xl border-l-4 border-[#C48F82] shadow-sm">
+                    <h3 class="font-bold text-[#3A352D] text-lg mb-2">① 最核心結論：失控的所得分配天秤</h3>
+                    <p class="text-sm text-[#7E786E] leading-relaxed">
+                        根據最新統計，台灣最富有的 20% 與最窮的 20% 申報所得差距已創下歷史新高。
+                        這意味著社會頂端的資產積累速度，正呈指數級超越底層純勞動的薪資漲幅。
+                    </p>
+                </div>
+                <div class="bg-[#FAF9F5] p-6 rounded-xl border-l-4 border-[#8EA1A5] shadow-sm">
+                    <h3 class="font-bold text-[#3A352D] text-lg mb-2">② 結構成因：<span class="term-tooltip text-[#C48F82] font-semibold cursor-pointer" onclick="showGlossary('housing-term')">高房價的隱形掠奪</span></h3>
+                    <p class="text-sm text-[#7E786E] leading-relaxed">
+                        一個普通的受薪階級一輩子不吃不喝積攢的薪水，追不上台北市精華區房價一年的上漲幅。
+                        房租與房價的上漲，實質上成了資金從「無產勞動者」流向「有產資產方」的隱形財富再分配。
+                    </p>
+                </div>
+                <div class="bg-[#FAF9F5] p-6 rounded-xl border-l-4 border-[#8FA382] shadow-sm">
+                    <h3 class="font-bold text-[#3A352D] text-lg mb-2">③ 財稅成因：<span class="term-tooltip text-[#C48F82] font-semibold cursor-pointer" onclick="showGlossary('capital-term')">資本利得</span> 與 <span class="term-tooltip text-[#C48F82] font-semibold cursor-pointer" onclick="showGlossary('labor-term')">勞動所得</span> 嚴重脫鉤</h3>
+                    <p class="text-sm text-[#7E786E] leading-relaxed">
+                        高比例依賴基層勞工的薪資所得稅，而炒股、炒地與富人信託等資本利得，在現有稅制中課稅相對具有多樣的節稅空間。辛勤工作的所得難以逃避，而錢滾錢的增值卻享有廣大生存機會。
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-[#FAF9F5] border border-[#E1DBD2] p-6 md:p-8 rounded-2xl shadow-sm">
+                <h3 class="font-bold text-[#3A352D] text-lg mb-2 text-center">📊 實測：你在台灣財富金字塔的哪裡？</h3>
+                <p class="text-xs text-[#7E786E] text-center mb-6">輸入您的每月收入（台幣），分析您在受薪階層中的PR定位</p>
+                
+                <div class="max-w-md mx-auto flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 mb-6">
+                    <input type="number" id="user-income-input" placeholder="請輸入月收入，如: 35000" class="flex-grow bg-[#EFECE5] border border-[#E1DBD2] rounded-xl px-4 py-3 text-[#3A352D] text-sm focus:outline-none focus:border-[#C48F82]">
+                    <button onclick="calculateIncomePercentile()" class="px-6 py-3 bg-[#C48F82] hover:bg-[#B57F73] text-white font-bold text-sm rounded-xl transition shrink-0">
+                        立即試算
+                    </button>
+                </div>
+                <div id="calculator-result" class="hidden bg-[#EFECE5]/60 p-4 rounded-xl border border-[#E1DBD2] transition-all duration-300">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="data" class="max-w-5xl mx-auto px-4 py-16 scroll-mt-24">
+        <div class="text-center mb-12">
+            <span class="text-xs font-bold uppercase tracking-wider text-[#8EA1A5]">大數據與微觀心聲</span>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-[#3A352D] mt-2">
+                歷史沙漏與人民真實之聲
+            </h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-7 bg-[#FAF9F5] border border-[#E1DBD2] p-6 rounded-2xl shadow-sm">
+                <h3 class="font-bold text-[#3A352D] text-base mb-2">⏳ 財富沙漏變化 (吉尼係數趨勢)</h3>
+                <p class="text-xs text-[#7E786E] mb-6">拉動下方年份，觀察中產階級變動、財富兩極化（沙漏底部與頂部擴大）的動態走勢：</p>
+                
+                <div class="flex justify-center mb-6">
+                    <svg id="hourglass-svg" width="220" height="220" viewBox="0 0 100 100" class="transition-all duration-500">
+                        <path d="M 20 10 L 80 10 L 80 15 L 53 50 L 80 85 L 80 90 L 20 90 L 20 85 L 47 50 L 20 15 Z" fill="none" stroke="#E1DBD2" stroke-width="2" />
+                        <polygon id="hourglass-top" points="25,15 75,15 50,50" fill="#8EA1A5" opacity="0.8" class="transition-all duration-500" />
+                        <polygon id="hourglass-bottom" points="48,52 52,52 50,52" fill="#C48F82" opacity="0.8" class="transition-all duration-500" />
+                        <line id="hourglass-stream" x1="50" y1="50" x2="50" y2="85" stroke="#C48F82" stroke-width="1.5" stroke-dasharray="2,2" class="hidden" />
+                    </svg>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-xs text-[#7E786E]">
+                        <span class="font-bold">1980年 (均富年代)</span>
+                        <span id="current-hourglass-year" class="font-extrabold text-[#C48F82] text-sm">2026年 (極端差距)</span>
+                    </div>
+                    <input type="range" id="hourglass-slider" min="0" max="4" step="1" value="4" oninput="updateHourglass()" class="w-full accent-[#C48F82] h-2 bg-[#E1DBD2] rounded-lg cursor-pointer">
+                </div>
+                <div id="hourglass-desc" class="mt-4 p-3 bg-[#EFECE5]/60 rounded-lg text-xs text-[#7E786E] leading-relaxed">
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 space-y-4">
+                <h3 class="font-bold text-[#3A352D] text-base mb-4">📢 聆聽 · 底層與邊緣的無聲掙扎</h3>
+                
+                <div class="bg-[#FAF9F5] border border-[#E1DBD2] p-4 rounded-xl flex space-x-3 items-start relative group hover:border-[#C48F82] transition">
+                    <span class="text-2xl pt-1">👵</span>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-center mb-1">
+                            <h4 class="font-bold text-[#3A352D] text-sm">清潔工 阿英姨 (58歲)</h4>
+                            <button onclick="playMockAudio('audio1')" id="btn-audio1" class="text-xs px-2.5 py-1 bg-[#EFECE5] hover:bg-[#C48F82] hover:text-white rounded-lg transition font-bold flex items-center gap-1">
+                                <span class="play-icon">▶</span> 播放 30s
+                            </button>
+                        </div>
+                        <p class="text-xs text-[#7E786E] leading-relaxed" id="quote-audio1">
+                            「工作了三十年，薪水還是三萬多。房租從六千漲到一萬二，我現在連每個月買退燒藥硬撐上工都覺得貴...」
+                        </p>
+                        <div id="wave-audio1" class="hidden flex items-center gap-1 mt-2 h-6">
+                            <div class="visualizer-bar" style="animation-delay: 0.1s"></div>
+                            <div class="visualizer-bar" style="animation-delay: 0.3s"></div>
+                            <div class="visualizer-bar" style="animation-delay: 0.5s"></div>
+                            <div class="visualizer-bar" style="animation-delay: 0.2s"></div>
+                            <div class="visualizer-bar" style="animation-delay: 0.4s"></div>
+                            <div class="visualizer-bar" style="animation-delay: 0.6s"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#FAF9F5] border border-[#E1DBD2] p-4 rounded-xl flex space-x-3 items-start relative group hover:border-[#C48F82] transition">
+                    <span class="text-2xl pt-1">👨</span>
+                    <div class="flex-grow">
+                        <div class="flex justify-between items-center mb-1">
+                            <h4 class="font-bold text-[#3A352D] text-sm">社會學副教授 吳教授</h4>
+                            <button onclick="playMockAudio('audio2')" id="btn-audio2" class="text-xs px-2.5 py-1 bg-[#EFECE5] hover:bg-[#C48F82] hover:text-white rounded-lg transition font-bold flex items-center gap-1">
+                                <span class="play-icon">▶</span> 播放 30s
+                            </button>
+                        </div>
+                        <p class="text-xs text-[#7E786E] leading-relaxed" id="quote-audio2">
+                            「當前的分配不均，最可怕的往往不是物質的短缺，而是『希望的貧困』。當年輕人發現無論如何努力，也無法靠薪資購買一個安穩的家時，社會的流動性就會停滯。」
+                        </p>
+                        <div id="wave-audio2" class="hidden flex items-center gap-1 mt-2 h-6">
+                            <div class="visualizer-bar" style="animation-delay: 0.2s"></div>
+                            <div class="visualizer-bar" style="animation-delay: 0.4s"></div>
+                            <div class="visualizer-bar" style="animation-delay: 0.1s"></div>
+                            <div class="visualizer-bar" style="animation-delay: 0.5s"></div>
+                            <div class="visualizer-bar" style="animation-delay: 0.3s"></div>
+                            <div class="visualizer-bar" style="animation-delay: 0.6s"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="game" class="bg-[#EFECE5] py-16 scroll-mt-24">
+        <div class="max-w-4xl mx-auto px-4">
+            
+            <div class="text-center mb-10">
+                <span class="px-3 py-1 bg-[#C48F82]/10 border border-[#C48F82]/30 text-[#C48F82] text-xs font-bold rounded-full">核心沉浸式體驗</span>
+                <h2 class="text-2xl md:text-3xl font-black text-[#3A352D] mt-4 mb-3">
+                    體驗挑戰：靠最低工資活過一個月？
+                </h2>
+                <p class="text-sm text-[#7E786E] max-w-lg mx-auto leading-relaxed">
+                    2026 年台灣法定最低工資已調升至 <strong>NT$ 29,500</strong>。你將扮演一名在台北打拼的年輕勞工，面對<strong>四週的生存試煉</strong>，在「健康」與「存款」間做出抉擇。
+                </p>
+            </div>
+            
+            <div id="toast-container" class="fixed bottom-6 right-6 z-[9999] pointer-events-none space-y-2 max-w-sm w-full"></div>
+            
+            <div class="w-full bg-[#FAF9F5] border border-[#E1DBD2] rounded-2xl shadow-xl overflow-hidden transition-all duration-300">
+                
+                <div id="start-screen" class="p-6 md:p-12 text-center">
+                    <div class="max-w-xl mx-auto">
+                        <div class="inline-block p-3 bg-[#C48F82]/10 border border-[#C48F82]/30 rounded-full mb-6">
+                            <svg class="w-12 h-12 text-[#C48F82]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        
+                        <h2 class="text-xl md:text-2xl font-black text-[#3A352D] tracking-tight mb-4">
+                            準備進入 2026 台北生存試煉
+                        </h2>
+                        
+                        <p class="text-[#7E786E] text-xs md:text-sm leading-relaxed mb-8">
+                            在這個四週的生存戰中，每一步抉擇都伴隨著生活資源的變動。
+                            一旦存款、生理健康、心靈滿意度其中一項歸零，挑戰即告失敗。你能順利挺過這四週嗎？
+                        </p>
+                        <div class="bg-[#EFECE5] border border-[#E1DBD2] rounded-xl p-5 mb-8 text-left text-xs text-[#7E786E] space-y-2">
+                            <div class="flex items-start">
+                                <span class="text-[#C48F82] mr-2">✦</span>
+                                <span><strong>最低工資月薪 (NT$ 29,500)</strong>：若歸零即告破產，落入信用黑洞。</span>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-[#8FA382] mr-2">✦</span>
+                                <span><strong>生理健康度 (100%)</strong>：過低時容易引發病痛就醫，造成大筆醫療負擔。</span>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-[#8EA1A5] mr-2">✦</span>
+                                <span><strong>心靈滿意度 (80%)</strong>：過低會演變為重度心理無力與疲憊。</span>
+                            </div>
+                        </div>
+                        <button onclick="startGame()" class="w-full sm:w-auto px-8 py-4 bg-[#C48F82] hover:bg-[#B57F73] text-white font-bold rounded-xl transition duration-200 shadow-md">
+                            進入真實台北，開始挑戰
+                        </button>
+                    </div>
+                </div>
+
+                <div id="game-screen" class="hidden flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-[#E1DBD2]">
+                    
+                    <div class="w-full md:w-3/5 p-6 md:p-8 flex flex-col justify-between min-h-[460px]">
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <div class="flex items-center space-x-2">
+                                    <span class="px-2.5 py-1 bg-[#EFECE5] text-xs text-[#C48F82] font-bold rounded">WEEK <span id="current-week">1</span>/4</span>
+                                    <span class="text-xs text-[#7E786E]" id="week-label">第一週：初始考驗</span>
+                                </div>
+                                <div class="w-1/2 bg-[#EFECE5] h-1.5 rounded-full overflow-hidden">
+                                    <div id="week-progress-bar" class="bg-[#C48F82] h-full transition-all duration-300" style="width: 25%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h3 id="event-title" class="text-base md:text-lg font-bold text-[#3A352D] mb-2">
+                                    載入中...
+                                </h3>
+                                <p id="event-desc" class="text-[#7E786E] text-xs md:text-sm leading-relaxed">
+                                    載入中...
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-2.5 my-4" id="choices-container">
+                        </div>
+                        <div id="trivia-banner" class="mt-4 p-3 bg-[#EFECE5]/60 border border-[#E1DBD2] rounded-xl text-[11px] text-[#7E786E] flex items-start space-x-2">
+                            <span class="text-[#C48F82] font-bold shrink-0">💡 社會真相：</span>
+                            <span id="trivia-text" class="leading-relaxed">載入中...</span>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-2/5 bg-[#EFECE5]/40 p-6 md:p-8 flex flex-col justify-between">
+                        
+                        <div class="space-y-5">
+                            <h4 class="text-[11px] font-bold tracking-wider text-[#7E786E] uppercase mb-2">當前生存狀態</h4>
+                            
+                            <div>
+                                <div class="flex justify-between items-end mb-1">
+                                    <span class="text-xs text-[#7E786E] flex items-center">
+                                        💰 存款 (TWD)
+                                    </span>
+                                    <span id="stat-money" class="text-base font-extrabold text-[#3A352D]">NT$ 29,500</span>
+                                </div>
+                                <div class="w-full bg-[#EFECE5] h-1.5 rounded-full overflow-hidden">
+                                    <div id="bar-money" class="bg-[#C48F82] h-full transition-all duration-300" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-end mb-1">
+                                    <span class="text-xs text-[#7E786E] flex items-center">
+                                        ❤️ 生理健康
+                                    </span>
+                                    <span id="stat-health" class="text-xs font-bold text-[#8FA382]">100%</span>
+                                </div>
+                                <div class="w-full bg-[#EFECE5] h-1.5 rounded-full overflow-hidden">
+                                    <div id="bar-health" class="bg-[#8FA382] h-full transition-all duration-300" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-end mb-1">
+                                    <span class="text-xs text-[#7E786E] flex items-center">
+                                        🧠 心靈滿意度
+                                    </span>
+                                    <span id="stat-mental" class="text-xs font-bold text-[#8EA1A5]">80%</span>
+                                </div>
+                                <div class="w-full bg-[#EFECE5] h-1.5 rounded-full overflow-hidden">
+                                    <div id="bar-mental" class="bg-[#8EA1A5] h-full transition-all duration-300" style="width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 border-t border-[#E1DBD2] pt-4">
+                            <span class="text-[11px] font-bold tracking-wider text-[#7E786E] uppercase block mb-2">生活日誌</span>
+                            <div id="journal-log" class="text-[11px] text-[#7E786E] space-y-1.5 max-h-[140px] overflow-y-auto pr-1">
+                                <div class="text-[#7E786E]">挑戰開始，新生活正在台北市展開...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="result-screen" class="hidden p-6 md:p-12">
+                    <div class="max-w-2xl mx-auto text-center">
+                        <div id="result-badge" class="inline-block px-4 py-1 bg-red-500/10 border border-red-500/30 text-red-500 text-xs font-bold rounded-full mb-4">
+                            破產
+                        </div>
+                        
+                        <h2 id="result-title" class="text-xl md:text-3xl font-black text-[#3A352D] mb-4">
+                            這不是一場遊戲，這是 200 萬人的日常
+                        </h2>
+                        <p id="result-desc" class="text-[#7E786E] text-xs md:text-sm leading-relaxed mb-8">
+                            你在第 3 週時面臨資金歸零。
+                        </p>
+                        
+                        <div class="bg-[#FAF9F5] border border-[#E1DBD2] rounded-2xl p-6 mb-8 text-left">
+                            <h4 class="text-sm font-bold text-[#3A352D] mb-2 flex items-center">
+                                <span class="mr-2 text-base">👥</span> 大家選擇的平均值與你的決策對比
+                            </h4>
+                            <p class="text-xs text-[#7E786E] mb-5">
+                                看看你的生存策略，與其他台北生活挑戰者的平均選擇有何不同：
+                            </p>
+                            <div id="community-stats-container" class="space-y-5">
+                            </div>
+                            <div class="mt-6 pt-4 border-t border-[#E1DBD2] text-[11px] text-[#7E786E] leading-relaxed">
+                                <strong class="text-[#3A352D]">📊 數據洞察：</strong>
+                                高達 <span class="text-[#C48F82] font-bold">71% 的人在遭遇意外時選擇「吞藥硬撐」</span>，並有 <span class="text-[#C48F82] font-bold">58% 的人選擇「居住頂加」</span>。這顯示低薪群體為了省下微薄的積蓄，往往被迫用「損耗健康」作為代價，這正是隱形貧窮最寫實的寫照。
+                            </div>
+                        </div>
+
+                        <div class="bg-[#FAF9F5] border border-[#E1DBD2] rounded-2xl p-5 mb-8">
+                            <h4 class="text-xs font-bold text-[#7E786E] uppercase tracking-widest mb-4 text-left">
+                                本月生存與財富消長曲線 (按週統計)
+                            </h4>
+                            
+                            <div class="relative w-full h-48 md:h-56 flex flex-col justify-end">
+                                <svg id="chart-svg" class="w-full h-full" viewBox="0 0 600 200" preserveAspectRatio="none">
+                                    <line x1="0" y1="50" x2="600" y2="50" stroke="#E1DBD2" stroke-dasharray="4,4" />
+                                    <line x1="0" y1="100" x2="600" y2="100" stroke="#E1DBD2" stroke-dasharray="4,4" />
+                                    <line x1="0" y1="150" x2="600" y2="150" stroke="#E1DBD2" stroke-dasharray="4,4" />
+                                    <line x1="150" y1="0" x2="150" y2="200" stroke="#E1DBD2" stroke-opacity="0.3" stroke-dasharray="2,2" />
+                                    <line x1="300" y1="0" x2="300" y2="200" stroke="#E1DBD2" stroke-opacity="0.3" stroke-dasharray="2,2" />
+                                    <line x1="450" y1="0" x2="450" y2="200" stroke="#E1DBD2" stroke-opacity="0.3" stroke-dasharray="2,2" />
+                                </svg>
+                                
+                                <div class="flex justify-between text-[10px] text-[#7E786E] mt-2 px-1 font-bold">
+                                    <span>起點 (W0)</span>
+                                    <span>第一週 (W1)</span>
+                                    <span>第二週 (W2)</span>
+                                    <span>第三週 (W3)</span>
+                                    <span>結算 (W4)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-center gap-6 mt-4 text-xs">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-1.5 rounded-full bg-[#C48F82] inline-block"></span>
+                                    <span class="text-[#7E786E] font-medium">💰 存款走勢</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-1.5 rounded-full bg-[#8FA382] inline-block"></span>
+                                    <span class="text-[#7E786E] font-medium">❤️ 生理健康</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-1.5 rounded-full bg-[#8EA1A5] inline-block"></span>
+                                    <span class="text-[#7E786E] font-medium">🧠 心靈狀況</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="startGame()" class="px-6 py-3 bg-[#C48F82] hover:bg-[#B57F73] text-white text-xs font-bold rounded-lg transition shadow-md">
+                            重新挑戰模擬
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="transparency" class="max-w-4xl mx-auto px-4 py-16 scroll-mt-24">
+        <div class="border-t border-[#E1DBD2] pt-12">
+            <h3 class="text-xl font-bold text-[#3A352D] mb-6 flex items-center gap-2">
+                📂 專題資訊透明度與資料來源
+            </h3>
+            <p class="text-xs text-[#7E786E] leading-relaxed mb-6">
+                本專題之所得分配、房租負荷與工時統計，皆基於台灣政府部門公開大數據及學術研究報告。我們秉持客觀透明原則，將數據轉化為動態體驗，旨在探討台北市結構性的青年生存挑戰。
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-[#7E786E]">
+                <div class="bg-[#FAF9F5] border border-[#E1DBD2] p-4 rounded-xl space-y-2">
+                    <h4 class="font-bold text-[#3A352D]">政府官方大數據：</h4>
+                    <ul class="list-disc pl-4 space-y-1">
+                        <li><strong>法定基本工資：</strong>中華民國勞動部基本工資調整公告。</li>
+                        <li><strong>所得五等分位差距：</strong>行政院主計總處《家庭收支調查報告》。</li>
+                        <li><strong>台北市平均房租水準：</strong>內政部實價登錄與住宅租金統計大數據分析。</li>
+                    </ul>
+                </div>
+                <div class="bg-[#FAF9F5] border border-[#E1DBD2] p-4 rounded-xl space-y-2">
+                    <h4 class="font-bold text-[#3A352D]">學術文獻與社會學研究：</h4>
+                    <ul class="list-disc pl-4 space-y-1">
+                        <li><strong>高房價資產再分配機制：</strong>中央研究院、臺灣大學社會學系關於不產分配與階級流動性報告。</li>
+                        <li><strong>非典型勞動過勞：</strong>勞動部勞動安全衛生研究所關於非典型從業者（外送員）之工時與安全調查。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-[#E1DBD2] bg-[#FAF9F5] py-8 text-center text-xs text-[#7E786E] px-4">
+        <p class="mb-2">平行台北 © 2026 互動人文多媒體專題特刊版權所有</p>
+        <p>本站為虛擬學術深度專題，旨在喚醒社會對於青年低薪與結構性貧窮的重視。</p>
+    </footer>
+
+    <div id="info-modal" class="fixed inset-0 bg-[#3A352D]/40 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 hidden transition-opacity duration-300 opacity-0">
+        <div class="bg-[#FAF9F5] border border-[#E1DBD2] w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300">
+            <div class="p-6">
+                <h4 id="modal-title" class="text-lg font-bold text-[#3A352D] mb-3 flex items-center gap-2">
+                </h4>
+                <p id="modal-text" class="text-xs text-[#7E786E] leading-relaxed mb-6">
+                </p>
+                <div class="flex justify-end">
+                    <button onclick="closeModal()" class="px-5 py-2 bg-[#C48F82] hover:bg-[#B57F73] text-white text-xs font-bold rounded-lg transition">
+                        確認並返回
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const splitContainer = document.querySelector('.split-container');
+        const richPanel = document.getElementById('rich-panel');
+        const splitSlider = document.getElementById('split-slider');
+
+        if (splitContainer && richPanel && splitSlider) {
+            let isDragging = false;
+
+            const moveSlider = (clientX) => {
+                const rect = splitContainer.getBoundingClientRect();
+                const x = clientX - rect.left;
+                let percentage = (x / rect.width) * 100;
+                if (percentage < 0) percentage = 0;
+                if (percentage > 100) percentage = 100;
+                splitSlider.style.left = `${percentage}%`;
+                richPanel.style.width = `${percentage}%`;
+            };
+
+            splitSlider.addEventListener('mousedown', () => isDragging = true);
+            window.addEventListener('mouseup', () => isDragging = false);
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                moveSlider(e.clientX);
+            });
+            splitSlider.addEventListener('touchstart', () => isDragging = true);
+            window.addEventListener('touchend', () => isDragging = false);
+            window.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                if (e.touches.length > 0) {
+                    moveSlider(e.touches[0].clientX);
+                }
+            });
+        }
+
+        function showCustomModal(title, text, isError = false) {
+            const modal = document.getElementById('info-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalText = document.getElementById('modal-text');
+            const modalContent = modal.firstElementChild;
+            if (!modal || !modalTitle || !modalText || !modalContent) return;
+            modalTitle.innerHTML = isError ? `⚠️ ${title}` : `💡 ${title}`;
+            modalText.textContent = text;
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.add('opacity-100');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('info-modal');
+            const modalContent = modal.firstElementChild;
+            if (!modal || !modalContent) return;
+            modal.classList.remove('opacity-100');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function calculateIncomePercentile() {
+            const inputEl = document.getElementById('user-income-input');
+            const resultEl = document.getElementById('calculator-result');
+            if (!inputEl || !resultEl) return;
+            const income = parseFloat(inputEl.value);
+            if (isNaN(income) || income <= 0) {
+                showCustomModal('輸入有誤', '請輸入大於 0 的有效月收入金額。', true);
+                return;
+            }
+            let pr = 0, tier = "", analysis = "";
+            if (income < 29500) {
+                pr = Math.round((income / 29500) * 10);
+                tier = "法定基層邊緣";
+                analysis = "您的薪資低於 2026 法定最低工資，可能屬於部分工時、非典型就業或面臨嚴重的結構性貧窮挑戰。在台北生活，房租與基本開銷將帶來極其沉重的生存高壓。";
+            } else if (income <= 35000) {
+                pr = Math.round(10 + ((income - 29500) / 5500) * 20);
+                tier = "初階勞動群體 (PR 10-30)";
+                analysis = "您正處於社會受薪金字塔的底層區間。這群體多為剛出社會的青年、服務業或剛性勞力者。面對台北高漲的物價，扣除房租與基本餐飲後，每月的「風險耐受積蓄」幾乎趨近於零。";
+            } else if (income <= 50000) {
+                pr = Math.round(30 + ((income - 35000) / 15000) * 35);
+                tier = "典型中產受薪階級 (PR 30-65)";
+                analysis = "您屬於台灣最堅實但也最無奈的中產群體。薪資能支應日常開銷，甚至偶爾犒賞自己；然而面對失控的房價，若沒有家族資產援助，在台北購屋、婚育的實質難度依然極高，正經歷隱形的中產階級下流化。";
+            } else if (income <= 80000) {
+                pr = Math.round(65 + ((income - 50000) / 30000) * 20);
+                tier = "中高階專業白領 (PR 65-85)";
+                analysis = "您的收入已超越多數受薪族。多為科技業、金融業、工程師或中階主管。生活品質優良，具備基本資產配置能力，但主要財富來源仍高度依賴「勞動時間所得」，需注意防禦通膨對薪資購買力的侵蝕。";
+            } else if (income <= 150000) {
+                pr = Math.round(85 + ((income - 80000) / 70000) * 10);
+                tier = "高階受薪精英 (PR 85-95)";
+                analysis = "您已進入台灣受薪階層的頂端前 10%。擁有優異的儲蓄與投資轉化率。不過請注意，本計算器僅計算『勞動所得』。在真實世界中，此階層與真正靠『錢滾錢』的頂端富裕資本家之間，仍有一道難以跨越的體制鴻溝。";
+            } else {
+                pr = Math.round(95 + Math.min(4, (income - 150000) / 50000));
+                if (pr > 99) pr = 99;
+                tier = "金字塔頂端受薪族 (PR 95-99)";
+                analysis = "您的勞動所得極具優勢，屬於社會領頭羊。然而，真正拉開平行台北差距的往往是『資本利得』（如不動產、股票股利、家族信託）。您的下一個挑戰是如何將高額薪資加速轉化為被動資本積累。";
+            }
+            resultEl.classList.remove('hidden');
+            resultEl.innerHTML = `<div class="space-y-3"><div class="flex justify-between items-center border-b border-[#E1DBD2] pb-2"><span class="text-xs font-bold text-[#7E786E]">定位階層：</span><span class="text-sm font-black text-[#3A352D]">${tier}</span></div><div class="flex justify-between items-center border-b border-[#E1DBD2] pb-2"><span class="text-xs font-bold text-[#7E786E]">受薪階層勝過人比例：</span><span class="text-lg font-black text-[#C48F82]">約 PR ${pr}</span></div><div class="text-xs text-[#4E4941] leading-relaxed pt-1"><strong class="text-[#3A352D] block mb-1">💡 結構深度剖析：</strong>${analysis}</div></div>`;
+        }
+
+        const hourglassData = [
+            { year: "1980年 (均富年代)", top: "35,15 65,15 50,48", bottom: "40,85 60,85 50,52", desc: "1980年代：台灣經濟起飛，中產階級蓬勃發展，貧富差距小（吉尼係數約 0.28）。社會流動性極強，只要肯努力，黑手也能變老闆，沙漏上下結構相對均衡。" },
+            { year: "1990年 (資產膨脹)", top: "30,15 70,15 50,48", bottom: "35,85 65,85 50,52", desc: "1990年代：股市萬點與早期房地產飆升，資本利得開始展露威力。早期持有資產者與純勞工差距拉大，中產階級開始面臨首波分流。" },
+            { year: "2000年 (產業轉型)", top: "28,15 72,15 50,48", bottom: "30,85 70,85 50,52", desc: "2000年代：全球化與製造業外移，科技業與傳統產業薪資嚴重雙軌化。低技術勞工薪資停滯，財富沙漏的中間腰部開始明顯收窄。" },
+            { year: "2015年 (下流中產)", top: "22,15 78,15 50,48", bottom: "25,85 75,85 50,52", desc: "2015年左右：台北房價飆升至所得比歷史高位。「買不起房」成為世代集體焦慮。薪資調幅追不上資產通膨，中產階級向下流動，沙漏兩極化加速。" },
+            { year: "2026年 (極端差距)", top: "15,15 85,15 50,48", bottom: "18,85 82,85 50,52", desc: "2026年現況：最富有的 20% 與最窮 20% 所得差距創歷史新高。財富分配失衡，沙漏演變為極端的『頂部資本龐大、底部勞動掙扎、中產腰部幾乎消失』結構。" }
+        ];
+
+        function updateHourglass() {
+            const slider = document.getElementById('hourglass-slider');
+            const yearLabel = document.getElementById('current-hourglass-year');
+            const descDiv = document.getElementById('hourglass-desc');
+            const topPoly = document.getElementById('hourglass-top');
+            const bottomPoly = document.getElementById('hourglass-bottom');
+            const streamLine = document.getElementById('hourglass-stream');
+            if (!slider || !yearLabel || !descDiv || !topPoly || !bottomPoly) return;
+            const idx = parseInt(slider.value);
+            const data = hourglassData[idx];
+            yearLabel.textContent = data.year;
+            descDiv.textContent = data.desc;
+            topPoly.setAttribute('points', data.top);
+            bottomPoly.setAttribute('points', data.bottom);
+            streamLine.classList.remove('hidden');
+            setTimeout(() => { streamLine.classList.add('hidden'); }, 400);
+        }
+        document.addEventListener('DOMContentLoaded', updateHourglass);
+
+        const activeAudios = {};
+        function playMockAudio(id) {
+            const btn = document.getElementById(`btn-${id}`);
+            const wave = document.getElementById(`wave-${id}`);
+            if (!btn || !wave) return;
+            const playIcon = btn.querySelector('.play-icon');
+            if (activeAudios[id]) {
+                clearInterval(activeAudios[id].interval);
+                delete activeAudios[id];
+                if (playIcon) playIcon.textContent = "▶";
+                btn.childNodes[btn.childNodes.length - 1].textContent = " 播放 30s";
+                btn.classList.remove('bg-[#C48F82]', 'text-white');
+                btn.classList.add('bg-[#EFECE5]');
+                wave.classList.add('hidden');
+            } else {
+                let timeLeft = 30;
+                if (playIcon) playIcon.textContent = "⏸";
+                btn.childNodes[btn.childNodes.length - 1].textContent = ` ${timeLeft}s`;
+                btn.classList.remove('bg-[#EFECE5]');
+                btn.classList.add('bg-[#C48F82]', 'text-white');
+                wave.classList.remove('hidden');
+                const interval = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft <= 0) {
+                        clearInterval(interval);
+                        delete activeAudios[id];
+                        if (playIcon) playIcon.textContent = "▶";
+                        btn.childNodes[btn.childNodes.length - 1].textContent = " 播放 30s";
+                        btn.classList.remove('bg-[#C48F82]', 'text-white');
+                        btn.classList.add('bg-[#EFECE5]');
+                        wave.classList.add('hidden');
+                    } else {
+                        btn.childNodes[btn.childNodes.length - 1].textContent = ` ${timeLeft}s`;
+                    }
+                }, 1000);
+                activeAudios[id] = { interval };
+            }
+        }
+
+        let gameState = { week: 1, money: 29500, health: 100, mental: 80, history: { money: [29500], health: [100], mental: [80] }, choicesMade: [] };
+        const gameEvents = {
+            1: { title: "第一週：居住的剛性代價", desc: "2026 年台北房租再度飛漲。開工第一天，你需要解決落腳處。面對微薄的最低工資月薪，你打算如何選擇下個月的棲身之所？", trivia: "2026 年台北市平均單人套房租金已突破 NT$ 15,000，佔法定最低薪資比例高達 50% 以上，迫使青年基層往頂加或老舊公寓外移。", choices: [{ text: "選擇大安區巷弄老舊頂樓加蓋 (租金 $9,000，通風差但便宜)", effect: { money: -9000, health: -15, mental: -10 }, log: "為了省錢住進悶熱頂加，過敏惡化，心靈感到壓抑。", key: "housing_cheap" }, { text: "合租外圍老舊公寓正常單間 (租金 $14,000，環境較好但負擔沉重)", effect: { money: -14000, health: 0, mental: +5 }, log: "選擇了環境較好的合租房，雖然存款大幅失血，但至少擁有尊嚴。", key: "housing_normal" }] },
+            2: { title: "第二週：超負荷的生存磨損", desc: "主管突然在週五晚上八點拋出一個大型專案，暗示如果不加班配合，考核將會面臨危機。同時，外送平台今晚開啟了暴雨高額加碼。你該怎麼做？", trivia: "台灣勞工年均總工時居高不下。基層勞工往往在非典型就業（如外送、兼職）與本職高強度加班中雙重過勞，用健康換取有限的收入。", choices: [{ text: "吞下退燒藥與蠻牛，拒絕無薪加班去跑外送 (+ $4,000，極度疲憊)", effect: { money: 4000, health: -30, mental: -15 }, log: "在雨夜中用時間換來 4000 元，但中途差點發生車禍，身體面臨崩潰邊緣。", key: "overwork_ride" }, { text: "留在辦公室無償加班保住工作 (薪資不變，精神損耗嚴重)", effect: { money: 0, health: -10, mental: -25 }, log: "在辦公室熬到清晨，看著沒有加班費的薪資單，心靈滿意度暴跌。", key: "overwork_office" }] },
+            3: { title: "第三週：不可預知的意外逆襲", desc: "命運往往不給底層喘息的機會。這週你半夜突然急性牙髓炎發作、痛不欲生；同時，你相依為命的二手筆電（生財工具）無預警損壞。你面臨預算大擠壓！", trivia: "社會學研究指出，低薪群體之所以無法翻身，主因在於財富累積缺乏安全墊，任何一次小意外（生病、修車、器材壞掉）都會演變成破產災難。", choices: [{ text: "自費就醫、購買二手筆電硬撐 (花費 $8,000，換來健康與生財工具)", effect: { money: -8000, health: +15, mental: -5 }, log: "付出了沉重金錢代價換取牙齒不痛與電腦，但看著存款數字感到恐慌。", key: "accident_pay" }, { text: "去藥局買最便宜的止痛藥硬吞，電腦先向朋友借舊機 (省錢但極度痛苦)", effect: { money: -1000, health: -25, mental: -20 }, log: "止痛藥漸漸失效，發炎導致發燒，工作效率一落千丈，整個人精疲力竭。", key: "accident_endure" }] },
+            4: { title: "第四週：終局代價與社交孤立", desc: "終於熬到了最後一週。高中的死隊友突然發來喜帖，希望你出席婚禮並擔任伴郎。這意味著你必須支出紅包、置裝與高鐵交通費。這將是壓垮你本月預算的最後稻草嗎？", trivia: "「關係貧窮」是當代隱形貧窮的重要特徵。為了維持基本生存，貧困者往往被迫切斷所有非必要社交，最終陷入支持網路匱乏的孤立循環。", choices: [{ text: "花費 $4,500 出席婚禮，維繫珍貴的友情", effect: { money: -4500, health: 0, mental: +25 }, log: "看見老友很開心，內心得到了溫暖與充實，但錢包徹底見底。", key: "social_yes" }, { text: "編造加班謊言婉拒出席，默默待在房間吃泡麵 (省下紅包，但感到孤獨與無力)", effect: { money: -300, health: -5, mental: -30 }, log: "拒絕了朋友，關掉社群軟體不敢看婚禮照片，極度的孤獨感侵蝕著靈魂。", key: "social_no" }] }
+        };
+        const communityStats = { "housing_cheap": { label: "居住頂加/老舊房間", global: 58 }, "housing_normal": { label: "正常合租單間", global: 42 }, "overwork_ride": { label: "雨夜兼差外送", global: 64 }, "overwork_office": { label: "無償留任加班", global: 36 }, "accident_pay": { label: "自費就醫與修繕", global: 29 }, "accident_endure": { label: "吞藥硬撐不就醫", global: 71 }, "social_yes": { label: "花費紅包維繫社交", global: 34 }, "social_no": { label: "關係退縮婉拒出席", global: 66 } };
+        function startGame() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            gameState = { week: 1, money: 29500, health: 100, mental: 80, history: { money: [29500], health: [100], mental: [80] }, choicesMade: [] };
+            document.getElementById('journal-log').innerHTML = '<div class="text-[#7E786E]">挑戰開始，新生活正在台北市展開...</div>';
+            renderWeek();
+        }
+        function renderWeek() {
+            if (gameState.week > 4) { endGame(true, "【生存成功】你勉強在 2026 年的台北活過了一個月！"); return; }
+            if (gameState.money <= 0) { endGame(false, "【生存失敗：經濟破產】你的存款已歸零。你被迫預借現金、落入高利循環債務，台北的繁華與你徹底無緣。"); return; }
+            if (gameState.health <= 0) { endGame(false, "【生存失敗：急性過勞】你的生理健康歸零。你在清晨的街頭因急性病症暈倒，被送醫急救，面臨大筆醫療負擔。"); return; }
+            if (gameState.mental <= 0) { endGame(false, "【生存失敗：精神瓦解】你的心靈滿意度歸零。重度憂鬱與無力感將你徹底吞噬，你再也無法起床上班，面臨嚴重的精神磨損。"); return; }
+            const ev = gameEvents[gameState.week];
+            document.getElementById('current-week').textContent = gameState.week;
+            document.getElementById('week-label').textContent = ev.title;
+            document.getElementById('week-progress-bar').style.width = `${gameState.week * 25}%`;
+            document.getElementById('event-title').textContent = ev.title;
+            document.getElementById('event-desc').textContent = ev.desc;
+            document.getElementById('trivia-text').textContent = ev.trivia;
+            updateStatPanel();
+            const choicesContainer = document.getElementById('choices-container');
+            choicesContainer.innerHTML = '';
+            ev.choices.forEach(c => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 bg-[#FAF9F5] border border-[#E1DBD2] hover:border-[#C48F82] hover:bg-[#FAF9F5]/60 rounded-xl text-xs font-semibold leading-relaxed transition flex justify-between items-center group";
+                let costText = `(${c.effect.money >= 0 ? '+' : ''}${c.effect.money}元 / 心靈:${c.effect.mental >= 0 ? '+' : ''}${c.effect.mental}%)`;
+                btn.innerHTML = `<span class="text-[#4E4941] group-hover:text-[#3A352D] pr-2">${c.text}</span><span class="text-[10px] text-[#7E786E] font-mono shrink-0">${costText}</span>`;
+                btn.onclick = () => handleChoice(c);
+                choicesContainer.appendChild(btn);
+            });
+        }
+        function handleChoice(choice) {
+            gameState.money += choice.effect.money;
+            gameState.health = Math.min(100, Math.max(0, gameState.health + choice.effect.health));
+            gameState.mental = Math.min(100, Math.max(0, gameState.mental + choice.effect.mental));
+            gameState.history.money.push(gameState.money);
+            gameState.history.health.push(gameState.health);
+            gameState.history.mental.push(gameState.mental);
+            gameState.choicesMade.push(choice.key);
+            const logContainer = document.getElementById('journal-log');
+            const logItem = document.createElement('div');
+            logItem.className = "border-l-2 border-[#C48F82] pl-2 text-[11px] text-[#4E4941] mt-1";
+            logItem.innerHTML = `<strong>W${gameState.week}：</strong>${choice.log}`;
+            logContainer.appendChild(logItem);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            showToast(`已做出選擇：${choice.log.substring(0, 15)}...`);
+            gameState.week++;
+            renderWeek();
+        }
+        function updateStatPanel() {
+            const moneyText = document.getElementById('stat-money');
+            const healthText = document.getElementById('stat-health');
+            const mentalText = document.getElementById('stat-mental');
+            moneyText.textContent = `NT$ ${gameState.money.toLocaleString()}`;
+            healthText.textContent = `${gameState.health}%`;
+            mentalText.textContent = `${gameState.mental}%`;
+            moneyText.className = gameState.money < 5000 ? "text-base font-extrabold danger-pulse" : "text-base font-extrabold text-[#3A352D]";
+            healthText.className = gameState.health < 30 ? "text-xs font-bold danger-pulse" : "text-xs font-bold text-[#8FA382]";
+            mentalText.className = gameState.mental < 25 ? "text-xs font-bold danger-pulse" : "text-xs font-bold text-[#8EA1A5]";
+            document.getElementById('bar-money').style.width = `${Math.min(100, Math.max(0, (gameState.money / 29500) * 100))}%`;
+            document.getElementById('bar-health').style.width = `${gameState.health}%`;
+            document.getElementById('bar-mental').style.width = `${gameState.mental}%`;
+        }
+        function endGame(isSuccess, message) {
+            document.getElementById('game-screen').classList.add('hidden');
+            const resultScreen = document.getElementById('result-screen');
+            resultScreen.classList.remove('hidden');
+            const badge = document.getElementById('result-badge');
+            const title = document.getElementById('result-title');
+            const desc = document.getElementById('result-desc');
+            if (isSuccess) {
+                badge.textContent = "生存通關";
+                badge.className = "inline-block px-4 py-1 bg-[#8FA382]/20 border border-[#8FA382]/50 text-[#5C6E52] text-xs font-bold rounded-full mb-4";
+                title.textContent = "通關了，但這並非勝利，而是常態性的損耗。";
+                desc.innerHTML = `${message}<br><br>你在月底勉強剩下了 <strong>NT$ ${gameState.money.toLocaleString()}</strong>。但你的生理健康剩下 ${gameState.health}%，心靈狀況剩下 ${gameState.mental}%。這意味著你正在台北進行『慢性跨世代燃燒』。你還能撐過下一個月、下一年嗎？`;
+            } else {
+                badge.textContent = "破產/倒下";
+                badge.className = "inline-block px-4 py-1 bg-red-500/10 border border-red-500/30 text-red-500 text-xs font-bold rounded-full mb-4";
+                title.textContent = "這不是一場惡作劇遊戲，這是 200 萬人的無聲日常";
+                desc.textContent = message;
+            }
+            renderCommunityStats();
+            drawChart();
+        }
+        function renderCommunityStats() {
+            const container = document.getElementById('community-stats-container');
+            if (!container) return;
+            container.innerHTML = '';
+            gameState.choicesMade.forEach((key, index) => {
+                const stat = communityStats[key];
+                if (!stat) return;
+                const div = document.createElement('div');
+                div.className = "space-y-1.5";
+                div.innerHTML = `<div class="flex justify-between text-xs font-bold text-[#3A352D]"><span>第 ${index + 1} 週你的抉擇：${stat.label}</span><span class="text-[#C48F82]">其餘挑戰者選擇此項比例：${stat.global}%</span></div><div class="w-full bg-[#EFECE5] h-2 rounded-full overflow-hidden relative"><div class="bg-[#C48F82] h-full transition-all duration-500" style="width: ${stat.global}%"></div></div>`;
+                container.appendChild(div);
+            });
+        }
+        function drawChart() {
+            const svg = document.getElementById('chart-svg');
+            if (!svg) return;
+            const lines = svg.querySelectorAll('.dynamic-path');
+            lines.forEach(l => l.remove());
+            const totalWeeks = gameState.history.money.length;
+            const width = 600;
+            const height = 200;
+            const stepX = width / 4;
+            let moneyPoints = [], healthPoints = [], mentalPoints = [];
+            for (let i = 0; i < totalWeeks; i++) {
+                const x = i * stepX;
+                const mNorm = Math.min(1, Math.max(0, gameState.history.money[i] / 29500));
+                moneyPoints.push(`${x},${height - (mNorm * (height - 40) + 20)}`);
+                healthPoints.push(`${x},${height - ((gameState.history.health[i] / 100) * (height - 40) + 20)}`);
+                mentalPoints.push(`${x},${height - ((gameState.history.mental[i] / 100) * (height - 40) + 20)}`);
+            }
+            createSvgPath(svg, moneyPoints.join(' '), '#C48F82');
+            createSvgPath(svg, healthPoints.join(' '), '#8FA382');
+            createSvgPath(svg, mentalPoints.join(' '), '#8EA1A5');
+        }
+        function createSvgPath(svg, points, color) {
+            const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+            polyline.setAttribute('points', points);
+            polyline.setAttribute('fill', 'none');
+            polyline.setAttribute('stroke', color);
+            polyline.setAttribute('stroke-width', '3');
+            polyline.setAttribute('stroke-linecap', 'round');
+            polyline.setAttribute('stroke-linejoin', 'round');
+            polyline.setAttribute('class', 'dynamic-path transition-all duration-1000');
+            svg.appendChild(polyline);
+        }
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = "bg-[#FAF9F5] text-[#3A352D] border border-[#E1DBD2] px-4 py-2.5 rounded-xl shadow-lg text-xs font-semibold flex items-center space-x-2 pointer-events-auto transition duration-300 opacity-0 transform translate-y-2";
+            toast.innerHTML = `<span>⏳</span> <span>${msg}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => { toast.classList.remove('opacity-0', 'translate-y-2'); toast.classList.add('opacity-100', 'translate-y-0'); }, 50);
+            setTimeout(() => { toast.classList.add('opacity-0', '-translate-y-2'); setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+        function showGlossary(termId) {
+            const glossary = {
+                'housing-term': { title: "高房價的隱形掠奪", text: "指房價、租金漲幅遠超實質薪資增長。無產勞工必須將大量勞動所得轉化為房租上繳給資產階級，形成社會財富結構的再次分配。" },
+                'capital-term': { title: "資本利得 (Capital Gains)", text: "指透過股票複利、房地產增值、家族信託等資產工具產生的財富積累速度。其最大特徵為不受個人時間限制，且通常比勞動所得擁有更多樣的稅賦配置方案。" },
+                'labor-term': { title: "勞動所得 (Earned Income)", text: "指依賴出賣體力、時間、專業技術所換取的薪資報酬。具有嚴格的每日 24 小時上限，且在現行稅制中承受著相對剛性的薪資綜合所得稅。" }
+            };
+            const info = glossary[termId];
+            if (info) showCustomModal(info.title, info.text, false);
+        }
+    </script>
+</body>
+</html>

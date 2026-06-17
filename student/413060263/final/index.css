@@ -1,0 +1,535 @@
+/* ==========================================================================
+   設計系統與基礎排版 (新聞編輯風格)
+   ========================================================================== */
+
+:root {
+    --bg-primary: #ffffff;
+    --bg-card: #ffffff;
+    --border-color: #e6dfd5;
+    --text-primary: #22201f;
+    --text-secondary: #5a544f;
+    --text-light: #8e857c;
+    
+    --color-alarm: #8c251e;      /* 警報深紅 */
+    --color-alarm-hover: #721e18;
+    --color-alarm-light: #fdf2f2;
+    
+    --color-kevin: #1a4332;      /* 凱文深綠 */
+    --color-kevin-hover: #123024;
+    --color-kevin-light: #f0fdf4;
+    
+    --color-amber: #b45309;      /* 琥珀金 */
+    --color-amber-light: #fffbeb;
+    
+    --font-serif: 'Noto Serif TC', serif;
+    --font-sans: 'Noto Sans TC', sans-serif;
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s ease-in-out;
+}
+
+/* 災難警報暗黑模式 */
+body.emergency-mode {
+    --bg-primary: #120202;
+    --bg-card: #1c0606;
+    --border-color: #3d1411;
+    --text-primary: #f5e6e6;
+    --text-secondary: #cca7a5;
+    --text-light: #997472;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: var(--transition-smooth);
+}
+
+.serif-text {
+    font-family: var(--font-serif);
+}
+
+/* 響應式容器與排版 */
+.app-container {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    width: 100%;
+}
+
+/* ==========================================================================
+   元件與樣式卡片 (Editorial Card)
+   ========================================================================== */
+
+.editorial-header {
+    width: 100%;
+    padding: 1.25rem 2rem;
+    background-color: var(--bg-primary);
+    border-b: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(8px);
+    transition: var(--transition-smooth);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.editorial-header-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.badge-tag {
+    background-color: var(--color-alarm);
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 0.25rem 0.5rem;
+    text-transform: uppercase;
+    border-radius: 2px;
+}
+
+.editorial-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 30px rgba(142, 131, 115, 0.03);
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+body.emergency-mode .editorial-card {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   按鈕與微小操作設計
+   ========================================================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 0.8rem 1.6rem;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: var(--color-alarm);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-alarm-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(140, 37, 30, 0.15);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.btn-secondary:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+    color: var(--text-primary);
+}
+
+body.emergency-mode .btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.btn-option {
+    width: 100%;
+    text-align: left;
+    padding: 1.1rem 1.5rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
+}
+
+.btn-option:hover {
+    border-color: var(--color-alarm);
+    background-color: rgba(140, 37, 30, 0.01);
+    transform: translateX(4px);
+}
+
+.btn-option.option-kevin:hover {
+    border-color: var(--color-kevin);
+    background-color: rgba(26, 67, 50, 0.01);
+}
+
+body.emergency-mode .btn-option:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* ==========================================================================
+   版面排版系統 (Grid & Layouts)
+   ========================================================================== */
+
+.screen-section {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.screen-section.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .game-grid {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+/* 狀態面板 */
+.status-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.status-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.status-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.status-label-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.status-label {
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-value {
+    font-family: monospace;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.progress-track {
+    width: 100%;
+    height: 6px;
+    background-color: rgba(0, 0, 0, 0.06);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+body.emergency-mode .progress-track {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.6s cubic-bezier(0.1, 0.8, 0.3, 1), background-color 0.3s ease;
+    border-radius: 3px;
+}
+
+/* 進度條狀態顏色 */
+.bg-risk { background-color: var(--color-alarm); }
+.bg-warning { background-color: var(--color-amber); }
+.bg-safe { background-color: var(--color-kevin); }
+
+/* ==========================================================================
+   動畫效果集 (Animations)
+   ========================================================================== */
+
+/* 地震搖晃 */
+@keyframes shake {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    10% { transform: translate(-0.8px, -0.6px) rotate(-0.1deg); }
+    20% { transform: translate(0.8px, 0.6px) rotate(0.1deg); }
+    30% { transform: translate(-0.8px, 0.6px) rotate(-0.1deg); }
+    40% { transform: translate(0.8px, -0.6px) rotate(0.1deg); }
+    55% { transform: translate(-1.2px, 0.8px) rotate(-0.15deg); }
+    70% { transform: translate(1.2px, -0.8px) rotate(0.15deg); }
+    80% { transform: translate(-0.6px, -0.6px) rotate(-0.05deg); }
+    90% { transform: translate(0.6px, 0.6px) rotate(0.05deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.shake-active {
+    animation: shake 0.12s infinite;
+}
+
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+.flash-active {
+    animation: flash 1s infinite;
+}
+
+/* 地層砂泡沸騰 */
+@keyframes bubble-rise {
+    0% { transform: translateY(0) scale(0.8); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(-30px) scale(1.2); opacity: 0; }
+}
+
+.liquefying-bubble {
+    animation: bubble-rise 1.5s infinite ease-out;
+}
+
+/* ==========================================================================
+   動態 SVG 模擬器相關樣式
+   ========================================================================== */
+
+.svg-container {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-card);
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 16/10;
+}
+
+.svg-ground {
+    transition: var(--transition-smooth);
+}
+
+.svg-building {
+    transform-origin: bottom center;
+    transition: transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 阻尼器擺動 */
+@keyframes damper-swing {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+    100% { transform: translateX(0); }
+}
+
+.swinging-damper {
+    animation: damper-swing 0.8s infinite ease-in-out;
+}
+
+/* ==========================================================================
+   互動式新莊 SVG 地圖樣式
+   ========================================================================== */
+
+.map-container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.map-region {
+    fill: #f3ece4;
+    stroke: #d8cebf;
+    stroke-width: 1.5;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+body.emergency-mode .map-region {
+    fill: #2c1615;
+    stroke: #4d2321;
+}
+
+.map-region:hover {
+    fill: #e9ded0;
+    stroke: var(--text-primary);
+}
+
+.map-region.active-region {
+    fill: #fae9e8;
+    stroke: var(--color-alarm);
+}
+
+body.emergency-mode .map-region.active-region {
+    fill: #5a1e1b;
+    stroke: var(--color-alarm);
+}
+
+.map-label {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 700;
+    fill: var(--text-secondary);
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+body.emergency-mode .map-label {
+    fill: #cca7a5;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* ==========================================================================
+   決策結果回饋 Overlay/畫面
+   ========================================================================== */
+
+.feedback-card {
+    border-top: 4px solid var(--color-alarm);
+}
+
+.feedback-card.kevin-feedback {
+    border-top-color: var(--color-kevin);
+}
+
+.diff-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+.diff-positive {
+    background-color: var(--color-kevin-light);
+    color: var(--color-kevin);
+}
+
+.diff-negative {
+    background-color: var(--color-alarm-light);
+    color: var(--color-alarm);
+}
+
+/* ==========================================================================
+   其他元件
+   ========================================================================== */
+
+.fact-footnote {
+    background-color: rgba(0, 0, 0, 0.01);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 1rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+body.emergency-mode .fact-footnote {
+    background-color: rgba(255, 255, 255, 0.01);
+}
+
+.volume-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.volume-toggle:hover {
+    color: var(--text-primary);
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+body.emergency-mode .volume-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 地震倒數畫面 */
+.earthquake-logo-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ping-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(140, 37, 30, 0.15);
+    animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+    75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}

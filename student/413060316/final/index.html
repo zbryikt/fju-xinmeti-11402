@@ -1,0 +1,2108 @@
+<html lang="zh-TW"><head><script data-bard-injected="true">(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })()</script><script data-bard-injected="true">(function(){'use strict';window.addEventListener("message",a=>{a.data&&a.data.type==="SUPPLEMENTAL_DATA_UPDATE"&&window.dispatchEvent(new CustomEvent("supplementaldataupdate",{detail:a.data.data}))});}).call(this);
+</script><script data-bard-injected="true">(function(){'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
+function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
+p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
+
+ MIT License
+
+ Copyright (c) 2017-2023 W.Y.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+*/
+function u(a,b){var d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);var c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{var a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){var b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
+function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{var c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
+function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
+function D(a,b,d){return t(function*(){var c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
+var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{var c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
+function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){var c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);var e=yield c.blob();return new Promise((f,g)=>{var k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){var c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
+function L(a,b,d){return t(function*(){var c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());try{let f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});var e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){var b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");let c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
+function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
+function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;var c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
+return b})}function ea(a,b,d){var c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{var g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
+function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
+function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){let g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
+c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
+function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){var b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
+function la(a,b,d,c){return t(function*(){try{let e=d?(new URL(b,d||void 0)).toString():b,f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){let [c,,e]=ia.exec(d)||[];if(!e)return"";if(e===b)return`src: ${c};`}}):a}
+function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;var c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c,e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
+function oa(a,b){return t(function*(){var d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
+function pa(a,b){return t(function*(){var d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){var d=a.cssText,c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){var g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
+function X(a){if(a==null)return[];var b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
+d.lastIndex;b.push(e[0])}return b}
+function qa(a,b){return t(function*(){var d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){let g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
+{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
+function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}var d=new Set;b(a);return d}function ua(a,b){return t(function*(){var d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
+function va(a,b){return t(function*(){var d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){let c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){var {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
+function xa(a,b={}){return t(function*(){var {width:d,height:c}=A(a,b),e=yield wa(a,b);e=yield B(e);var f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384));
+f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;let c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
+function Aa(){return t(function*(){var a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
+function Ba(a){return t(function*(){var b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){var b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
+window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
+})();</script><script data-bard-injected="true">(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script data-bard-injected="true">
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script ws-interception-config="{&quot;parentOrigin&quot;:&quot;https://gemini.google.com&quot;,&quot;proxiedDomains&quot;:[]}" data-bard-injected="true">(function(){'use strict';var u=typeof Object.defineProperties=="function"?Object.defineProperty:function(b,d,e){if(b==Array.prototype||b==Object.prototype)return b;b[d]=e.value;return b};function v(b){b=["object"==typeof globalThis&&globalThis,b,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var d=0;d<b.length;++d){var e=b[d];if(e&&e.Math==Math)return e}throw Error("Cannot find global object");}var w=v(this);
+function y(b,d){if(d)a:{var e=w;b=b.split(".");for(var h=0;h<b.length-1;h++){var k=b[h];if(!(k in e))break a;e=e[k]}b=b[b.length-1];h=e[b];d=d(h);d!=h&&d!=null&&u(e,b,{configurable:!0,writable:!0,value:d})}}function z(b){function d(h){return b.next(h)}function e(h){return b.throw(h)}return new Promise(function(h,k){function m(n){n.done?h(n.value):Promise.resolve(n.value).then(d,e).then(m,k)}m(b.next())})}y("globalThis",function(b){return b||w});/*
+
+ Copyright The Closure Library Authors.
+ SPDX-License-Identifier: Apache-2.0
+*/
+function A(b,d){function e(){}e.prototype=d.prototype;b.i=d.prototype;b.prototype=new e;b.prototype.constructor=b;b.g=function(h,k,m){for(var n=Array(arguments.length-2),p=2;p<arguments.length;p++)n[p-2]=arguments[p];return d.prototype[k].apply(h,n)}};function B(b,d,e="*"){function h(a){if(typeof a==="string")return F.encode(a).buffer;if(a instanceof ArrayBuffer)return a.slice(0);if(ArrayBuffer.isView(a))return a.buffer.slice(a.byteOffset,a.byteOffset+a.byteLength);throw Error("Invalid data type");}function k(a){a=h(a);var f={type:"send",data:new Uint8Array(a)},g;(g=r)==null||g.postMessage(f,[a])}function m(){if(!r)throw Error("Data port not captured yet.");r.onmessage=a=>{if(a.data.type==="message"){a=new MessageEvent("message",{data:G.decode(a.data.data)});
+let f;(f=c.onmessage)==null||f.call(c,a);c.dispatchEvent(a)}}}function n(){if(!t)throw Error("Control port not captured yet.");t.onmessage=a=>{switch(a.data.type){case "open":l=1;var f=new Event("open"),g;(g=c.onopen)==null||g.call(c,f);c.dispatchEvent(f);q.forEach(H=>{k(H)});q=[];break;case "close":g=a.data;l=3;g=new CloseEvent("close",{code:g.code,reason:g.reason,wasClean:g.wasClean});(f=c.onclose)==null||f.call(c,g);c.dispatchEvent(g);break;case "error":l=3;f=new Event("error");let x;(x=c.onerror)==
+null||x.call(c,f);c.dispatchEvent(f)}}}function p(a){return z(function*(){var f=new MessageChannel;t=f.port1;var g=new MessageChannel;r=g.port1;n();m();window.parent.postMessage({type:"websocket_open",portOrdering:["control","data"],url:b,protocols:a||[],connectionId:I},e,[f.port2,g.port2])}())}var c=Reflect.construct(EventTarget,[],new.target);c.CONNECTING=0;c.OPEN=1;c.CLOSING=2;c.CLOSED=3;c.url=b;c.binaryType="arraybuffer";c.protocol="";c.h="";var l=0,t=null,r=null,q=[],F=new TextEncoder,G=new TextDecoder;
+c.onopen=null;c.onmessage=null;c.onclose=null;c.onerror=null;Object.defineProperty(c,"readyState",{get:()=>l,enumerable:!0,configurable:!0});Object.defineProperty(c,"bufferedAmount",{get:()=>{var a=0;q.forEach(f=>{a+=typeof f==="string"?f.length:f.byteLength});return a},enumerable:!0,configurable:!0});var I=function(){var a;return((a=globalThis.crypto)==null?0:a.randomUUID)?globalThis.crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,f=>{var g=Math.random()*16|0;return(f===
+"x"?g:g&3|8).toString(16)})}();c.send=a=>{if(l===1)a instanceof Blob?a.arrayBuffer().then(f=>{k(f)}):k(a);else if(l===0)if(typeof a==="string")q.push(a);else if(a instanceof ArrayBuffer||ArrayBuffer.isView(a))q.push(h(a));else throw Error("Sending Blob is not supported before the connection is open.");else console.debug("WebSocket send called in CLOSING or CLOSED state; ignored.")};c.close=(a=1E3,f="")=>{if(l!==2&&l!==3){l=2;a={type:"close",code:a,reason:f,wasClean:a===1E3};var g;(g=t)==null||g.postMessage(a)}};
+Promise.resolve().then(()=>p(d));return c}A(B,EventTarget);var C=document.currentScript,D=C==null?void 0:C.getAttribute("ws-interception-config");if(!D)throw Error("WebSocket Interceptor: Missing ws-interception-config attribute in the script tag.");var E=JSON.parse(D);if(!E.parentOrigin||typeof E.parentOrigin!=="string")throw Error("WebSocket Interceptor: Invalid parentOrigin in ws-interception-config");
+(function(b){var d=Object.getOwnPropertyDescriptor(window,"WebSocket");if(!d||d.writable||d.configurable)d=Object.assign(function(e,h){try{let k=(new URL(e)).hostname;if(b.proxiedDomains.some(m=>k===m||k.endsWith(`.${m}`)))return new B(e,h,b.parentOrigin)}catch(k){throw window.parent.postMessage({type:"websocket_blocked",url:e,reason:"blocked_invalid_url"},b.parentOrigin),new DOMException(`WebSocket connection to '${e}' is not allowed in Canvas.`,"SecurityError");}window.parent.postMessage({type:"websocket_blocked",
+url:e,reason:"blocked_domain_not_allowlisted"},b.parentOrigin);throw new DOMException(`WebSocket connection to '${e}' is not allowed in Canvas.`,"SecurityError");},{CONNECTING:0,OPEN:1,CLOSING:2,CLOSED:3}),Object.defineProperty(window,"WebSocket",{value:d,writable:!1,configurable:!1})})({proxiedDomains:E.proxiedDomains||[],parentOrigin:E.parentOrigin});}).call(this);
+</script><script data-bard-injected="true">((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+  modelInformation.deprecatedGenerateImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-3-flash-preview","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-3.1-flash-image-preview","imageTransformModelName":"gemini-3-pro-image-preview-11-2025","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20","gemini-2.5-flash-preview-09-2025"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"],"deprecatedGenerateImageModelNames":["gemini-2.5-flash-image-preview","gemini-2.5-flash-image"]})</script><script data-bard-injected="true">(function(){'use strict';function a(){window.parent.postMessage({type:"interaction"},"*")}window.addEventListener("click",a,{capture:!0,passive:!0});window.addEventListener("touchstart",a,{capture:!0,passive:!0});window.addEventListener("keydown",a,{capture:!0,passive:!0});}).call(this);
+</script><script data-bard-injected="true">(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>排隊心理學：為什麼隔壁排總是比較快？| 互動專題新聞</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter & Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700&amp;family=Noto+Sans+TC:wght=300;400;500;700;900&amp;display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Image Comparison Slider Styles */
+        .comparison-slider {
+            position: relative;
+            overflow: hidden;
+        }
+        .comparison-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        /* Hide scrollbar for clean dashboard */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.inset-y-0{top:0px;bottom:0px}.-bottom-10{bottom:-2.5rem}.-left-10{left:-2.5rem}.-right-10{right:-2.5rem}.-top-10{top:-2.5rem}.bottom-0{bottom:0px}.left-0{left:0px}.left-6{left:1.5rem}.left-\[50\%\]{left:50%}.right-0{right:0px}.top-0{top:0px}.top-4{top:1rem}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-4{margin-top:1rem;margin-bottom:1rem}.my-8{margin-top:2rem;margin-bottom:2rem}.mb-1{margin-bottom:0.25rem}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}.mb-16{margin-bottom:4rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-1{margin-left:0.25rem}.mr-1{margin-right:0.25rem}.mr-2{margin-right:0.5rem}.mt-1{margin-top:0.25rem}.mt-1\.5{margin-top:0.375rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[16\/10\]{aspect-ratio:16/10}.h-1{height:0.25rem}.h-10{height:2.5rem}.h-12{height:3rem}.h-16{height:4rem}.h-2{height:0.5rem}.h-2\.5{height:0.625rem}.h-4{height:1rem}.h-40{height:10rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-8{height:2rem}.h-\[380px\]{height:380px}.h-full{height:100%}.min-h-\[350px\]{min-height:350px}.min-h-\[64px\]{min-height:64px}.min-h-\[95vh\]{min-height:95vh}.w-1{width:0.25rem}.w-10{width:2.5rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-16{width:4rem}.w-2{width:0.5rem}.w-2\.5{width:0.625rem}.w-4{width:1rem}.w-40{width:10rem}.w-5{width:1.25rem}.w-8{width:2rem}.w-\[100vw\]{width:100vw}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-5xl{max-width:64rem}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.max-w-xl{max-width:36rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.translate-x-0{--tw-translate-x:0px;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes bounce{0%, 100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-ew-resize{cursor:ew-resize}.select-none{-webkit-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.items-stretch{align-items:stretch}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-around{justify-content:space-around}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-x-1 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.25rem * var(--tw-space-x-reverse));margin-left:calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.375rem * var(--tw-space-x-reverse));margin-left:calc(0.375rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-6 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1.5rem * var(--tw-space-x-reverse));margin-left:calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-12 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(3rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(3rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.self-start{align-self:flex-start}.self-end{align-self:flex-end}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.rounded-b-xl{border-bottom-right-radius:0.75rem;border-bottom-left-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-y{border-top-width:1px;border-bottom-width:1px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-indigo-100{--tw-border-opacity:1;border-color:rgb(224 231 255 / var(--tw-border-opacity, 1))}.border-indigo-500{--tw-border-opacity:1;border-color:rgb(99 102 241 / var(--tw-border-opacity, 1))}.border-indigo-500\/30{border-color:rgb(99 102 241 / 0.3)}.border-indigo-600{--tw-border-opacity:1;border-color:rgb(79 70 229 / var(--tw-border-opacity, 1))}.border-indigo-700\/50{border-color:rgb(67 56 202 / 0.5)}.border-indigo-900{--tw-border-opacity:1;border-color:rgb(49 46 129 / var(--tw-border-opacity, 1))}.border-indigo-900\/50{border-color:rgb(49 46 129 / 0.5)}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-200\/50{border-color:rgb(226 232 240 / 0.5)}.border-slate-200\/60{border-color:rgb(226 232 240 / 0.6)}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-slate-800\/50{border-color:rgb(30 41 59 / 0.5)}.border-slate-800\/80{border-color:rgb(30 41 59 / 0.8)}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.border-white\/20{border-color:rgb(255 255 255 / 0.2)}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-amber-500\/10{background-color:rgb(245 158 11 / 0.1)}.bg-emerald-400{--tw-bg-opacity:1;background-color:rgb(52 211 153 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-indigo-200{--tw-bg-opacity:1;background-color:rgb(199 210 254 / var(--tw-bg-opacity, 1))}.bg-indigo-400{--tw-bg-opacity:1;background-color:rgb(129 140 248 / var(--tw-bg-opacity, 1))}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255 / var(--tw-bg-opacity, 1))}.bg-indigo-50\/50{background-color:rgb(238 242 255 / 0.5)}.bg-indigo-500{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.bg-indigo-500\/10{background-color:rgb(99 102 241 / 0.1)}.bg-indigo-500\/20{background-color:rgb(99 102 241 / 0.2)}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-indigo-600\/30{background-color:rgb(79 70 229 / 0.3)}.bg-indigo-900\/40{background-color:rgb(49 46 129 / 0.4)}.bg-indigo-950\/40{background-color:rgb(30 27 75 / 0.4)}.bg-rose-400{--tw-bg-opacity:1;background-color:rgb(251 113 133 / var(--tw-bg-opacity, 1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94 / var(--tw-bg-opacity, 1))}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72 / var(--tw-bg-opacity, 1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/50{background-color:rgb(15 23 42 / 0.5)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-slate-950\/40{background-color:rgb(2 6 23 / 0.4)}.bg-slate-950\/80{background-color:rgb(2 6 23 / 0.8)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/10{background-color:rgb(255 255 255 / 0.1)}.bg-white\/20{background-color:rgb(255 255 255 / 0.2)}.bg-white\/5{background-color:rgb(255 255 255 / 0.05)}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-\[radial-gradient\(\#ffffff_1px\2c transparent_1px\)\]{background-image:radial-gradient(#ffffff 1px,transparent 1px)}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-amber-400{--tw-gradient-from:#fbbf24 var(--tw-gradient-from-position);--tw-gradient-to:rgb(251 191 36 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-indigo-900{--tw-gradient-from:#312e81 var(--tw-gradient-from-position);--tw-gradient-to:rgb(49 46 129 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-100{--tw-gradient-from:#f1f5f9 var(--tw-gradient-from-position);--tw-gradient-to:rgb(241 245 249 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-900{--tw-gradient-from:#0f172a var(--tw-gradient-from-position);--tw-gradient-to:rgb(15 23 42 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-950\/70{--tw-gradient-from:rgb(2 6 23 / 0.7) var(--tw-gradient-from-position);--tw-gradient-to:rgb(2 6 23 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-slate-900\/30{--tw-gradient-to:rgb(15 23 42 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(15 23 42 / 0.3) var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-indigo-50{--tw-gradient-to:#eef2ff var(--tw-gradient-to-position)}.to-indigo-950{--tw-gradient-to:#1e1b4b var(--tw-gradient-to-position)}.to-rose-400{--tw-gradient-to:#fb7185 var(--tw-gradient-to-position)}.to-slate-50{--tw-gradient-to:#f8fafc var(--tw-gradient-to-position)}.to-slate-950{--tw-gradient-to:#020617 var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.object-cover{object-fit:cover}.object-center{object-position:center}.p-2{padding:0.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-8{padding-left:2rem;padding-right:2rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-20{padding-top:5rem;padding-bottom:5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-2{padding-bottom:0.5rem}.pb-24{padding-bottom:6rem}.pb-4{padding-bottom:1rem}.pl-6{padding-left:1.5rem}.pr-12{padding-right:3rem}.pt-2{padding-top:0.5rem}.pt-32{padding-top:8rem}.pt-4{padding-top:1rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[8px\]{font-size:8px}.text-\[9px\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-light{font-weight:300}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-500{--tw-text-opacity:1;color:rgb(16 185 129 / var(--tw-text-opacity, 1))}.text-indigo-200{--tw-text-opacity:1;color:rgb(199 210 254 / var(--tw-text-opacity, 1))}.text-indigo-300{--tw-text-opacity:1;color:rgb(165 180 252 / var(--tw-text-opacity, 1))}.text-indigo-400{--tw-text-opacity:1;color:rgb(129 140 248 / var(--tw-text-opacity, 1))}.text-indigo-500{--tw-text-opacity:1;color:rgb(99 102 241 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-indigo-700{--tw-text-opacity:1;color:rgb(67 56 202 / var(--tw-text-opacity, 1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133 / var(--tw-text-opacity, 1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94 / var(--tw-text-opacity, 1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.accent-indigo-500{accent-color:#6366f1}.accent-rose-500{accent-color:#f43f5e}.opacity-0{opacity:0}.opacity-10{opacity:0.1}.opacity-90{opacity:0.9}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-amber-500\/30{--tw-shadow-color:rgb(245 158 11 / 0.3);--tw-shadow:var(--tw-shadow-colored)}.shadow-indigo-200{--tw-shadow-color:#c7d2fe;--tw-shadow:var(--tw-shadow-colored)}.blur-2xl{--tw-blur:blur(40px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-xl{--tw-backdrop-blur:blur(24px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-100{transition-duration:100ms}.duration-1000{transition-duration:1000ms}.duration-500{transition-duration:500ms}.\[background-size\:24px_24px\]{background-size:24px 24px}.first-letter\:float-left::first-letter{float:left}.first-letter\:mr-3::first-letter{margin-right:0.75rem}.first-letter\:mt-1::first-letter{margin-top:0.25rem}.first-letter\:text-5xl::first-letter{font-size:3rem;line-height:1}.first-letter\:font-bold::first-letter{font-weight:700}.first-letter\:text-indigo-600::first-letter{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.selection\:bg-indigo-500 *::selection{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.selection\:text-white *::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.selection\:bg-indigo-500::selection{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.selection\:text-white::selection{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:-translate-y-0\.5:hover{--tw-translate-y:-0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-white\/20:hover{border-color:rgb(255 255 255 / 0.2)}.hover\:bg-amber-400:hover{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-500:hover{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-500:hover{--tw-bg-opacity:1;background-color:rgb(99 102 241 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-600:hover{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-500:hover{--tw-bg-opacity:1;background-color:rgb(244 63 94 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:bg-white\/10:hover{background-color:rgb(255 255 255 / 0.1)}.hover\:bg-white\/15:hover{background-color:rgb(255 255 255 / 0.15)}.hover\:text-indigo-300:hover{--tw-text-opacity:1;color:rgb(165 180 252 / var(--tw-text-opacity, 1))}.hover\:text-indigo-600:hover{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.hover\:text-slate-200:hover{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:opacity-100{opacity:1}@media (min-width: 640px){.sm\:inline{display:inline}.sm\:w-auto{width:auto}.sm\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:p-12{padding:3rem}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:flex{display:flex}.md\:aspect-\[16\/9\]{aspect-ratio:16/9}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:p-10{padding:2.5rem}.md\:p-16{padding:4rem}.md\:pb-36{padding-bottom:9rem}.md\:pt-40{padding-top:10rem}.md\:text-5xl{font-size:3rem;line-height:1}.md\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width: 1024px){.lg\:col-span-4{grid-column:span 4 / span 4}.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:col-span-8{grid-column:span 8 / span 8}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}.lg\:text-6xl{font-size:3.75rem;line-height:1}}</style></head>
+<body class="bg-slate-50 text-slate-900 selection:bg-indigo-500 selection:text-white">
+
+<!-- Navigation bar -->
+<nav class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md border-b border-slate-100 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+            <span class="bg-indigo-600 text-white p-2 rounded-lg text-xs font-black tracking-wider uppercase">NEWS Insight</span>
+            <span class="text-sm font-bold text-slate-800">數據解釋型專題</span>
+        </div>
+        <div class="hidden md:flex space-x-6 text-sm font-medium text-slate-600">
+            <a href="#intro" class="hover:text-indigo-600 transition">引言</a>
+            <a href="#comparison" class="hover:text-indigo-600 transition">結構對比</a>
+            <a href="#theory" class="hover:text-indigo-600 transition">數據剖析</a>
+            <a href="#lab" class="hover:text-indigo-600 transition">排隊實驗室</a>
+            <a href="#trivia" class="hover:text-indigo-600 transition">排隊冷知識</a>
+        </div>
+        <a href="#lab" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-4 py-2 rounded-full transition shadow-md shadow-indigo-200">
+            進入實驗室
+        </a>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="hero" class="relative pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden bg-slate-900 text-white min-h-[95vh] flex items-center">
+    <!-- Background Image: No vegetables. Showing a long line of crowded people waiting with shopping bags under stress/frustration -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&amp;fit=crop&amp;w=1920&amp;q=80" alt="Crowded line of shoppers queueing impatiently" class="w-full h-full object-cover object-center opacity-90 select-none pointer-events-none scale-105 transform transition duration-1000">
+        <!-- Subtle dark vignette gradient overlay to enhance visual focus and text contrast -->
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-900/30 to-slate-50 z-10"></div>
+    </div>
+    
+    <!-- Glassmorphism Text Card protecting legibility while letting the busy line backdrop shine -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full">
+        <div class="bg-slate-950/80 backdrop-blur-xl border border-white/20 rounded-3xl p-8 sm:p-12 md:p-16 text-center shadow-2xl relative overflow-hidden">
+            <!-- Decorative background elements inside the card -->
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-indigo-500/10 rounded-full blur-2xl"></div>
+            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-amber-500/10 rounded-full blur-2xl"></div>
+
+            <div class="relative z-10">
+                <span class="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 mb-6 backdrop-blur-sm">
+                    <span class="h-2 w-2 rounded-full bg-indigo-400 animate-pulse"></span>
+                    <span>大眾心理學與排隊理論</span>
+                </span>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-6">
+                    為什麼<span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-rose-400">隔壁排</span>總是比較快？
+                </h1>
+                <p class="text-base sm:text-lg md:text-xl text-slate-200 max-w-2xl mx-auto font-light leading-relaxed mb-10">
+                    這不是你的錯覺，而是扎實的「排隊理論」與「大腦選擇性記憶」。<br class="hidden sm:inline">
+                    透過這場互動模擬，我們將帶你拆解超市收銀台背後的效率密碼。
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                    <a href="#lab" class="w-full sm:w-auto px-8 py-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl transition shadow-lg shadow-amber-500/30 transform hover:-translate-y-0.5 text-center">
+                        開始模擬實驗
+                    </a>
+                    <a href="#intro" class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/15 border border-white/20 font-medium rounded-xl transition backdrop-blur-sm text-center">
+                        向下探索故事
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Introduction Section -->
+<section id="intro" class="py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="border-l-4 border-indigo-600 pl-6 mb-12">
+            <p class="text-xs font-bold text-indigo-600 uppercase tracking-widest mb-1">Introduction</p>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-snug">
+                日常生活中最折磨人的 5 分鐘
+            </h2>
+        </div>
+        
+        <div class="prose prose-slate prose-lg text-slate-700 leading-relaxed space-y-6 font-light">
+            <p class="first-letter:text-5xl first-letter:font-bold first-letter:text-indigo-600 first-letter:float-left first-letter:mr-3 first-letter:mt-1">
+                你正站在大排長龍的超市裡。手裡拿著一盒鮮奶和麵包，眼前有三個收銀台。你左看右看，挑了一個看似人最少、移動最順暢的隊伍排了進去。
+            </p>
+            <p>
+                然而，兩分鐘過去了。你這排完全沒有動靜。你隔壁原本排在你後方的一位先生，現在已經付完錢、拿著提袋優雅地離開了。此時你心中升起一陣莫名的怒火與挫折感，並在心裡默想：<strong class="font-semibold text-rose-600">「為什麼每一次我排的隊伍，都是最慢的那一排？」</strong>
+            </p>
+            <p>
+                這不僅是一個廣為流傳的都市傳說，更是一個牽涉到**機率學、心理學以及作業研究（Operations Research）**的經典課題。今天，我們不用生硬的公式，而是直接將「超市收銀台」搬到你面前，用科學模型讓你親自找出答案。
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Image Comparison Slider Section -->
+<section id="comparison" class="py-16 bg-slate-50 border-y border-slate-100">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Visual Contrast</span>
+            <h2 class="text-3xl font-bold text-slate-900 mt-2">兩大排隊陣型的對決</h2>
+            <p class="text-slate-500 mt-2 max-w-xl mx-auto">拖動滑杆，親眼看看「多排多口」與「一排多口（蛇形）」在結構設計上的根本差異。</p>
+        </div>
+
+        <!-- Slider container -->
+        <div class="relative w-full aspect-[16/10] md:aspect-[16/9] bg-slate-200 rounded-2xl overflow-hidden shadow-xl border border-slate-200/50 select-none">
+            <!-- Left Side: Parallel Queues (Multi-Queue) -->
+            <div class="absolute inset-0 bg-gradient-to-br from-slate-100 to-indigo-50 flex flex-col justify-between p-6 md:p-10">
+                <div class="z-10 bg-white/90 backdrop-blur px-3 py-1.5 rounded-full shadow-sm self-start flex items-center space-x-2 border border-slate-100">
+                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                    <span class="text-xs font-bold text-slate-800">多排對多口 (並行排隊)</span>
+                </div>
+                <!-- Visual simulation schematic (Static graphic styled with HTML/Tailwind) -->
+                <div class="flex-1 flex justify-around items-center my-4">
+                    <!-- Column 1 -->
+                    <div class="flex flex-col items-center space-y-4">
+                        <div class="w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center font-bold shadow">
+                            <i class="fa-solid fa-cash-register text-lg"></i>
+                        </div>
+                        <div class="flex flex-col space-y-2">
+                            <div class="w-8 h-8 rounded-full bg-rose-400 border-2 border-white shadow flex items-center justify-center text-white text-xs font-bold animate-bounce">😟</div>
+                            <div class="w-8 h-8 rounded-full bg-indigo-200 border-2 border-white shadow flex items-center justify-center text-indigo-700 text-xs font-bold">🧍</div>
+                            <div class="w-8 h-8 rounded-full bg-indigo-200 border-2 border-white shadow flex items-center justify-center text-indigo-700 text-xs font-bold">🧍</div>
+                        </div>
+                        <span class="text-xs font-bold text-rose-500">被結帳慢的人堵死！</span>
+                    </div>
+                    <!-- Column 2 -->
+                    <div class="flex flex-col items-center space-y-4">
+                        <div class="w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center font-bold shadow">
+                            <i class="fa-solid fa-cash-register text-lg"></i>
+                        </div>
+                        <div class="flex flex-col space-y-2">
+                            <div class="w-8 h-8 rounded-full bg-emerald-400 border-2 border-white shadow flex items-center justify-center text-white text-xs font-bold">😊</div>
+                            <div class="w-8 h-8 rounded-full bg-indigo-200 border-2 border-white shadow flex items-center justify-center text-indigo-700 text-xs font-bold">🧍</div>
+                        </div>
+                        <span class="text-xs font-medium text-slate-400">移動順暢</span>
+                    </div>
+                </div>
+                <div class="z-10 text-xs text-slate-500 max-w-sm">
+                    每個人自由選擇一條隊伍。一旦你前面的顧客遇到問題（刷卡失敗、忘記帶錢），整條隊伍便陷入癱瘓，而隔壁排依然飛速進行。
+                </div>
+            </div>
+
+            <!-- Right Side: Serpentine Queue (Single-Queue) (Dynamic slider mask) -->
+            <div id="slider-right-pane" class="absolute inset-y-0 right-0 left-[50%] bg-gradient-to-br from-slate-900 to-indigo-950 flex flex-col justify-between p-6 md:p-10 border-l border-white/20 overflow-hidden">
+                <!-- Inner container mirrored and aligned to right to prevent distortion on resize -->
+                <div class="absolute inset-y-0 right-0 w-[100vw] flex flex-col justify-between p-6 md:p-10 text-white">
+                    <div class="z-10 bg-indigo-500/20 backdrop-blur px-3 py-1.5 rounded-full shadow-sm self-end flex items-center space-x-2 border border-indigo-500/30">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                        <span class="text-xs font-bold text-indigo-200">一排對多口 (蛇形排隊)</span>
+                    </div>
+                    
+                    <!-- Visual simulation schematic (Single Queue) -->
+                    <div class="flex-1 flex flex-col justify-center items-center my-4 pr-12">
+                        <!-- Registers -->
+                        <div class="flex justify-around w-full max-w-md mb-8">
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 bg-indigo-500 text-white rounded-lg flex items-center justify-center font-bold shadow-md">
+                                    <i class="fa-solid fa-cash-register text-sm"></i>
+                                </div>
+                                <span class="text-[10px] text-emerald-400 mt-1">空閒即補</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 bg-indigo-500 text-white rounded-lg flex items-center justify-center font-bold shadow-md">
+                                    <i class="fa-solid fa-cash-register text-sm"></i>
+                                </div>
+                                <span class="text-[10px] text-rose-400 mt-1">處理慢客</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="w-10 h-10 bg-indigo-500 text-white rounded-lg flex items-center justify-center font-bold shadow-md">
+                                    <i class="fa-solid fa-cash-register text-sm"></i>
+                                </div>
+                                <span class="text-[10px] text-emerald-400 mt-1">空閒即補</span>
+                            </div>
+                        </div>
+                        <!-- Single Serpent Queue -->
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 rounded-full bg-emerald-400 border-2 border-indigo-900 flex items-center justify-center text-white text-xs font-bold">😀</div>
+                            <i class="fa-solid fa-arrow-left text-indigo-400"></i>
+                            <div class="w-8 h-8 rounded-full bg-indigo-400 border-2 border-indigo-900 flex items-center justify-center text-white text-xs">🧍</div>
+                            <i class="fa-solid fa-arrow-left text-indigo-400"></i>
+                            <div class="w-8 h-8 rounded-full bg-indigo-400 border-2 border-indigo-900 flex items-center justify-center text-white text-xs">🧍</div>
+                        </div>
+                        <span class="text-xs font-bold text-indigo-300 mt-2">絕對公平：先到先得</span>
+                    </div>
+
+                    <div class="z-10 text-xs text-slate-300 max-w-sm self-end text-right">
+                        所有人排在同一條隊伍，當任何一個收銀台空出時，隊伍最前列的人便上前結帳。這能徹底消除個別慢速顧客對特定隊伍的毀滅性阻塞。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Draggable handle bar -->
+            <div id="slider-handle" class="absolute inset-y-0 left-[50%] w-1 bg-white cursor-ew-resize z-30 group flex items-center justify-center">
+                <div class="w-10 h-10 bg-white hover:bg-indigo-600 text-slate-800 hover:text-white rounded-full flex items-center justify-center shadow-lg border border-slate-200 transition-colors pointer-events-none">
+                    <i class="fa-solid fa-arrows-left-right text-xs"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Deep Analysis (Inverted Pyramid & Data Section) -->
+<section id="theory" class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">In-depth Analysis</span>
+            <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-2">
+                數據與心理學的「不平等條約」
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <!-- Stat 1 -->
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center">
+                <div class="text-indigo-600 text-3xl font-bold mb-2">2/3</div>
+                <div class="text-sm font-semibold text-slate-800 mb-1">隔壁排比較快的客觀機率</div>
+                <p class="text-xs text-slate-500">在 3 個並行排隊的超市通道中，你所選的那一排有高達 66.7% 的機率是三者中最慢或居中的。</p>
+            </div>
+            <!-- Stat 2 -->
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center">
+                <div class="text-rose-500 text-3xl font-bold mb-2">3 倍</div>
+                <div class="text-sm font-semibold text-slate-800 mb-1">心理等待時間膨脹</div>
+                <p class="text-xs text-slate-500">心理學家研究指出，當人在「無所事事」地站立等待時，主觀時間體感是實際流逝時間的三倍。</p>
+            </div>
+            <!-- Stat 3 -->
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-center">
+                <div class="text-emerald-500 text-3xl font-bold mb-2">30%</div>
+                <div class="text-sm font-semibold text-slate-800 mb-1">蛇形排隊提升的焦慮耐受</div>
+                <p class="text-xs text-slate-500">由於「先到先得」保證了絕對的程序正義，即便等待時間相同，蛇形排隊也能顯著降低客戶焦慮度。</p>
+            </div>
+        </div>
+
+        <div class="space-y-12 max-w-3xl mx-auto">
+            <!-- Part 1: The Core Fact -->
+            <div class="flex gap-6 items-start">
+                <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-lg shrink-0">1</div>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">核心數學事實：這不是你的錯覺</h3>
+                    <p class="text-slate-600 leading-relaxed font-light">
+                        假設超市有 3 個獨立的並行隊伍。假設每個隊伍的服務速度是隨機的。簡單的概率學告訴我們：任何特定的某一條隊伍（也就是你選的那一條）成為「最快隊伍」的機率只有 <strong>1/3 (約 33.3%)</strong>。換言之，<strong class="font-medium text-slate-800">有將近 67% 的機率，隔壁的某條隊伍一定會比你快。</strong> 這就是純粹的機率不對稱。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Part 2: The Psychological Magnifier -->
+            <div class="flex gap-6 items-start">
+                <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-lg shrink-0">2</div>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">心理放大鏡：損失厭惡與記憶偏見</h3>
+                    <p class="text-slate-600 leading-relaxed font-light">
+                        諾貝爾經濟學獎得主卡尼曼提出過**「損失厭惡（Loss Aversion）」**理論。我們對「損失」（別人超過我們）的痛苦感受，遠大於「獲得」（我們超過別人）的快樂。
+                        當你順暢通關時，你只覺得理所當然，完全不會在腦中留下記憶；但當你被卡在原地看著別人前進時，那種挫折感會被深深刻印在大腦中，形成「我每次排隊都最慢」的非理性偏見。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Part 3: The Interview Quote -->
+            <blockquote class="bg-indigo-50/50 rounded-2xl p-8 border border-indigo-100 relative my-8">
+                <i class="fa-solid fa-quote-left text-4xl text-indigo-200 absolute top-4 left-6"></i>
+                <div class="relative z-10">
+                    <p class="text-slate-700 italic font-medium leading-relaxed mb-4">
+                        「當人們擁有選擇權（自己選一排）時，他們會對結果產生過度的掌控感。然而，當預期落空，這種掌控感就會轉化為強烈的沮喪。蛇形排隊最大的優點在於『卸下了消費者的決策壓力』——雖然看起來很長，但它保障了正義與秩序。」
+                    </p>
+                    <cite class="text-sm font-bold text-indigo-600 block">— 廖副教授，台北科技大學工業工程與管理學系</cite>
+                </div>
+            </blockquote>
+        </div>
+    </div>
+</section>
+
+<!-- Queuing Laboratory Section -->
+<section id="lab" class="py-20 bg-slate-950 text-slate-100 overflow-hidden relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                可探索的交互解釋系統 (Explorable Explanation)
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-4">
+                超市排隊效率物理實驗室
+            </h2>
+            <p class="text-slate-400 mt-2 text-sm sm:text-base">
+                請遵循下方三個階段的引導，從最簡單的核心變數出發，直到量化對決、並打破常規測試複雜情境。
+            </p>
+        </div>
+
+        <!-- 3-Step Navigation Tabs -->
+        <div class="flex flex-col sm:flex-row justify-center items-stretch gap-2 mb-8 bg-slate-900/50 p-2 rounded-2xl border border-slate-800">
+            <button id="btn-step1" class="flex-1 py-3 px-4 rounded-xl text-center transition flex items-center justify-center space-x-2 text-sm font-bold bg-indigo-600 text-white" onclick="switchStep(1)">
+                <span class="w-5 h-5 rounded-full bg-white/20 text-white flex items-center justify-center text-xs">1</span>
+                <span>階段一：微觀模型 (KISS)</span>
+            </button>
+            <button id="btn-step2" class="flex-1 py-3 px-4 rounded-xl text-center transition flex items-center justify-center space-x-2 text-sm font-bold text-slate-400 hover:text-slate-200" onclick="switchStep(2)">
+                <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-xs">2</span>
+                <span>階段二：量化模擬對戰</span>
+            </button>
+            <button id="btn-step3" class="flex-1 py-3 px-4 rounded-xl text-center transition flex items-center justify-center space-x-2 text-sm font-bold text-slate-400 hover:text-slate-200" onclick="switchStep(3)">
+                <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-xs">3</span>
+                <span>階段三：突破規則極限</span>
+            </button>
+        </div>
+
+        <!-- STAGE CONTENT CARDS -->
+        <!-- Step 1: Micro Model (Keep It Simple) -->
+        <div id="panel-step1" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-5 space-y-6">
+                <div class="bg-indigo-950/40 border border-indigo-900/50 rounded-2xl p-6">
+                    <h3 class="text-lg font-bold text-white mb-3">
+                        <i class="fa-solid fa-seedling text-indigo-400 mr-2"></i>從小模型開始：單一收銀台的考驗
+                    </h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        在模擬整個宇宙之前，我們先簡化到只有 <strong>2個變數</strong>：<br>
+                        1. <span class="text-indigo-300 font-semibold">顧客到來 (Arrival Rate)</span>：多久來一個客人。<br>
+                        2. <span class="text-indigo-300 font-semibold">服務效率 (Service Speed)</span>：收銀員處理一位客人需要多久。
+                    </p>
+                    <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-3">
+                        <p class="text-xs text-slate-400 font-semibold uppercase">操作指令</p>
+                        <p class="text-xs text-slate-300">
+                            試著點擊下方按鈕，手動增加顧客。觀察當其中一位顧客是<strong>「慢速顧客」</strong>時，整條隊伍會如何被迅速堵住。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-slate-300">加入普通顧客：</span>
+                        <button onclick="addSingleCustomer('normal')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center space-x-1">
+                            <i class="fa-solid fa-plus"></i><span>快速付款 (只需 0.5 秒)</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-slate-300">加入超慢顧客 (找零錢/退貨)：</span>
+                        <button onclick="addSingleCustomer('slow')" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-bold transition flex items-center space-x-1">
+                            <i class="fa-solid fa-plus"></i><span>極慢付款 (需要 1 秒)</span>
+                        </button>
+                    </div>
+                    <div class="pt-4 border-t border-slate-800 flex justify-between">
+                        <button onclick="resetStep1()" class="text-xs text-slate-400 hover:text-white transition">
+                            <i class="fa-solid fa-rotate-left mr-1"></i>重置此小模型
+                        </button>
+                        <button onclick="switchStep(2)" class="text-xs text-indigo-400 hover:text-indigo-300 transition font-bold">
+                            下一步：觀察量化數據 <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Canvas Area for Step 1 -->
+            <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-6 min-h-[350px] flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center pb-4 border-b border-slate-800 mb-6">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">微觀收銀台即時狀況</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] bg-slate-800 text-slate-300 font-mono" id="step1-timer">模擬已暫停</span>
+                    </div>
+                    
+                    <!-- Cashier Row -->
+                    <div class="flex items-center justify-between bg-slate-950 p-6 rounded-2xl border border-slate-800/80 mb-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-16 h-16 bg-indigo-600/30 border-2 border-indigo-500 rounded-xl flex flex-col items-center justify-center text-white relative">
+                                <i class="fa-solid fa-cash-register text-2xl"></i>
+                                <span class="text-[10px] font-bold mt-1 text-indigo-300">櫃檯 1</span>
+                                <!-- Processing bar -->
+                                <div id="step1-progress-bar" class="absolute bottom-0 left-0 h-1 bg-emerald-400 rounded-b-xl transition-all duration-100" style="width: 0%"></div>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-white">收銀員狀態</h4>
+                                <p class="text-xs text-slate-400" id="step1-cashier-status">空閒中，等待顧客...</p>
+                            </div>
+                        </div>
+                        <div id="step1-active-customer" class="text-2xl"><span class="text-xs text-slate-600">櫃檯空置中</span></div>
+                    </div>
+
+                    <!-- Queue Area -->
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 mb-2">等待排隊隊伍 (<span id="step1-queue-count">0</span> 人)</p>
+                        <div id="step1-queue-line" class="flex items-center space-x-2 bg-slate-950/40 p-4 rounded-xl min-h-[64px] overflow-x-auto no-scrollbar"><span class="text-xs text-slate-500 italic">目前無人在排隊</span></div>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-slate-800 flex justify-between text-xs text-slate-400">
+                    <span>* 每次點擊上方增加顧客，會隨即排入上述隊伍中。</span>
+                    <span id="step1-processed-count">已服務顧客: 0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Quantitative Simulation (Comparison) -->
+        <div id="panel-step2" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-indigo-950/40 border border-indigo-900/50 rounded-2xl p-6">
+                    <h3 class="text-lg font-bold text-white mb-2">
+                        <i class="fa-solid fa-chart-line text-indigo-400 mr-2"></i>階段二：大數據對決
+                    </h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        當我們把系統放大：現在有 **3 個收銀台**。我們同時運作兩個平行的宇宙：
+                    </p>
+                    <ul class="text-xs text-slate-400 space-y-2 mb-4">
+                        <li><span class="text-rose-400 font-bold">宇宙 A (並行排隊)</span>: 顧客到達時，自動選擇目前排隊人數最少的隊伍。</li>
+                        <li><span class="text-emerald-400 font-bold">宇宙 B (蛇形排隊)</span>: 所有人先排在一個單一蛇形大隊，只要有人空閒，最前排自動補上。</li>
+                    </ul>
+                    <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                        <p class="text-xs text-amber-300 font-medium">注意統計面板中的「最大等待時間」和「不公感標準差」，這就是心理崩潰的源頭！</p>
+                    </div>
+                </div>
+
+                <!-- Simulation Controls -->
+                <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-6">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">模擬器控制面板</h4>
+                    
+                    <div class="space-y-4">
+                        <!-- Arrival rate slider -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-slate-300">顧客到來頻率 (秒/人)</span>
+                                <span id="val-arrival-rate" class="text-indigo-400 font-mono">2.5s</span>
+                            </div>
+                            <input type="range" id="slider-arrival-rate" min="1" max="5" step="0.5" value="2.5" class="w-full accent-indigo-500" oninput="updateSimParams()">
+                        </div>
+
+                        <!-- Service speed slider -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-slate-300">收銀員平均速度 (秒/人)</span>
+                                <span id="val-service-speed" class="text-indigo-400 font-mono">6s</span>
+                            </div>
+                            <input type="range" id="slider-service-speed" min="3" max="10" step="1" value="6" class="w-full accent-indigo-500" oninput="updateSimParams()">
+                        </div>
+
+                        <!-- Randomness / Slow shopper chance -->
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-slate-300">遇見「超慢結帳者」機率</span>
+                                <span id="val-slow-ratio" class="text-rose-400 font-mono">20%</span>
+                            </div>
+                            <input type="range" id="slider-slow-ratio" min="0" max="50" step="5" value="20" class="w-full accent-rose-500" oninput="updateSimParams()">
+                        </div>
+                    </div>
+
+                    <!-- Action buttons -->
+                    <div class="flex gap-2">
+                        <button id="btn-play-sim" onclick="toggleSimulation()" class="flex-1 py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition flex items-center justify-center space-x-1.5 shadow">
+                            <i class="fa-solid fa-play"></i><span>啟動雙排模擬</span>
+                        </button>
+                        <button onclick="resetSimulation()" class="py-3 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Arena -->
+            <div class="lg:col-span-8 space-y-6">
+                <!-- Top Realtime Dashboard Stats -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <span class="text-[10px] uppercase text-slate-400 font-semibold block">已結帳總人數</span>
+                        <div class="text-xl font-mono font-bold mt-1 text-white flex justify-between">
+                            <span class="text-rose-400" id="stat-served-p">A: 0 人</span>
+                            <span class="text-emerald-400" id="stat-served-s">B: 0 人</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <span class="text-[10px] uppercase text-slate-400 font-semibold block">平均等待時間</span>
+                        <div class="text-xl font-mono font-bold mt-1 text-white flex justify-between">
+                            <span class="text-rose-400" id="stat-avg-p">0.0s</span>
+                            <span class="text-emerald-400" id="stat-avg-s">0.0s</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <span class="text-[10px] uppercase text-slate-400 font-semibold block">極限等待痛苦值 (Max)</span>
+                        <div class="text-xl font-mono font-bold mt-1 text-white flex justify-between">
+                            <span class="text-rose-400" id="stat-max-p">0s</span>
+                            <span class="text-emerald-400" id="stat-max-s">0s</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <span class="text-[10px] uppercase text-slate-400 font-semibold block">不公平偏差 (標準差)</span>
+                        <div class="text-xl font-mono font-bold mt-1 text-white flex justify-between">
+                            <span class="text-rose-400" id="stat-sd-p">0.0</span>
+                            <span class="text-emerald-400" id="stat-sd-s">0.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Arena Visuals -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- System A: Parallel Queuing -->
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between h-[380px]">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">宇宙 A: 多排對多口 (自選隊伍)</span>
+                                <span class="h-2 w-2 rounded-full bg-rose-500 animate-pulse"></span>
+                            </div>
+
+                            <!-- Visual registers for Sys A -->
+                            <div class="space-y-4">
+                                <!-- Cashier 1 -->
+                                <div class="flex items-center space-x-3 bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                                    <div class="w-10 h-10 bg-slate-800 rounded-lg flex flex-col items-center justify-center text-xs text-slate-500 border border-slate-750" id="cashier-p0">🏪 <span class="text-[8px] font-bold text-slate-500">空</span></div>
+                                    <div class="flex-1 flex items-center space-x-1.5 overflow-x-auto no-scrollbar" id="queue-p0"><span class="text-[10px] text-slate-600 italic">無人排隊</span></div>
+                                </div>
+                                <!-- Cashier 2 -->
+                                <div class="flex items-center space-x-3 bg-slate-950 p-2.5 rounded-xl border border-slate-805">
+                                    <div class="w-10 h-10 bg-slate-800 rounded-lg flex flex-col items-center justify-center text-xs text-slate-500 border border-slate-750" id="cashier-p1">🏪 <span class="text-[8px] font-bold text-slate-500">空</span></div>
+                                    <div class="flex-1 flex items-center space-x-1.5 overflow-x-auto no-scrollbar" id="queue-p1"><span class="text-[10px] text-slate-600 italic">無人排隊</span></div>
+                                </div>
+                                <!-- Cashier 3 -->
+                                <div class="flex items-center space-x-3 bg-slate-950 p-2.5 rounded-xl border border-slate-800">
+                                    <div class="w-10 h-10 bg-slate-800 rounded-lg flex flex-col items-center justify-center text-xs text-slate-500 border border-slate-750" id="cashier-p2">🏪 <span class="text-[8px] font-bold text-slate-500">空</span></div>
+                                    <div class="flex-1 flex items-center space-x-1.5 overflow-x-auto no-scrollbar" id="queue-p2"><span class="text-[10px] text-slate-600 italic">無人排隊</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 italic mt-4">
+                            * 紅色帶驚嘆號的人代表「動作慢的顧客」，黃色對話框 😟 代表心情沮喪。
+                        </p>
+                    </div>
+
+                    <!-- System B: Serpentine Queuing -->
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between h-[380px]">
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">宇宙 B: 一排對多口 (蛇形單排)</span>
+                                <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            </div>
+
+                            <!-- Cashiers Sys B -->
+                            <div class="flex justify-between gap-2 mb-6">
+                                <div class="flex-1 flex flex-col items-center bg-slate-950 p-2 rounded-xl border border-slate-800">
+                                    <div class="text-lg" id="cashier-s0-val">🏪 <span class="text-xs text-slate-600">空</span></div>
+                                    <span class="text-[9px] text-slate-400 mt-1 font-semibold">櫃檯 B1</span>
+                                    <div class="w-full bg-slate-800 h-1 rounded-full mt-1.5 overflow-hidden">
+                                        <div class="bg-emerald-500 h-full transition-all duration-100" id="progress-s0" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center bg-slate-950 p-2 rounded-xl border border-slate-800">
+                                    <div class="text-lg" id="cashier-s1-val">🏪 <span class="text-xs text-slate-600">空</span></div>
+                                    <span class="text-[9px] text-slate-400 mt-1 font-semibold">櫃檯 B2</span>
+                                    <div class="w-full bg-slate-800 h-1 rounded-full mt-1.5 overflow-hidden">
+                                        <div class="bg-emerald-500 h-full transition-all duration-100" id="progress-s1" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center bg-slate-950 p-2 rounded-xl border border-slate-800">
+                                    <div class="text-lg" id="cashier-s2-val">🏪 <span class="text-xs text-slate-600">空</span></div>
+                                    <span class="text-[9px] text-slate-400 mt-1 font-semibold">櫃檯 B3</span>
+                                    <div class="w-full bg-slate-800 h-1 rounded-full mt-1.5 overflow-hidden">
+                                        <div class="bg-emerald-500 h-full transition-all duration-100" id="progress-s2" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Single Queue Row representing snake queue -->
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                                <span class="text-[10px] text-slate-400 font-bold block mb-2">蛇形排隊大隊</span>
+                                <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar h-12" id="queue-s"><span class="text-xs text-slate-600 italic">無人排隊</span></div>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 italic mt-4">
+                            * 任何人一被堵住，其餘人立刻會分流前往空出的收銀台，所以沒有任何人會出現極端的等待延誤。
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Break the Rules (Exploratory Sandbox) -->
+        <div id="panel-step3" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-indigo-950/40 border border-indigo-900/50 rounded-2xl p-6">
+                    <h3 class="text-lg font-bold text-white mb-3">
+                        <i class="fa-solid fa-flask text-indigo-400 mr-2"></i>階段三：打破規則！深度沙盒模式
+                    </h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        真正的超市情況要複雜得多。在這裡，我們引進**額外的進階變數與機制**，你可以親手點擊開啟或關閉：
+                    </p>
+                    <div class="space-y-3 pt-2">
+                        <!-- Jockeying Toggle -->
+                        <div class="flex items-center justify-between p-3 bg-slate-900 rounded-xl border border-slate-800">
+                            <div>
+                                <span class="text-xs font-bold text-white block">允許「中途跳槽」(Jockeying)</span>
+                                <span class="text-[10px] text-slate-400">多排排隊中，人會自動換到較短的一排。</span>
+                            </div>
+                            <button id="toggle-jockeying" onclick="toggleOption('jockeying')" class="w-11 h-6 bg-slate-700 rounded-full transition-colors relative flex items-center px-1">
+                                <div class="w-4 h-4 bg-white rounded-full transition-transform transform translate-x-0"></div>
+                            </button>
+                        </div>
+
+                        <!-- Express Lane Toggle -->
+                        <div class="flex items-center justify-between p-3 bg-slate-900 rounded-xl border border-slate-800">
+                            <div>
+                                <span class="text-xs font-bold text-white block">設立「特快窗口」 (Express Lane)</span>
+                                <span class="text-[10px] text-slate-400">專門處理快速付款客，慢速客禁入。</span>
+                            </div>
+                            <button id="toggle-express" onclick="toggleOption('express')" class="w-11 h-6 bg-slate-700 rounded-full transition-colors relative flex items-center px-1">
+                                <div class="w-4 h-4 bg-white rounded-full transition-transform transform translate-x-0"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                    <p class="text-xs text-indigo-300 font-medium mb-2">沙盒探討問題：</p>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        當開啟「跳槽機制」後，多排模式的平均效率會稍微提高，但卻極易引發顧客爭執；而當「特快通道」設立時，是否真的能拯救全體消費者的幸福感？還是讓少數慢速消費者遭到極限邊緣化？
+                    </p>
+                </div>
+            </div>
+
+            <!-- Visualization Arena for Step 3 Sandbox -->
+            <div class="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                <div class="flex justify-between items-center pb-4 border-b border-slate-800 mb-6">
+                    <div>
+                        <h4 class="text-sm font-bold text-white">進階沙盒運作狀況</h4>
+                        <p class="text-xs text-slate-400">結合目前已啟用的進階策略進行並行模擬</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="btn-play-sim-s3" onclick="toggleSimulationS3()" class="py-2 px-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-bold transition">
+                            <i class="fa-solid fa-play mr-1"></i> 啟動沙盒
+                        </button>
+                        <button onclick="resetSimulationS3()" class="p-2 bg-slate-800 text-slate-400 hover:text-white rounded-lg transition text-xs">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sandbox Live Stats -->
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
+                        <span class="text-[9px] text-slate-400 block font-semibold">總體不公怨恨值</span>
+                        <span class="text-lg font-mono font-bold text-rose-400" id="s3-stat-frustration">低</span>
+                    </div>
+                    <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
+                        <span class="text-[9px] text-slate-400 block font-semibold">跳槽發生次數</span>
+                        <span class="text-lg font-mono font-bold text-indigo-400" id="s3-stat-jockey">0</span>
+                    </div>
+                    <div class="bg-slate-950 p-3 rounded-lg border border-slate-800 text-center">
+                        <span class="text-[9px] text-slate-400 block font-semibold">特快通道使用人數</span>
+                        <span class="text-lg font-mono font-bold text-emerald-400" id="s3-stat-express">0</span>
+                    </div>
+                </div>
+
+                <!-- Live Area for Sandbox (Visual Dynamic View) -->
+                <div class="bg-slate-950 p-6 rounded-xl border border-slate-850 space-y-4">
+                    <div class="flex items-center justify-between pb-2 border-b border-slate-800/50">
+                        <span class="text-xs text-indigo-300 font-bold">沙盒超市現況：</span>
+                        <span id="sandbox-active-scenario" class="text-xs text-slate-400 bg-slate-900 px-2 py-0.5 rounded">常規模式</span>
+                    </div>
+                    <!-- Row 0 -->
+                    <div class="flex items-center space-x-3 bg-slate-900/50 p-2.5 rounded-lg border border-slate-800">
+                        <div class="w-12 h-10 bg-slate-800 rounded-md flex flex-col items-center justify-center text-xs text-slate-500 border border-slate-750" id="s3-cashier-0">🏪 <span class="text-[8px] font-bold text-slate-500">空置</span></div>
+                        <div class="flex-1 flex items-center space-x-1.5 overflow-x-auto no-scrollbar" id="s3-queue-0"><span class="text-xs text-slate-600 italic">無人排隊</span></div>
+                    </div>
+                    <!-- Row 1 -->
+                    <div class="flex items-center space-x-3 bg-slate-900/50 p-2.5 rounded-lg border border-slate-800">
+                        <div class="w-12 h-10 bg-slate-800 rounded-md flex flex-col items-center justify-center text-xs text-slate-500 border border-slate-750" id="s3-cashier-1">🏪 <span class="text-[8px] font-bold text-slate-500">空置</span></div>
+                        <div class="flex-1 flex items-center space-x-1.5 overflow-x-auto no-scrollbar" id="s3-queue-1"><span class="text-xs text-slate-600 italic">無人排隊</span></div>
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="flex items-center space-x-3 bg-slate-900/50 p-2.5 rounded-lg border border-slate-800">
+                        <div class="w-12 h-10 bg-slate-800 rounded-md flex flex-col items-center justify-center text-xs text-slate-500 border border-slate-750" id="s3-cashier-2">🏪 <span class="text-[8px] font-bold text-slate-500">空置</span></div>
+                        <div class="flex-1 flex items-center space-x-1.5 overflow-x-auto no-scrollbar" id="s3-queue-2"><span class="text-xs text-slate-600 italic">無人排隊</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Explaining Trivia & Cold Knowledge Section -->
+<section id="trivia" class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Fascinating Trivia</span>
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-2">必要的排隊冷知識與心理戰</h2>
+            <p class="text-slate-500 mt-2">為什麼大賣場明明知道「蛇形排隊」更公平，卻很少見到他們使用？</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Trivia Card 1 -->
+            <div class="p-8 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-bold text-amber-500 uppercase tracking-wider block mb-2">商業機密 1</span>
+                    <h3 class="text-lg font-bold text-slate-900 mb-3">
+                        蛇形排隊太長了，容易「嚇跑」消費者
+                    </h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        心理學研究顯示，雖然「蛇形排隊」的流動速度更快且最公平，但因為整條隊伍是由所有人組成的，所以它的物理長度看起來會非常驚人。顧客在進入收銀區前，若看到一條如巨蟒般蜿蜒的超長隊伍，在大腦中會直覺性地判定「這需要排超久」，從而直接放棄購買，放棄率高達 20%。
+                    </p>
+                </div>
+                <div class="text-xs font-medium text-slate-400 pt-4 border-t border-slate-200/60">
+                    <i class="fa-regular fa-lightbulb mr-1 text-amber-400"></i> 超市寧願讓你多承擔一些隨機延遲，也不願讓隊伍長度嚇跑你。
+                </div>
+            </div>
+
+            <!-- Trivia Card 2 -->
+            <div class="p-8 bg-slate-50 rounded-2xl border border-slate-100 flex flex-col justify-between">
+                <div>
+                    <span class="text-xs font-bold text-indigo-500 uppercase tracking-wider block mb-2">商業機密 2</span>
+                    <h3 class="text-lg font-bold text-slate-900 mb-3">
+                        貨架誘惑與「衝動購物」的黃金地帶
+                    </h3>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        並行排隊（多排多口）將每個人固定在狹長的通道中，兩旁通常塞滿了口香糖、避孕套、電池或小零食。你被卡住的時間越長，你就越有可能盯著這些低單價的小商品看，進而伸手將它們放進購物車。如果改用蛇形排隊，由於每個人都在不斷流動，根本無暇逗留，超市將損失高達 15% 的衝動購物利潤。
+                    </p>
+                </div>
+                <div class="text-xs font-medium text-slate-400 pt-4 border-t border-slate-200/60">
+                    <i class="fa-regular fa-lightbulb mr-1 text-indigo-500"></i> 排隊時的「無聊」是商家最暴利的行銷沃土。
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section with Interactive Poll -->
+<section id="cta" class="py-20 bg-gradient-to-br from-indigo-900 to-slate-950 text-white relative">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 class="text-3xl font-extrabold mb-4">分享你今天排隊的「痛苦體感」！</h2>
+        <p class="text-indigo-200 text-sm max-w-xl mx-auto mb-10 leading-relaxed">
+            親身體驗過兩大排隊體系的效率比拼後，若由你來設計最理想的未來購物體驗，你會如何選擇？參與快速票選，與其他數萬名讀者一起探討。
+        </p>
+
+        <!-- Poll Section -->
+        <div id="poll-container" class="bg-white/5 border border-white/10 p-6 sm:p-8 rounded-3xl max-w-2xl mx-auto mb-10 text-left">
+            <h3 class="text-base font-bold text-amber-400 mb-4"><i class="fa-solid fa-vote-yea mr-2"></i> 讀者意見調查：哪一種排隊制度更讓你抓狂？</h3>
+            <div class="space-y-3" id="poll-options">
+                <button onclick="submitVote('parallel')" class="w-full p-4 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 hover:border-white/20 transition flex items-center justify-between text-left group">
+                    <span class="text-xs sm:text-sm">在「並行排隊」中遇到慢速客人，而旁邊動得飛快</span>
+                    <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                </button>
+                <button onclick="submitVote('serpent')" class="w-full p-4 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 hover:border-white/20 transition flex items-center justify-between text-left group">
+                    <span class="text-xs sm:text-sm">看見「蛇形排隊」人山人海，連排進去的勇氣都沒有</span>
+                    <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                </button>
+                <button onclick="submitVote('express')" class="w-full p-4 bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 hover:border-white/20 transition flex items-center justify-between text-left group">
+                    <span class="text-xs sm:text-sm">雖然有「特快通道」但前面的慢客硬要排，收銀員也不勸阻</span>
+                    <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                </button>
+            </div>
+            
+            <!-- Result container (initially hidden) -->
+            <div id="poll-results" class="hidden space-y-4">
+                <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-semibold">
+                        <span>遇到慢客整排卡死 (多排多口)</span>
+                        <span id="pct-parallel" class="font-mono">54%</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                        <div id="bar-parallel" class="bg-indigo-500 h-full transition-all duration-500" style="width: 54%"></div>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-semibold">
+                        <span>被蜿蜒的蛇形大隊嚇跑 (一排多口)</span>
+                        <span id="pct-serpent" class="font-mono">28%</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                        <div id="bar-serpent" class="bg-amber-500 h-full transition-all duration-500" style="width: 28%"></div>
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-semibold">
+                        <span>特快通道形同虛設</span>
+                        <span id="pct-express" class="font-mono">18%</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                        <div id="bar-express" class="bg-rose-500 h-full transition-all duration-500" style="width: 18%"></div>
+                    </div>
+                </div>
+                <p class="text-[10px] text-slate-400 text-center mt-4">感謝您的票選！您的意見已回傳，這將幫助我們建構更完整的大眾心理研究。</p>
+            </div>
+        </div>
+
+        <p class="text-xs text-slate-400">
+            專題編輯：新聞部數據小組 © 2026. 所有實驗模擬均基於「排隊理論 (Queueing Theory)」多伺服器隊列模型簡化演繹。
+        </p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-slate-900 text-slate-500 py-8 text-center text-xs border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <span>排隊心理學專題 ‧ Explorable Explanations 實踐專案</span>
+        <div class="flex space-x-4">
+            <a href="#" class="hover:text-white transition">隱私政策</a>
+            <a href="#" class="hover:text-white transition">服務條款</a>
+            <a href="#" class="hover:text-white transition">聯絡數據團隊</a>
+        </div>
+    </div>
+</footer>
+
+<!-- JAVASCRIPT LOGIC -->
+<script>
+    // -------------------------------------------------------------
+    // Slider Component Logic
+    // -------------------------------------------------------------
+    const sliderHandle = document.getElementById('slider-handle');
+    const sliderRightPane = document.getElementById('slider-right-pane');
+    const sliderContainer = sliderHandle.parentElement;
+
+    let isSliding = false;
+
+    function handleSlide(clientX) {
+        const rect = sliderContainer.getBoundingClientRect();
+        const offsetX = clientX - rect.left;
+        let percentage = (offsetX / rect.width) * 100;
+        
+        // Clamp percentage between 5% and 95%
+        percentage = Math.max(5, Math.min(95, percentage));
+        
+        sliderHandle.style.left = `${percentage}%`;
+        sliderRightPane.style.left = `${percentage}%`;
+    }
+
+    // Touch events
+    sliderHandle.addEventListener('mousedown', () => isSliding = true);
+    window.addEventListener('mouseup', () => isSliding = false);
+    
+    window.addEventListener('mousemove', (e) => {
+        if (!isSliding) return;
+        handleSlide(e.clientX);
+    });
+
+    // Mobile Support
+    sliderHandle.addEventListener('touchstart', () => isSliding = true);
+    window.addEventListener('touchend', () => isSliding = false);
+    window.addEventListener('touchmove', (e) => {
+        if (!isSliding) return;
+        if (e.touches && e.touches[0]) {
+            handleSlide(e.touches[0].clientX);
+        }
+    });
+
+    // -------------------------------------------------------------
+    // Step Navigation Logic
+    // -------------------------------------------------------------
+    function switchStep(stepNum) {
+        // Reset styles for navigation buttons
+        for (let i = 1; i <= 3; i++) {
+            const btn = document.getElementById(`btn-step${i}`);
+            const span = btn.querySelector('span:first-child');
+            btn.className = "flex-1 py-3 px-4 rounded-xl text-center transition flex items-center justify-center space-x-2 text-sm font-bold text-slate-400 hover:text-slate-200";
+            span.className = "w-5 h-5 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-xs";
+            
+            document.getElementById(`panel-step${i}`).classList.add('hidden');
+        }
+
+        // Active State style
+        const activeBtn = document.getElementById(`btn-step${stepNum}`);
+        const activeSpan = activeBtn.querySelector('span:first-child');
+        activeBtn.className = "flex-1 py-3 px-4 rounded-xl text-center transition flex items-center justify-center space-x-2 text-sm font-bold bg-indigo-600 text-white";
+        activeSpan.className = "w-5 h-5 rounded-full bg-white/20 text-white flex items-center justify-center text-xs";
+        
+        document.getElementById(`panel-step${stepNum}`).classList.remove('hidden');
+
+        // Stop simulations when switching tabs to prevent memory leakage
+        stopAllSimulations();
+    }
+
+    function stopAllSimulations() {
+        if (simIntervalId) {
+            clearInterval(simIntervalId);
+            simIntervalId = null;
+            document.getElementById('btn-play-sim').innerHTML = `<i class="fa-solid fa-play"></i><span>啟動雙排模擬</span>`;
+        }
+        if (s3IntervalId) {
+            clearInterval(s3IntervalId);
+            s3IntervalId = null;
+            document.getElementById('btn-play-sim-s3').innerHTML = `<i class="fa-solid fa-play mr-1"></i> 啟動沙盒`;
+        }
+    }
+
+    // -------------------------------------------------------------
+    // STEP 1 Simulator Code (Micro Model - Hand Triggered)
+    // -------------------------------------------------------------
+    let step1Queue = [];
+    let step1Processed = 0;
+    let step1ActiveCustomer = null;
+    let step1ProcessingTimer = null;
+    let step1TimeLeft = 0;
+    let step1TotalRequired = 0;
+    let step1ClockId = null;
+    let step1RunTime = 0;
+
+    // Start a tiny game loop for Step 1 at 100ms interval for sub-second precision
+    function startStep1Clock() {
+        if (step1ClockId) return;
+        step1ClockId = setInterval(() => {
+            step1RunTime += 0.1;
+            // Rounded to avoid floating point precision issues
+            step1RunTime = Math.round(step1RunTime * 10) / 10;
+            document.getElementById('step1-timer').innerText = `已運行: ${step1RunTime.toFixed(1)} 秒`;
+
+            // Process queue logic
+            if (!step1ActiveCustomer && step1Queue.length > 0) {
+                step1ActiveCustomer = step1Queue.shift();
+                step1TotalRequired = step1ActiveCustomer.serviceTime;
+                step1TimeLeft = step1TotalRequired;
+                updateStep1UI();
+            }
+
+            if (step1ActiveCustomer) {
+                step1TimeLeft -= 0.1;
+                step1TimeLeft = Math.max(0, Math.round(step1TimeLeft * 10) / 10);
+                const pct = ((step1TotalRequired - step1TimeLeft) / step1TotalRequired) * 100;
+                document.getElementById('step1-progress-bar').style.width = `${pct}%`;
+                document.getElementById('step1-cashier-status').innerText = `正為 [${step1ActiveCustomer.emoji}] 結帳中... 剩餘 ${step1TimeLeft.toFixed(1)} 秒`;
+
+                if (step1TimeLeft <= 0) {
+                    // Completed!
+                    step1Processed++;
+                    step1ActiveCustomer = null;
+                    document.getElementById('step1-progress-bar').style.width = '0%';
+                    document.getElementById('step1-cashier-status').innerText = `空閒中，等待顧客...`;
+                    updateStep1UI();
+                }
+            }
+        }, 100);
+    }
+
+    function addSingleCustomer(type) {
+        startStep1Clock();
+        const emoji = type === 'slow' ? '🐢' : ['🧍', '🚶', '🏃'][Math.floor(Math.random() * 3)];
+        const serviceTime = type === 'slow' ? 1.0 : 0.5; // Modified: Slow is 1s, Normal is 0.5s
+        const colorClass = type === 'slow' ? 'bg-rose-500 border-rose-400' : 'bg-emerald-500 border-emerald-400';
+        
+        step1Queue.push({
+            emoji,
+            serviceTime,
+            colorClass,
+            id: Date.now()
+        });
+
+        updateStep1UI();
+    }
+
+    function updateStep1UI() {
+        document.getElementById('step1-queue-count').innerText = step1Queue.length;
+        document.getElementById('step1-processed-count').innerText = `已服務顧客: ${step1Processed}`;
+
+        // Render queue
+        const queueLine = document.getElementById('step1-queue-line');
+        if (step1Queue.length === 0) {
+            queueLine.innerHTML = `<span class="text-xs text-slate-500 italic">目前無人在排隊</span>`;
+        } else {
+            queueLine.innerHTML = step1Queue.map(c => `
+                <div class="flex flex-col items-center shrink-0">
+                    <div class="w-10 h-10 rounded-full ${c.colorClass} border-2 flex items-center justify-center text-white font-bold relative text-sm">
+                        ${c.emoji}
+                        ${c.serviceTime >= 1.0 ? '<span class="absolute -top-1 -right-1 bg-rose-600 text-white rounded-full w-4 h-4 text-[9px] flex items-center justify-center font-bold">!</span>' : ''}
+                    </div>
+                    <span class="text-[9px] text-slate-400 mt-1">${c.serviceTime.toFixed(1)}s</span>
+                </div>
+            `).join('');
+        }
+
+        // Render active customer
+        const activeContainer = document.getElementById('step1-active-customer');
+        if (step1ActiveCustomer) {
+            activeContainer.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <span class="text-xs text-indigo-300 font-mono">${step1TimeLeft.toFixed(1)}秒</span>
+                    <div class="w-12 h-12 rounded-full ${step1ActiveCustomer.colorClass} border-2 flex items-center justify-center text-white text-lg font-bold animate-pulse">
+                        ${step1ActiveCustomer.emoji}
+                    </div>
+                </div>
+            `;
+        } else {
+            activeContainer.innerHTML = `<span class="text-xs text-slate-600">櫃檯空置中</span>`;
+        }
+    }
+
+    function resetStep1() {
+        if (step1ClockId) {
+            clearInterval(step1ClockId);
+            step1ClockId = null;
+        }
+        step1Queue = [];
+        step1Processed = 0;
+        step1ActiveCustomer = null;
+        step1TimeLeft = 0;
+        step1RunTime = 0;
+        document.getElementById('step1-timer').innerText = `模擬已暫停`;
+        document.getElementById('step1-progress-bar').style.width = '0%';
+        document.getElementById('step1-cashier-status').innerText = `空閒中，等待顧客...`;
+        updateStep1UI();
+    }
+
+
+    // -------------------------------------------------------------
+    // STEP 2 Simulator Logic (Parallel vs Serpentine Side-by-Side)
+    // -------------------------------------------------------------
+    let simIntervalId = null;
+    let simTime = 0;
+
+    // Simulation Config/Parameters (Read from Sliders)
+    let arrivalInterval = 2.5; // seconds per customer
+    let avgServiceTime = 6;    // base service seconds
+    let slowProbability = 0.2; // probability of a "slow" shopper
+
+    // Universe A (Parallel System) States
+    let pCashiers = [
+        { activeCust: null, timeLeft: 0, totalTime: 0, id: 0 },
+        { activeCust: null, timeLeft: 0, totalTime: 0, id: 1 },
+        { activeCust: null, timeLeft: 0, totalTime: 0, id: 2 }
+    ];
+    let pQueues = [[], [], []];
+    let pServedCount = 0;
+    let pTotalWaitTime = 0;
+    let pMaxWaitTime = 0;
+    let pWaitTimesList = [];
+
+    // Universe B (Serpentine System) States
+    let sCashiers = [
+        { activeCust: null, timeLeft: 0, totalTime: 0, id: 0 },
+        { activeCust: null, timeLeft: 0, totalTime: 0, id: 1 },
+        { activeCust: null, timeLeft: 0, totalTime: 0, id: 2 }
+    ];
+    let sQueue = [];
+    let sServedCount = 0;
+    let sTotalWaitTime = 0;
+    let sMaxWaitTime = 0;
+    let sWaitTimesList = [];
+
+    function updateSimParams() {
+        arrivalInterval = parseFloat(document.getElementById('slider-arrival-rate').value);
+        avgServiceTime = parseFloat(document.getElementById('slider-service-speed').value);
+        slowProbability = parseFloat(document.getElementById('slider-slow-ratio').value) / 100;
+
+        document.getElementById('val-arrival-rate').innerText = `${arrivalInterval}s`;
+        document.getElementById('val-service-speed').innerText = `${avgServiceTime}s`;
+        document.getElementById('val-slow-ratio').innerText = `${Math.round(slowProbability * 100)}%`;
+    }
+
+    function toggleSimulation() {
+        if (simIntervalId) {
+            // Pause
+            clearInterval(simIntervalId);
+            simIntervalId = null;
+            document.getElementById('btn-play-sim').innerHTML = `<i class="fa-solid fa-play"></i><span>啟動雙排模擬</span>`;
+        } else {
+            // Play
+            updateSimParams();
+            simIntervalId = setInterval(simulationTick, 1000);
+            document.getElementById('btn-play-sim').innerHTML = `<i class="fa-solid fa-pause text-amber-400"></i><span>暫停模擬</span>`;
+        }
+    }
+
+    function resetSimulation() {
+        stopAllSimulations();
+        simTime = 0;
+
+        // Reset system A
+        pCashiers.forEach(c => { c.activeCust = null; c.timeLeft = 0; });
+        pQueues = [[], [], []];
+        pServedCount = 0;
+        pTotalWaitTime = 0;
+        pMaxWaitTime = 0;
+        pWaitTimesList = [];
+
+        // Reset system B
+        sCashiers.forEach(c => { c.activeCust = null; c.timeLeft = 0; });
+        sQueue = [];
+        sServedCount = 0;
+        sTotalWaitTime = 0;
+        sMaxWaitTime = 0;
+        sWaitTimesList = [];
+
+        updateSimUI();
+    }
+
+    // Helper function to create a shopper
+    function createShopper() {
+        const isSlow = Math.random() < slowProbability;
+        const base = avgServiceTime;
+        // Slow shopper takes double or triple time
+        const duration = isSlow ? Math.round(base * 2.5) : Math.round(base * (0.6 + Math.random() * 0.8));
+        return {
+            id: Math.random(),
+            entryTime: simTime,
+            isSlow: isSlow,
+            duration: Math.max(2, duration),
+            emoji: isSlow ? '🐢' : ['🧍', '🚶', '🏃'][Math.floor(Math.random() * 3)]
+        };
+    }
+
+    function simulationTick() {
+        simTime++;
+
+        // 1. ARRIVALS: Should a new customer arrive in both universes?
+        if (Math.random() < (1 / arrivalInterval)) {
+            // Generate exact copy of customer for fair side-by-side comparison
+            const shopperA = createShopper();
+            const shopperB = JSON.parse(JSON.stringify(shopperA)); // exact duplicate
+
+            // Universe A (Parallel): Pick the shortest queue out of the 3
+            let shortestQueueIndex = 0;
+            let minLen = pQueues[0].length;
+            for (let i = 1; i < 3; i++) {
+                if (pQueues[i].length < minLen) {
+                    minLen = pQueues[i].length;
+                    shortestQueueIndex = i;
+                }
+            }
+            pQueues[shortestQueueIndex].push(shopperA);
+
+            // Universe B (Serpentine): Just join the single winding queue
+            sQueue.push(shopperB);
+        }
+
+        // 2. UNIVERSE A: Serve customers in Parallel Queues
+        pCashiers.forEach((cashier, idx) => {
+            // If cashier idle, pull from that queue
+            if (!cashier.activeCust && pQueues[idx].length > 0) {
+                const nextCust = pQueues[idx].shift();
+                cashier.activeCust = nextCust;
+                cashier.totalTime = nextCust.duration;
+                cashier.timeLeft = nextCust.duration;
+                // Calculate wait time
+                const wait = simTime - nextCust.entryTime;
+                pTotalWaitTime += wait;
+                pWaitTimesList.push(wait);
+                if (wait > pMaxWaitTime) pMaxWaitTime = wait;
+                pServedCount++;
+            }
+
+            // Tick active customer
+            if (cashier.activeCust) {
+                cashier.timeLeft--;
+                if (cashier.timeLeft <= 0) {
+                    cashier.activeCust = null; // checkout done
+                }
+            }
+        });
+
+        // 3. UNIVERSE B: Serve customers in Serpentine Queue
+        sCashiers.forEach((cashier) => {
+            if (!cashier.activeCust && sQueue.length > 0) {
+                const nextCust = sQueue.shift();
+                cashier.activeCust = nextCust;
+                cashier.totalTime = nextCust.duration;
+                cashier.timeLeft = nextCust.duration;
+                // Calculate wait time
+                const wait = simTime - nextCust.entryTime;
+                sTotalWaitTime += wait;
+                sWaitTimesList.push(wait);
+                if (wait > sMaxWaitTime) sMaxWaitTime = wait;
+                sServedCount++;
+            }
+
+            // Tick active customer
+            if (cashier.activeCust) {
+                cashier.timeLeft--;
+                if (cashier.timeLeft <= 0) {
+                    cashier.activeCust = null; // checkout done
+                }
+            }
+        });
+
+        // 4. Update UI visuals
+        updateSimUI();
+    }
+
+    // Mathematical deviation helper
+    function getStandardDeviation(array) {
+        if (!array || array.length === 0) return 0;
+        const n = array.length;
+        const mean = array.reduce((a, b) => a + b) / n;
+        return Math.sqrt(array.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n);
+    }
+
+    function updateSimUI() {
+        // Stats Calculation
+        const avgWaitA = pServedCount > 0 ? (pTotalWaitTime / pServedCount).toFixed(1) : "0.0";
+        const avgWaitB = sServedCount > 0 ? (sTotalWaitTime / sServedCount).toFixed(1) : "0.0";
+
+        const sdA = getStandardDeviation(pWaitTimesList).toFixed(1);
+        const sdB = getStandardDeviation(sWaitTimesList).toFixed(1);
+
+        document.getElementById('stat-served-p').innerText = `A: ${pServedCount} 人`;
+        document.getElementById('stat-served-s').innerText = `B: ${sServedCount} 人`;
+        document.getElementById('stat-avg-p').innerText = `${avgWaitA}s`;
+        document.getElementById('stat-avg-s').innerText = `${avgWaitB}s`;
+        document.getElementById('stat-max-p').innerText = `${pMaxWaitTime}s`;
+        document.getElementById('stat-max-s').innerText = `${sMaxWaitTime}s`;
+        document.getElementById('stat-sd-p').innerText = `${sdA}`;
+        document.getElementById('stat-sd-s').innerText = `${sdB}`;
+
+        // Color coding for visual clarity based on performance
+        if (parseFloat(avgWaitA) > parseFloat(avgWaitB)) {
+            document.getElementById('stat-avg-p').className = "text-rose-500";
+            document.getElementById('stat-avg-s').className = "text-emerald-400";
+        } else if (parseFloat(avgWaitA) < parseFloat(avgWaitB)) {
+            document.getElementById('stat-avg-p').className = "text-emerald-400";
+            document.getElementById('stat-avg-s').className = "text-rose-500";
+        }
+
+        if (pMaxWaitTime > sMaxWaitTime) {
+            document.getElementById('stat-max-p').className = "text-rose-500";
+            document.getElementById('stat-max-s').className = "text-emerald-400";
+        }
+
+        // Render SYSTEM A Cashiers & Queues
+        pCashiers.forEach((cashier, idx) => {
+            const cashierEl = document.getElementById(`cashier-p${idx}`);
+            if (cashier.activeCust) {
+                const color = cashier.activeCust.isSlow ? 'border-rose-500 text-rose-400' : 'border-emerald-500 text-emerald-400';
+                cashierEl.innerHTML = `
+                    <div class="text-xs font-mono font-bold">${cashier.activeCust.emoji}</div>
+                    <span class="text-[8px] bg-slate-900 px-1 py-0.5 rounded text-indigo-300 font-mono">${cashier.timeLeft}s</span>
+                `;
+                cashierEl.className = `w-10 h-10 rounded-lg flex flex-col items-center justify-center border ${color} bg-slate-900/80 animate-pulse`;
+            } else {
+                cashierEl.innerHTML = `🏪 <span class="text-[8px] font-bold text-slate-500">空</span>`;
+                cashierEl.className = "w-10 h-10 bg-slate-800 rounded-lg flex flex-col items-center justify-center text-xs text-slate-500 border border-slate-750";
+            }
+
+            // Render Queue
+            const queueEl = document.getElementById(`queue-p${idx}`);
+            if (pQueues[idx].length === 0) {
+                queueEl.innerHTML = `<span class="text-[10px] text-slate-600 italic">無人排隊</span>`;
+            } else {
+                queueEl.innerHTML = pQueues[idx].map((c, qIdx) => {
+                    const bg = c.isSlow ? 'bg-rose-600/30 text-rose-300 border-rose-500/40' : 'bg-slate-800 text-slate-300 border-slate-700';
+                    const angerBubble = (qIdx > 2 && !c.isSlow) ? `<span class="absolute -top-1 -left-1 text-[10px]" title="等待太久，感到煩悶">😟</span>` : '';
+                    return `
+                        <div class="relative flex flex-col items-center shrink-0">
+                            <div class="w-8 h-8 rounded-full border flex items-center justify-center ${bg} text-xs font-medium relative">
+                                ${c.emoji}
+                                ${angerBubble}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        });
+
+        // Render SYSTEM B Cashiers & Queues
+        sCashiers.forEach((cashier, idx) => {
+            const valEl = document.getElementById(`cashier-s${idx}-val`);
+            const progressEl = document.getElementById(`progress-s${idx}`);
+
+            if (cashier.activeCust) {
+                valEl.innerHTML = `${cashier.activeCust.emoji} <span class="text-[9px] font-mono text-indigo-400">${cashier.timeLeft}s</span>`;
+                const pct = ((cashier.totalTime - cashier.timeLeft) / cashier.totalTime) * 100;
+                progressEl.style.width = `${pct}%`;
+                progressEl.className = cashier.activeCust.isSlow ? 'bg-rose-500 h-full' : 'bg-emerald-400 h-full';
+            } else {
+                valEl.innerHTML = `🏪 <span class="text-xs text-slate-600">空</span>`;
+                progressEl.style.width = `0%`;
+            }
+        });
+
+        // Render Serpent Queue
+        const sQueueEl = document.getElementById(`queue-s`);
+        if (sQueue.length === 0) {
+            sQueueEl.innerHTML = `<span class="text-xs text-slate-600 italic">無人排隊</span>`;
+        } else {
+            sQueueEl.innerHTML = sQueue.map(c => {
+                const border = c.isSlow ? 'border-rose-500/50' : 'border-slate-700';
+                return `
+                    <div class="w-8 h-8 rounded-full bg-slate-800 border ${border} flex items-center justify-center shrink-0 text-xs text-white">
+                        ${c.emoji}
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+
+
+    // -------------------------------------------------------------
+    // STEP 3 Sandbox Logic (Advanced variables)
+    // -------------------------------------------------------------
+    let s3IntervalId = null;
+    let s3Time = 0;
+
+    // Sandbox Toggle Options
+    let isJockeyingEnabled = false;
+    let isExpressEnabled = false;
+
+    // Sandbox Queues & Cashiers state
+    let s3Cashiers = [
+        { activeCust: null, timeLeft: 0, totalTime: 0, isExpressOnly: false },
+        { activeCust: null, timeLeft: 0, totalTime: 0, isExpressOnly: false },
+        { activeCust: null, timeLeft: 0, totalTime: 0, isExpressOnly: false }
+    ];
+    let s3Queues = [[], [], []];
+    
+    // Sandbox stats
+    let s3JockeyCount = 0;
+    let s3ExpressProcessed = 0;
+    let s3Frustration = "低";
+
+    function toggleOption(type) {
+        if (type === 'jockeying') {
+            isJockeyingEnabled = !isJockeyingEnabled;
+            const btn = document.getElementById('toggle-jockeying');
+            const handle = btn.firstElementChild;
+            if (isJockeyingEnabled) {
+                btn.className = "w-11 h-6 bg-indigo-600 rounded-full transition-colors relative flex items-center px-1";
+                handle.className = "w-4 h-4 bg-white rounded-full transition-transform transform translate-x-5";
+            } else {
+                btn.className = "w-11 h-6 bg-slate-700 rounded-full transition-colors relative flex items-center px-1";
+                handle.className = "w-4 h-4 bg-white rounded-full transition-transform transform translate-x-0";
+            }
+        } else if (type === 'express') {
+            isExpressEnabled = !isExpressEnabled;
+            const btn = document.getElementById('toggle-express');
+            const handle = btn.firstElementChild;
+            if (isExpressEnabled) {
+                btn.className = "w-11 h-6 bg-indigo-600 rounded-full transition-colors relative flex items-center px-1";
+                handle.className = "w-4 h-4 bg-white rounded-full transition-transform transform translate-x-5";
+                s3Cashiers[2].isExpressOnly = true;
+                document.getElementById('s3-lbl-c2').innerText = "特快 R3";
+                document.getElementById('s3-lbl-c2').className = "text-[8px] text-amber-300 font-bold";
+            } else {
+                btn.className = "w-11 h-6 bg-slate-700 rounded-full transition-colors relative flex items-center px-1";
+                handle.className = "w-4 h-4 bg-white rounded-full transition-transform transform translate-x-0";
+                s3Cashiers[2].isExpressOnly = false;
+                document.getElementById('s3-lbl-c2').innerText = "收銀 3";
+                document.getElementById('s3-lbl-c2').className = "text-[8px] text-slate-400";
+            }
+        }
+        updateScenarioLabel();
+    }
+
+    function updateScenarioLabel() {
+        let text = "常規模式";
+        if (isJockeyingEnabled && isExpressEnabled) {
+            text = "自由跳槽 + 特快通道 混合策略";
+        } else if (isJockeyingEnabled) {
+            text = "消費者中途跳槽模型";
+        } else if (isExpressEnabled) {
+            text = "特快與慢速分流模型";
+        }
+        document.getElementById('sandbox-active-scenario').innerText = text;
+    }
+
+    function toggleSimulationS3() {
+        if (s3IntervalId) {
+            // Pause
+            clearInterval(s3IntervalId);
+            s3IntervalId = null;
+            document.getElementById('btn-play-sim-s3').innerHTML = `<i class="fa-solid fa-play mr-1"></i> 啟動沙盒`;
+        } else {
+            // Play
+            s3IntervalId = setInterval(sandboxTick, 1000);
+            document.getElementById('btn-play-sim-s3').innerHTML = `<i class="fa-solid fa-pause text-amber-400 mr-1"></i> 暫停沙盒`;
+        }
+    }
+
+    function resetSimulationS3() {
+        stopAllSimulations();
+        s3Time = 0;
+        s3JockeyCount = 0;
+        s3ExpressProcessed = 0;
+        s3Frustration = "低";
+        
+        s3Cashiers.forEach(c => { c.activeCust = null; c.timeLeft = 0; });
+        s3Queues = [[], [], []];
+
+        updateSandboxUI();
+    }
+
+    function sandboxTick() {
+        s3Time++;
+
+        // 1. ARRIVALS
+        if (Math.random() < 0.5) { // 2s per customer approx
+            const shopper = createShopper();
+            
+            // If Express Lane is active and customer is FAST (isSlow is false)
+            if (isExpressEnabled && !shopper.isSlow) {
+                // Highly prefer to enter the express line (queue 2)
+                s3Queues[2].push(shopper);
+                s3ExpressProcessed++;
+            } else {
+                // Choose the shortest among normal lanes
+                let limit = isExpressEnabled ? 2 : 3;
+                let shortestIdx = 0;
+                let minLen = s3Queues[0].length;
+                for (let i = 1; i < limit; i++) {
+                    if (s3Queues[i].length < minLen) {
+                        minLen = s3Queues[i].length;
+                        shortestIdx = i;
+                    }
+                }
+                s3Queues[shortestIdx].push(shopper);
+            }
+        }
+
+        // 2. JOCKEYING (中途跳槽) LOGIC
+        if (isJockeyingEnabled) {
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (i === j) continue;
+                    // If express lane is active, slow customers CANNOT jump into queue 2
+                    if (isExpressEnabled && j === 2) {
+                        const lastInI = s3Queues[i][s3Queues[i].length - 1];
+                        if (lastInI && lastInI.isSlow) continue; 
+                    }
+
+                    // If queue i is longer than queue j by 2 or more people, hop!
+                    if (s3Queues[i].length > s3Queues[j].length + 1) {
+                        const hopper = s3Queues[i].pop();
+                        if (hopper) {
+                            s3Queues[j].push(hopper);
+                            s3JockeyCount++;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 3. SERVICE LOGIC
+        s3Cashiers.forEach((cashier, idx) => {
+            if (!cashier.activeCust && s3Queues[idx].length > 0) {
+                const nextCust = s3Queues[idx].shift();
+                cashier.activeCust = nextCust;
+                cashier.totalTime = nextCust.duration;
+                cashier.timeLeft = nextCust.duration;
+            }
+
+            if (cashier.activeCust) {
+                cashier.timeLeft--;
+                if (cashier.timeLeft <= 0) {
+                    cashier.activeCust = null;
+                }
+            }
+        });
+
+        // Calculate frustration index based on queue lengths
+        let maxQLen = Math.max(s3Queues[0].length, s3Queues[1].length, s3Queues[2].length);
+        if (maxQLen > 5) {
+            s3Frustration = "極高 🤬";
+        } else if (maxQLen > 3) {
+            s3Frustration = "中等 😟";
+        } else {
+            s3Frustration = "舒適 😊";
+        }
+
+        updateSandboxUI();
+    }
+
+    function updateSandboxUI() {
+        document.getElementById('s3-stat-frustration').innerText = s3Frustration;
+        document.getElementById('s3-stat-jockey').innerText = s3JockeyCount;
+        document.getElementById('s3-stat-express').innerText = s3ExpressProcessed;
+
+        // Render lanes
+        s3Cashiers.forEach((cashier, idx) => {
+            const cashierEl = document.getElementById(`s3-cashier-${idx}`);
+            if (cashier.activeCust) {
+                cashierEl.innerHTML = `
+                    <div class="text-xs font-bold">${cashier.activeCust.emoji}</div>
+                    <span class="text-[8px] bg-slate-900 px-1 py-0.5 rounded text-indigo-300 font-mono">${cashier.timeLeft}s</span>
+                `;
+                cashierEl.className = cashier.activeCust.isSlow ? 'w-12 h-10 bg-slate-800 rounded-md flex flex-col items-center justify-center border border-rose-500 bg-slate-900/80' : 'w-12 h-10 bg-slate-800 rounded-md flex flex-col items-center justify-center border border-emerald-500 bg-slate-900/80';
+            } else {
+                const label = cashier.isExpressOnly ? '特快' : '空置';
+                cashierEl.innerHTML = `🏪 <span class="text-[8px] font-bold text-slate-500">${label}</span>`;
+                cashierEl.className = "w-12 h-10 bg-slate-800 rounded-md flex flex-col items-center justify-center text-xs text-slate-500 border border-slate-750";
+            }
+
+            // Render Queue
+            const queueEl = document.getElementById(`s3-queue-${idx}`);
+            if (s3Queues[idx].length === 0) {
+                queueEl.innerHTML = `<span class="text-xs text-slate-600 italic">無人排隊</span>`;
+            } else {
+                queueEl.innerHTML = s3Queues[idx].map(c => {
+                    const bg = c.isSlow ? 'bg-rose-600/30 text-rose-300 border-rose-500/40' : 'bg-slate-800 text-slate-300 border-slate-700';
+                    return `
+                        <div class="w-8 h-8 rounded-full border flex items-center justify-center ${bg} text-xs font-medium shrink-0">
+                            ${c.emoji}
+                        </div>
+                    `;
+                }).join('');
+            }
+        });
+    }
+
+    // -------------------------------------------------------------
+    // Poll Interaction Logic
+    // -------------------------------------------------------------
+    function submitVote(choice) {
+        document.getElementById('poll-options').classList.add('hidden');
+        document.getElementById('poll-results').classList.remove('hidden');
+    }
+
+    // Initialize UI on load
+    window.onload = function() {
+        updateStep1UI();
+        updateSimUI();
+        updateSandboxUI();
+    }
+</script>
+
+</body></html>
